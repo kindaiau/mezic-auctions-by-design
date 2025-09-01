@@ -52,6 +52,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Custom Gallery Colors
+				'gallery-black': 'hsl(var(--gallery-black))',
+				'gallery-white': 'hsl(var(--gallery-white))',
+				'artist-gold': 'hsl(var(--artist-gold))',
+				'artist-gold-muted': 'hsl(var(--artist-gold-muted))',
+				'charcoal': 'hsl(var(--charcoal))',
+				'charcoal-light': 'hsl(var(--charcoal-light))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

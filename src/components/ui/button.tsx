@@ -18,6 +18,11 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // Gallery-specific variants
+        hero: "bg-gradient-to-r from-artist-gold to-artist-gold-muted text-gallery-black font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105",
+        gallery: "border border-artist-gold bg-transparent text-artist-gold hover:bg-artist-gold hover:text-gallery-black transition-all duration-300",
+        auction: "bg-charcoal-light text-gallery-white border border-artist-gold/30 hover:border-artist-gold hover:bg-artist-gold/10 transition-all duration-300",
+        minimal: "text-gallery-white hover:text-artist-gold transition-colors duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",
