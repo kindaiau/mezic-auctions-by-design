@@ -1,21 +1,15 @@
-import Header from '@/components/Header';
-import Hero from '@/components/Hero';
-import CurrentAuctions from '@/components/CurrentAuctions';
-import EmailSignup from '@/components/EmailSignup';
-import About from '@/components/About';
-import Footer from '@/components/Footer';
+import KierkegaardHeader from '@/components/KierkegaardHeader';
+import ScrollingHero from '@/components/ScrollingHero';
+import KierkegaardGrid from '@/components/KierkegaardGrid';
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
-      <Header />
+    <div className="min-h-screen bg-gallery-black">
+      <KierkegaardHeader />
       <main>
-        <Hero />
-        <CurrentAuctions />
-        <EmailSignup />
-        <About />
+        <ScrollingHero />
+        <KierkegaardGrid />
       </main>
-      <Footer />
     </div>
   );
 };

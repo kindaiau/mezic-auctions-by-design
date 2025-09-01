@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Mezic Auctions Design System - Dark, Minimalist, Artistic */
+/* Kierkegaard-Inspired Design System for Mez Auctions */
 
 @layer base {
   :root {
-    /* Dark Theme Core Colors */
+    /* Core Colors - Dark Theme */
     --background: 0 0% 4%;
     --foreground: 0 0% 98%;
 
@@ -45,77 +45,16 @@
     --gallery-black: 0 0% 2%;
     --gallery-white: 0 0% 98%;
     --artist-gold: 45 85% 55%;
-    --artist-gold-muted: 45 50% 35%;
     --charcoal: 0 0% 8%;
-    --charcoal-light: 0 0% 12%;
     
-    /* Gradients */
-    --gradient-dark: linear-gradient(180deg, hsl(var(--gallery-black)), hsl(var(--charcoal)));
-    --gradient-gold: linear-gradient(135deg, hsl(var(--artist-gold)), hsl(var(--artist-gold-muted)));
-    --gradient-glow: radial-gradient(circle at center, hsl(var(--artist-gold) / 0.1), transparent 70%);
+    /* Typography Scale - Kierkegaard Style */
+    --text-hero: clamp(3rem, 12vw, 12rem);
+    --text-large: clamp(2rem, 6vw, 5rem);
+    --text-medium: clamp(1.25rem, 3vw, 2rem);
     
-    /* Shadows */
-    --shadow-glow: 0 0 30px hsl(var(--artist-gold) / 0.2);
-    --shadow-elegant: 0 10px 40px -10px hsl(0 0% 0% / 0.5);
-    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.3);
-    
-    /* Animations */
+    /* Animation */
+    --scroll-speed: 80s;
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -126,17 +65,75 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background: var(--gradient-dark);
-    min-height: 100vh;
+    background: hsl(var(--gallery-black));
+    color: hsl(var(--gallery-white));
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
-  /* Custom Typography */
+  /* Hero Typography - Kierkegaard Style */
+  .text-hero {
+    font-size: var(--text-hero);
+    line-height: 0.8;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  .text-large {
+    font-size: var(--text-large);
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  /* Scrolling Text Animation */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .scroll-text {
+    animation: scroll-left var(--scroll-speed) linear infinite;
+  }
+
+  /* Fade in animations */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  /* Animation delays */
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-300 { animation-delay: 0.3s; }
+  .delay-400 { animation-delay: 0.4s; }
+  .delay-500 { animation-delay: 0.5s; }
+
+  /* Custom utilities */
+  .text-gallery-white {
+    color: hsl(var(--gallery-white));
+  }
+
   .text-gallery-gold {
     color: hsl(var(--artist-gold));
   }
 
-  .text-gallery-white {
-    color: hsl(var(--gallery-white));
+  .bg-gallery-gold {
+    background-color: hsl(var(--artist-gold));
   }
 
   .bg-gallery-black {
@@ -147,22 +144,23 @@
     background-color: hsl(var(--charcoal));
   }
 
-  /* Animation utilities */
-  .transition-smooth {
+  /* Hover effects */
+  .hover-glow:hover {
+    box-shadow: 0 0 30px hsl(var(--artist-gold) / 0.3);
     transition: var(--transition-smooth);
   }
 
-  .transition-slow {
-    transition: var(--transition-slow);
+  /* Grid utilities */
+  .grid-kierkegaard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: hsl(var(--gallery-white) / 0.1);
   }
 
-  /* Glow effects */
-  .glow-gold {
-    box-shadow: var(--shadow-glow);
-  }
-
-  .glow-hover:hover {
-    box-shadow: var(--shadow-glow);
-    transition: var(--transition-smooth);
+  @media (max-width: 768px) {
+    .grid-kierkegaard {
+      grid-template-columns: 1fr;
+    }
   }
 }
