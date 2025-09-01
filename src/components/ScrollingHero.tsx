@@ -1,12 +1,19 @@
 const ScrollingHero = () => {
-  const scrollingItems = [
-    "artist",
-    "auctioneer", 
-    "creator",
-    "artist",
-    "auctioneer",
-    "creator"
-  ];
+  const scrollingItems = Array(6).fill("club mez");
+
+  const renderAnimatedText = (text: string) => (
+    <span className="mx-8 md:mx-16">
+      {text.split('').map((char, idx) => (
+        <span
+          key={idx}
+          className="text-hero text-gallery-white/10 inline-block opacity-0 animate-digital"
+          style={{ animationDelay: `${idx * 0.05}s` }}
+        >
+          {char}
+        </span>
+      ))}
+    </span>
+  );
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-gallery-black">
@@ -17,23 +24,15 @@ const ScrollingHero = () => {
             {/* First set */}
             {scrollingItems.map((item, index) => (
               <div key={`first-${index}`} className="inline-flex items-center">
-                <span className="text-hero text-gallery-white/10 mx-8 md:mx-16">
-                  {item}
-                </span>
-                <span className="text-hero text-gallery-white/10 mx-8 md:mx-16">
-                  •
-                </span>
+                {renderAnimatedText(item)}
+                <span className="text-hero text-gallery-white/10 mx-8 md:mx-16">•</span>
               </div>
             ))}
             {/* Duplicate for seamless loop */}
             {scrollingItems.map((item, index) => (
               <div key={`second-${index}`} className="inline-flex items-center">
-                <span className="text-hero text-gallery-white/10 mx-8 md:mx-16">
-                  {item}
-                </span>
-                <span className="text-hero text-gallery-white/10 mx-8 md:mx-16">
-                  •
-                </span>
+                {renderAnimatedText(item)}
+                <span className="text-hero text-gallery-white/10 mx-8 md:mx-16">•</span>
               </div>
             ))}
           </div>
