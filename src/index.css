@@ -16,8 +16,8 @@
     --popover: 0 0% 8%;
     --popover-foreground: 0 0% 95%;
 
-    /* Primary - Gold Accent */
-    --primary: 45 85% 55%;
+    /* Primary - White Accent */
+    --primary: 0 0% 98%;
     --primary-foreground: 0 0% 4%;
 
     /* Secondary - Charcoal */
@@ -28,8 +28,8 @@
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 65%;
 
-    /* Accent - Warm Gold */
-    --accent: 45 85% 55%;
+    /* Accent - White */
+    --accent: 0 0% 98%;
     --accent-foreground: 0 0% 4%;
 
     --destructive: 0 84% 60%;
@@ -37,14 +37,15 @@
 
     --border: 0 0% 20%;
     --input: 0 0% 15%;
-    --ring: 45 85% 55%;
+    --ring: 0 0% 98%;
 
     --radius: 0.75rem;
 
     /* Custom Design Tokens */
     --gallery-black: 0 0% 2%;
     --gallery-white: 0 0% 98%;
-    --artist-gold: 45 85% 55%;
+    --artist-gold: 0 0% 98%;
+    --artist-gold-muted: 0 0% 90%;
     --charcoal: 0 0% 8%;
     
     /* Typography Scale - Kierkegaard Style */
@@ -129,11 +130,11 @@
   }
 
   .text-gallery-gold {
-    color: hsl(var(--artist-gold));
+    color: hsl(var(--gallery-white));
   }
 
   .bg-gallery-gold {
-    background-color: hsl(var(--artist-gold));
+    background-color: hsl(var(--gallery-white));
   }
 
   .bg-gallery-black {
@@ -146,7 +147,7 @@
 
   /* Hover effects */
   .hover-glow:hover {
-    box-shadow: 0 0 30px hsl(var(--artist-gold) / 0.3);
+    box-shadow: 0 0 30px hsl(var(--gallery-white) / 0.3);
     transition: var(--transition-smooth);
   }
 

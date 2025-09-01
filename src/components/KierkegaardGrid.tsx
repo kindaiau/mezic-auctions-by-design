@@ -1,32 +1,34 @@
-import auctionArt1 from '@/assets/auction-artwork-1.jpg';
-import auctionArt2 from '@/assets/auction-artwork-2.jpg';
-import auctionArt3 from '@/assets/auction-artwork-3.jpg';
-
 const KierkegaardGrid = () => {
   const artworks = [
     {
       id: 1,
-      title: "Abstract Convergence #12",
-      image: auctionArt1,
-      description: "Bold geometric forms dance across the canvas in this stunning piece exploring contemporary abstractions.",
+      title: "Auction Piece One",
+      image:
+        "https://marianamezic.com/cdn/shop/files/24E6E4FC-13CA-4D4C-AA56-0D8C3739BB33.jpg?v=1747023089",
+      description:
+        "Vibrant mixed media work showcasing Mez's signature style and hidden heart motifs.",
       currentBid: 450,
       status: "Active",
       endTime: "2024-02-15"
     },
     {
       id: 2,
-      title: "Ceramic Meditation",
-      image: auctionArt2,
-      description: "An organic sculpture capturing the essence of flowing movement in glazed ceramic form.",
+      title: "Auction Piece Two",
+      image:
+        "https://marianamezic.com/cdn/shop/files/24E6E4FC-13CA-4D4C-AA56-0D8C3739BB33.jpg?v=1747023089",
+      description:
+        "Another original artwork from Mez's ongoing auction series.",
       currentBid: 680,
-      status: "Active", 
+      status: "Active",
       endTime: "2024-02-18"
     },
     {
       id: 3,
-      title: "Mixed Narratives",
-      image: auctionArt3,
-      description: "Textural exploration combining traditional materials with contemporary artistic vision.",
+      title: "Auction Piece Three",
+      image:
+        "https://marianamezic.com/cdn/shop/files/24E6E4FC-13CA-4D4C-AA56-0D8C3739BB33.jpg?v=1747023089",
+      description:
+        "Unique piece available exclusively through Mez's social auctions.",
       currentBid: 320,
       status: "Active",
       endTime: "2024-02-20"
@@ -68,7 +70,7 @@ const KierkegaardGrid = () => {
                         <div className="text-xs text-gallery-white/50 uppercase tracking-wider">
                           Current Bid
                         </div>
-                        <div className="text-gallery-gold font-medium">
+                        <div className="text-gallery-white font-medium">
                           ${artwork.currentBid}
                         </div>
                       </div>
@@ -86,7 +88,7 @@ const KierkegaardGrid = () => {
                     <div className="pt-4">
                       <a 
                         href="#bid" 
-                        className="inline-flex items-center text-gallery-white text-sm hover:text-gallery-gold transition-colors"
+                        className="inline-flex items-center text-gallery-white text-sm hover:text-gallery-white/70 transition-colors"
                       >
                         Place Bid
                         <span className="ml-2">→</span>
@@ -111,9 +113,9 @@ const KierkegaardGrid = () => {
             </p>
             
             <div className="space-y-4">
-              <a 
-                href="#subscribe" 
-                className="inline-block text-gallery-gold hover:text-gallery-white transition-colors border-b border-gallery-gold/30 hover:border-gallery-white/30 pb-1"
+              <a
+                href="#subscribe"
+                className="inline-block text-gallery-white hover:text-gallery-white/70 transition-colors border-b border-gallery-white/30 hover:border-gallery-white/60 pb-1"
               >
                 Get Auction Alerts
               </a>
@@ -146,9 +148,9 @@ const KierkegaardGrid = () => {
               </p>
               
               <div className="pt-4">
-                <a 
-                  href="#about" 
-                  className="inline-flex items-center text-gallery-gold text-sm hover:text-gallery-white transition-colors"
+                <a
+                  href="#about"
+                  className="inline-flex items-center text-gallery-white text-sm hover:text-gallery-white/70 transition-colors"
                 >
                   Learn More
                   <span className="ml-2">→</span>
@@ -167,14 +169,14 @@ const KierkegaardGrid = () => {
             
             <div className="space-y-4">
               <div>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   placeholder="Enter your email"
-                  className="w-full bg-gallery-black/50 border border-gallery-white/20 text-gallery-white placeholder:text-gallery-white/50 px-4 py-3 text-sm focus:border-gallery-gold focus:outline-none transition-colors"
+                  className="w-full bg-gallery-black/50 border border-gallery-white/20 text-gallery-white placeholder:text-gallery-white/50 px-4 py-3 text-sm focus:border-gallery-white focus:outline-none transition-colors"
                 />
               </div>
               
-              <button className="w-full bg-gallery-white text-gallery-black py-3 text-sm font-medium hover:bg-gallery-gold transition-colors">
+              <button className="w-full bg-gallery-white text-gallery-black py-3 text-sm font-medium hover:bg-gallery-white/90 transition-colors">
                 Subscribe to Auction Alerts
               </button>
               

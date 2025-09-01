@@ -64,16 +64,11 @@ const ScrollingHero = () => {
         {/* Right Block - Featured Work */}
         <div className="bg-charcoal p-8 md:p-16 flex flex-col justify-center fade-in-up delay-200">
           <div className="aspect-square bg-gallery-white/5 rounded-lg overflow-hidden mb-8 hover-glow">
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gallery-gold/20 rounded-full flex items-center justify-center">
-                  <span className="text-gallery-gold text-2xl">♦</span>
-                </div>
-                <p className="text-gallery-white/60 text-sm">
-                  Featured Artwork
-                </p>
-              </div>
-            </div>
+            <img
+              src="https://marianamezic.com/cdn/shop/files/24E6E4FC-13CA-4D4C-AA56-0D8C3739BB33.jpg?v=1747023089"
+              alt="Featured Mez artwork"
+              className="w-full h-full object-cover"
+            />
           </div>
           
           <div className="space-y-4">
@@ -85,9 +80,9 @@ const ScrollingHero = () => {
               Each work represents a unique moment in digital art commerce.
             </p>
             <div className="pt-4">
-              <a 
-                href="#auctions" 
-                className="inline-flex items-center text-gallery-gold text-sm hover:text-gallery-white transition-colors"
+              <a
+                href="#auctions"
+                className="inline-flex items-center text-gallery-white text-sm hover:text-gallery-white/70 transition-colors"
               >
                 View Active Auctions
                 <span className="ml-2">→</span>

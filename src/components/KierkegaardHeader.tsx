@@ -7,29 +7,29 @@ const KierkegaardHeader = () => {
       <div className="flex items-center justify-between">
         {/* Brand Name - Left */}
         <div className="text-gallery-white">
-          <h1 className="text-sm md:text-base font-medium tracking-wide uppercase">
-            Mez
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight uppercase">
+            MEZ
           </h1>
         </div>
 
         {/* Navigation - Right */}
         <div className="flex items-center space-x-6">
           <nav className="hidden md:flex items-center space-x-8">
-            <a 
-              href="#work" 
-              className="text-sm text-gallery-white hover:text-gallery-gold transition-colors"
+            <a
+              href="#work"
+              className="text-sm text-gallery-white hover:text-gallery-white/70 transition-colors"
             >
               Work
             </a>
-            <a 
-              href="#about" 
-              className="text-sm text-gallery-white hover:text-gallery-gold transition-colors"
+            <a
+              href="#about"
+              className="text-sm text-gallery-white hover:text-gallery-white/70 transition-colors"
             >
               About
             </a>
-            <a 
-              href="#auctions" 
-              className="text-sm text-gallery-white hover:text-gallery-gold transition-colors"
+            <a
+              href="#auctions"
+              className="text-sm text-gallery-white hover:text-gallery-white/70 transition-colors"
             >
               Auctions
             </a>
