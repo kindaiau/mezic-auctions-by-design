@@ -1,5 +1,5 @@
 import KierkegaardHeader from '@/components/KierkegaardHeader';
-import ScrollingHero from '@/components/ScrollingHero';
+import AuctionHero from '@/components/AuctionHero';
 import KierkegaardGrid from '@/components/KierkegaardGrid';
 
 const Index = () => {
@@ -7,7 +7,7 @@ const Index = () => {
     <div className="min-h-screen bg-gallery-black">
       <KierkegaardHeader />
       <main className="pt-24 md:pt-0">
-        <ScrollingHero />
+        <AuctionHero />
         <KierkegaardGrid />
       </main>
     </div>
