@@ -6,7 +6,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gallery-black">
       <KierkegaardHeader />
-      <main>
+      <main className="pt-24 md:pt-0">
         <ScrollingHero />
         <KierkegaardGrid />
       </main>
