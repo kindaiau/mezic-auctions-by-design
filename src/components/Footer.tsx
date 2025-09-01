@@ -1,90 +1,20 @@
-import { Instagram, Facebook, Mail, MapPin } from 'lucide-react';
+import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-gallery-black py-16 px-4 border-t border-artist-gold/20">
-      <div className="container mx-auto max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Brand */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-gallery-white">
-              Mariana <span className="text-artist-gold">Mezic</span>
-            </h3>
-            <p className="text-gallery-white/70 leading-relaxed">
-              Contemporary artist pioneering social media art auctions from Adelaide, Australia.
-            </p>
-            <div className="flex items-center space-x-2 text-gallery-white/60">
-              <MapPin className="w-4 h-4" />
-              <span>Adelaide, South Australia</span>
-            </div>
-          </div>
+    <footer className="py-8 px-6 bg-gallery-black text-gallery-white">
+      <div className="container mx-auto max-w-4xl flex items-center justify-between">
+        <div className="text-sm">© {new Date().getFullYear()} Mariana Mezic — All rights reserved</div>
+        <div className="flex space-x-4">
+          <a href="https://instagram.com/marianamezic_artist" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-gallery-gold">
+            {/* Instagram SVG */}
+            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M17.5 6.5h.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </a>
 
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-gallery-white">Quick Links</h4>
-            <nav className="flex flex-col space-y-2">
-              <a href="#auctions" className="text-gallery-white/70 hover:text-artist-gold transition-colors">
-                Current Auctions
-              </a>
-              <a href="#about" className="text-gallery-white/70 hover:text-artist-gold transition-colors">
-                About the Artist
-              </a>
-              <a href="#subscribe" className="text-gallery-white/70 hover:text-artist-gold transition-colors">
-                Auction Alerts
-              </a>
-              <a href="#contact" className="text-gallery-white/70 hover:text-artist-gold transition-colors">
-                Contact
-              </a>
-            </nav>
-          </div>
-
-          {/* Contact & Social */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-gallery-white">Connect</h4>
-            <div className="space-y-3">
-              <a 
-                href="mailto:hello@marianamezic.com" 
-                className="flex items-center space-x-3 text-gallery-white/70 hover:text-artist-gold transition-colors"
-              >
-                <Mail className="w-4 h-4" />
-                <span>hello@marianamezic.com</span>
-              </a>
-              
-              <div className="flex space-x-4 mt-4">
-                <a 
-                  href="https://instagram.com/mariana.mezic" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-charcoal rounded-full flex items-center justify-center text-gallery-white hover:text-artist-gold hover:bg-artist-gold/20 transition-all duration-300"
-                >
-                  <Instagram className="w-5 h-5" />
-                </a>
-                <a 
-                  href="https://facebook.com/mariana.mezic" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-charcoal rounded-full flex items-center justify-center text-gallery-white hover:text-artist-gold hover:bg-artist-gold/20 transition-all duration-300"
-                >
-                  <Facebook className="w-5 h-5" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="border-t border-artist-gold/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gallery-white/60 text-sm">
-            © 2024 Mariana Mezic. All rights reserved.
-          </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#privacy" className="text-gallery-white/60 hover:text-artist-gold text-sm transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#terms" className="text-gallery-white/60 hover:text-artist-gold text-sm transition-colors">
-              Terms of Service
-            </a>
-          </div>
+          <a href="https://facebook.com/MarianaMezicartist" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-gallery-gold">
+            {/* Facebook SVG */}
+            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 2h-3a4 4 0 0 0-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 0 1 1-1h3V2z" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </a>
         </div>
       </div>
     </footer>

@@ -1,6 +1,8 @@
 import KierkegaardHeader from '@/components/KierkegaardHeader';
 import ScrollingHero from '@/components/ScrollingHero';
 import KierkegaardGrid from '@/components/KierkegaardGrid';
+import EmailSignup from '@/components/EmailSignup';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
@@ -9,7 +11,9 @@ const Index = () => {
       <main>
         <ScrollingHero />
         <KierkegaardGrid />
+        <EmailSignup />
       </main>
+      <Footer />
     </div>
   );
 };
