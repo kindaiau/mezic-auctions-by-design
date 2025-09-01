@@ -54,7 +54,7 @@ const ScrollingHero = () => {
               <div className="text-sm text-gallery-white/60 uppercase tracking-wider">
                 Current Focus
               </div>
-              <div className="text-gallery-gold font-medium">
+              <div className="text-gallery-white font-medium">
                 Instagram • Facebook • Live Auctions
               </div>
             </div>
