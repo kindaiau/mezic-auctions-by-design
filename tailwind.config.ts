@@ -60,6 +60,7 @@ export default {
 				'artist-gold-muted': 'hsl(var(--artist-gold-muted))',
 				'charcoal': 'hsl(var(--charcoal))',
 				'charcoal-light': 'hsl(var(--charcoal-light))',
+				'mez-blush': 'hsl(var(--mez-blush))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

@@ -47,6 +47,7 @@
     --artist-gold: 0 0% 98%;
     --artist-gold-muted: 0 0% 90%;
     --charcoal: 0 0% 8%;
+    --mez-blush: 350 100% 88%;
     
     /* Typography Scale - Kierkegaard Style */
     --text-hero: clamp(3rem, 12vw, 12rem);

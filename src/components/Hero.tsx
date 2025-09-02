@@ -1,70 +1,51 @@
-import { Button } from '@/components/ui/button';
-import heroArtwork from '@/assets/hero-artwork.jpg';
+import { motion } from 'framer-motion';
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src={heroArtwork} 
-          alt="Abstract artwork by Mariana Mezic" 
-          className="w-full h-full object-cover opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-gallery-black/70 via-gallery-black/50 to-gallery-black/90"></div>
+    <section className="min-h-screen flex items-center justify-center bg-gallery-black relative overflow-hidden">
+      {/* Scanline overlay */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="h-full w-full bg-gradient-to-b from-transparent via-gallery-white/[0.02] to-transparent bg-[length:100%_2px] animate-pulse" />
       </div>
-
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gallery-white">
-          Art <span className="text-artist-gold">Auctions</span>
+      
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1.8 }}
+        className="text-center"
+      >
+        <h1 
+          className="font-bold tracking-tight text-gallery-white relative group cursor-default"
+          style={{ 
+            fontSize: 'clamp(48px, 12vw, 220px)',
+            lineHeight: '0.9',
+            letterSpacing: '-0.02em'
+          }}
+        >
+          <span className="relative inline-block transition-all duration-300 group-hover:text-shadow-rgb">
+            ARTIST
+          </span>
         </h1>
-        <h2 className="text-xl md:text-2xl font-light mb-8 text-gallery-white/90 max-w-2xl mx-auto">
-          Discover unique pieces by Adelaide artist Mariana Mezic through exclusive social media auctions
-        </h2>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button 
-            variant="hero" 
-            size="lg"
-            onClick={() => document.getElementById('auctions')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            View Current Auctions
-          </Button>
-          <Button 
-            variant="gallery" 
-            size="lg"
-            onClick={() => document.getElementById('subscribe')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Get Auction Alerts
-          </Button>
-        </div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 2.2 }}
+          className="mt-8 text-gallery-white/60 text-lg tracking-wider uppercase"
+        >
+          Contemporary Auctions
+        </motion.p>
+      </motion.div>
 
-        {/* Social Media Links */}
-        <div className="mt-12 flex justify-center space-x-6">
-          <a 
-            href="https://instagram.com/mariana.mezic" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-gallery-white hover:text-artist-gold transition-colors"
-          >
-            <span className="text-sm">Follow on Instagram</span>
-          </a>
-          <a 
-            href="https://facebook.com/mariana.mezic" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-gallery-white hover:text-artist-gold transition-colors"
-          >
-            <span className="text-sm">Like on Facebook</span>
-          </a>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-gallery-white/70 animate-bounce">
-        <div className="w-1 h-8 bg-artist-gold/50 rounded-full"></div>
-      </div>
+      {/* RGB split hover effect styles */}
+      <style>{`
+        .text-shadow-rgb {
+          text-shadow: 
+            2px 0 0 #ff0000,
+            -2px 0 0 #00ff00,
+            0 2px 0 #0000ff;
+        }
+      `}</style>
     </section>
   );
 };
