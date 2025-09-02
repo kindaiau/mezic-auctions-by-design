@@ -1,16 +1,21 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
-const PixelIntro = () => {
+interface PixelIntroProps {
+  onDone?: () => void;
+}
+
+const PixelIntro = ({ onDone }: PixelIntroProps) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
+      onDone?.();
     }, 1600);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [onDone]);
 
   // Create 12x12 grid (144 pixels)
   const pixels = Array.from({ length: 144 }, (_, i) => i);

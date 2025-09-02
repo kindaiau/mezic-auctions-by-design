@@ -9,12 +9,12 @@ export default function Hero() {
       <div className="text-center">
         <motion.h1
           className="glitch text-[clamp(48px,12vw,220px)] font-black tracking-tight text-white"
-          data-text="ARTIST"
+          data-text="CLUB MEZ AUCTIONS"
           initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           whileHover={{ skewX: [-2, 2, -2], rotate: [0, 0.3, 0], transition: { repeat: Infinity, repeatType: "mirror", duration: 0.8 } }}
         >
-          ARTIST
+          CLUB MEZ AUCTIONS
         </motion.h1>
         <motion.p
           className="mt-6 max-w-2xl text-center text-white/70 text-xl mx-auto"
