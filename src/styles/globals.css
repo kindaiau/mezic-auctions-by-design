@@ -1,0 +1,7 @@
+:root{ --mez-blush:#F2A4B4; } /* update to exact site hex later */
+html,body,#root{height:100%;}
+body{background:#000;color:#fff;}
+/* prevent accidental global margins creating big gaps */
+section{margin:0;padding:0;}
+/* focus ring for dark UI */
+:focus-visible{outline:2px solid rgba(255,255,255,.5);outline-offset:2px;}

@@ -1,94 +1,17 @@
-import { Button } from '@/components/ui/button';
-import { Instagram } from 'lucide-react';
-
-const Footer = () => {
+export default function Footer() {
   return (
-    <footer className="py-16 md:py-24 bg-gallery-black border-t border-gallery-white/10">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="grid gap-8 md:grid-cols-3">
-          {/* Brand */}
-          <div>
-            <h3 className="text-2xl font-bold text-gallery-white mb-4" style={{ color: 'hsl(var(--mez-blush))' }}>
-              MEZ
-            </h3>
-            <p className="text-gallery-white/60 mb-4">
-              Contemporary artist pioneering social media art auctions in Adelaide.
-            </p>
-            <p className="text-gallery-white/40 text-sm">
-              Adelaide, Australia
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-sm font-medium text-gallery-white/80 uppercase tracking-wider mb-4">
-              Quick Links
-            </h4>
-            <div className="space-y-2">
-              <a href="#auctions" className="block text-gallery-white/60 hover:text-gallery-white transition-colors">
-                Current Auctions
-              </a>
-              <a href="#about" className="block text-gallery-white/60 hover:text-gallery-white transition-colors">
-                About
-              </a>
-              <a href="#alerts" className="block text-gallery-white/60 hover:text-gallery-white transition-colors">
-                Auction Alerts
-              </a>
-              <a href="#contact" className="block text-gallery-white/60 hover:text-gallery-white transition-colors">
-                Contact
-              </a>
-            </div>
-          </div>
-
-          {/* Connect */}
-          <div>
-            <h4 className="text-sm font-medium text-gallery-white/80 uppercase tracking-wider mb-4">
-              Connect
-            </h4>
-            <div className="space-y-4">
-              <p className="text-gallery-white/60">
-                <a href="mailto:hello@mezauctions.com" className="hover:text-gallery-white transition-colors">
-                  hello@mezauctions.com
-                </a>
-              </p>
-              
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-gallery-white/30 text-gallery-white hover:bg-gallery-white hover:text-gallery-black"
-                asChild
-              >
-                <a 
-                  href="https://instagram.com/marianamezic_artist" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2"
-                >
-                  <Instagram size={16} />
-                  Follow on Instagram
-                </a>
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-gallery-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gallery-white/40 text-sm">
-            © 2024 Mez Auctions. All rights reserved.
-          </p>
-          <div className="flex gap-6 text-sm">
-            <a href="#privacy" className="text-gallery-white/40 hover:text-gallery-white/60 transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#terms" className="text-gallery-white/40 hover:text-gallery-white/60 transition-colors">
-              Terms of Service
-            </a>
-          </div>
-        </div>
+    <footer className="mt-24 border-t border-white/10">
+      <div className="mx-auto max-w-6xl px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p className="text-white/60 text-sm">© {new Date().getFullYear()} Mariana Mezic</p>
+        <a
+          href="https://instagram.com/REPLACE" target="_blank" rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white hover:bg-white/10"
+          aria-label="Follow on Instagram"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 fill-current"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zM18.5 6.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>
+          Instagram
+        </a>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

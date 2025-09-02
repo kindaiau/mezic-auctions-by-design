@@ -1,53 +1,28 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import "./hero.css";
 
-const Hero = () => {
+export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gallery-black relative overflow-hidden">
-      {/* Scanline overlay */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="h-full w-full bg-gradient-to-b from-transparent via-gallery-white/[0.02] to-transparent bg-[length:100%_2px] animate-pulse" />
-      </div>
-      
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.8 }}
-        className="text-center"
-      >
-        <h1 
-          className="font-bold tracking-tight text-gallery-white relative group cursor-default"
-          style={{ 
-            fontSize: 'clamp(48px, 12vw, 220px)',
-            lineHeight: '0.9',
-            letterSpacing: '-0.02em'
-          }}
+    <section className="relative flex min-h-[70vh] items-center justify-center px-6 py-20">
+      <div className="absolute inset-0 -z-10 bg-black" />
+      <div className="scan-overlay" aria-hidden />
+      <div className="text-center">
+        <motion.h1
+          className="glitch text-[clamp(48px,12vw,220px)] font-black tracking-tight text-white"
+          data-text="ARTIST"
+          initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          whileHover={{ skewX: [-2, 2, -2], rotate: [0, 0.3, 0], transition: { repeat: Infinity, repeatType: "mirror", duration: 0.8 } }}
         >
-          <span className="relative inline-block transition-all duration-300 group-hover:text-shadow-rgb">
-            ARTIST
-          </span>
-        </h1>
-        
+          ARTIST
+        </motion.h1>
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 2.2 }}
-          className="mt-8 text-gallery-white/60 text-lg tracking-wider uppercase"
+          className="mt-6 max-w-2xl text-center text-white/70 text-xl mx-auto"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4, duration: 0.6 }}
         >
-          Contemporary Auctions
+          Original works auctioned weekly. Bidding starts at $1.
         </motion.p>
-      </motion.div>
-
-      {/* RGB split hover effect styles */}
-      <style>{`
-        .text-shadow-rgb {
-          text-shadow: 
-            2px 0 0 #ff0000,
-            -2px 0 0 #00ff00,
-            0 2px 0 #0000ff;
-        }
-      `}</style>
+      </div>
     </section>
   );
-};
-
-export default Hero;
+}
