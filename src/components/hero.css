@@ -1,0 +1,13 @@
+.glitch { position: relative; line-height: .9; text-transform: uppercase; }
+.glitch::before, .glitch::after {
+  content: attr(data-text); position: absolute; inset: 0; opacity: .6; pointer-events: none;
+}
+.glitch::before { transform: translate(2px,-1px); color:#0ff; mix-blend-mode:screen; }
+.glitch::after  { transform: translate(-2px,1px); color:#f0f; mix-blend-mode:screen; }
+
+.scan-overlay {
+  position:absolute; inset:0; pointer-events:none;
+  background: repeating-linear-gradient(to bottom, rgba(255,255,255,.08) 0 1px, transparent 1px 3px);
+  mix-blend-mode: overlay; animation: scanline 4s linear infinite;
+}
+@keyframes scanline { from { background-position:0 -100% } to { background-position:0 200% } }
