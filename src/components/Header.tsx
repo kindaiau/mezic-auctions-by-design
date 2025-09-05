@@ -1,11 +1,25 @@
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 p-4 md:p-6">
+    <motion.header 
+      className="fixed top-0 left-0 right-0 z-50 p-4 md:p-6"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+    >
       <div className="flex items-center justify-between">
         {/* Brand Name - Left */}
-        <h1 className="text-xl font-bold tracking-tight uppercase md:text-2xl" style={{ color: 'hsl(var(--mez-blush))' }}>
+        <h1 
+          className="text-xl font-bold tracking-tight uppercase md:text-2xl text-gallery-white"
+          style={{ 
+            willChange: 'transform',
+            backfaceVisibility: 'hidden',
+            transform: 'translateZ(0)',
+            fontWeight: '700'
+          }}
+        >
           MEZ
         </h1>
 
@@ -41,7 +55,7 @@ const Header = () => {
           </Button>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 };
 

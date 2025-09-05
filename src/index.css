@@ -66,10 +66,14 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground font-sans;
     background: hsl(var(--gallery-black));
     color: hsl(var(--gallery-white));
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    font-smooth: auto;
+    text-rendering: optimizeLegibility;
   }
 
   /* Hero Typography - Kierkegaard Style */
