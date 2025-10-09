@@ -1,9 +1,11 @@
+import valiMyersArtwork from '@/assets/vali-myers-artwork.jpg';
+
 const auctionItems = [
   {
     id: 1,
     title: "Vali Myers — No Regrets",
     artist: "Vali Myers",
-    image: "/artworks/sample.jpg",
+    image: valiMyersArtwork,
     currentBid: "$45",
     endTime: "Ends Sun 8pm",
     status: "Live"
