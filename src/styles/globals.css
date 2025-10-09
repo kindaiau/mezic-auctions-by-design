@@ -1,4 +1,4 @@
-:root{ --mez-blush:#F2A4B4; } /* update to exact site hex later */
+:root{ --mez-blush:#F2A4B4; --mez-red:#FF0033; } /* update to exact site hex later */
 html,body,#root{height:100%;}
 body{background:#fff;color:#000;}
 /* prevent accidental global margins creating big gaps */
