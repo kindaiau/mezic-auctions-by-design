@@ -16,10 +16,41 @@ interface Auction {
 }
 
 export default function Auctions() {
-  const [auctions, setAuctions] = useState<Auction[]>([]);
+  // Mock test data with the 3 artwork images
+  const mockAuctions: Auction[] = [
+    {
+      id: '1',
+      title: 'Vali Myers Original',
+      artist: 'Vali Myers',
+      image_url: 'vali-myers',
+      current_bid: 2500,
+      end_time: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+      status: 'live'
+    },
+    {
+      id: '2',
+      title: 'Abstract Emotions',
+      artist: 'Contemporary Artist',
+      image_url: 'abstract-emotions',
+      current_bid: 1800,
+      end_time: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(),
+      status: 'live'
+    },
+    {
+      id: '3',
+      title: 'Urban Decay Series',
+      artist: 'Street Artist',
+      image_url: 'urban-decay',
+      current_bid: 3200,
+      end_time: new Date(Date.now() + 72 * 60 * 60 * 1000).toISOString(),
+      status: 'live'
+    }
+  ];
+
+  const [auctions, setAuctions] = useState<Auction[]>(mockAuctions);
   const [selectedAuction, setSelectedAuction] = useState<Auction | null>(null);
   const [isBidModalOpen, setIsBidModalOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // Static image mapping
   const imageMap: Record<string, string> = {
@@ -61,7 +92,10 @@ export default function Auctions() {
         .order('end_time', { ascending: true });
 
       if (error) throw error;
-      setAuctions(data || []);
+      // Use database data if available, otherwise keep mock data
+      if (data && data.length > 0) {
+        setAuctions(data);
+      }
     } catch (error) {
       console.error('Error fetching auctions:', error);
     } finally {
