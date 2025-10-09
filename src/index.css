@@ -6,47 +6,47 @@
 
 @layer base {
   :root {
-    /* Core Colors - Dark Theme */
-    --background: 0 0% 4%;
-    --foreground: 0 0% 98%;
+    /* Core Colors - Light Theme */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
 
-    --card: 0 0% 6%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 5%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
 
-    /* Primary - White Accent */
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 4%;
+    /* Primary - Black Accent */
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Charcoal */
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 95%;
+    /* Secondary - Light Gray */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 0%;
 
-    /* Muted - Dark Gray */
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
+    /* Muted - Light Gray */
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 45%;
 
-    /* Accent - White */
-    --accent: 0 0% 98%;
-    --accent-foreground: 0 0% 4%;
+    /* Accent - Black */
+    --accent: 0 0% 0%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 98%;
+    --border: 0 0% 85%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 0%;
 
     --radius: 0.75rem;
 
     /* Custom Design Tokens */
-    --gallery-black: 0 0% 2%;
-    --gallery-white: 0 0% 98%;
-    --artist-gold: 0 0% 98%;
-    --artist-gold-muted: 0 0% 90%;
-    --charcoal: 0 0% 8%;
+    --gallery-black: 0 0% 0%;
+    --gallery-white: 0 0% 100%;
+    --artist-gold: 0 0% 0%;
+    --artist-gold-muted: 0 0% 20%;
+    --charcoal: 0 0% 95%;
     --mez-blush: 350 100% 88%;
     
     /* Typography Scale - Kierkegaard Style */
@@ -67,8 +67,8 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    background: hsl(var(--gallery-black));
-    color: hsl(var(--gallery-white));
+    background: hsl(var(--gallery-white));
+    color: hsl(var(--gallery-black));
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
