@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 interface BidModalProps {
   isOpen: boolean;
@@ -25,9 +27,20 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
   const [bidAmount, setBidAmount] = useState('');
   const [maximumBid, setMaximumBid] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isDemoAuction = useMemo(() => !UUID_REGEX.test(auction.id), [auction.id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (isDemoAuction) {
+      toast({
+        title: 'Demo mode',
+        description: 'Bidding is disabled until Supabase is connected.',
+        variant: 'destructive'
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -191,11 +204,16 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
             <Button type="button" variant="outline" onClick={onClose} className="flex-1">
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting} className="flex-1">
+            <Button type="submit" disabled={isSubmitting || isDemoAuction} className="flex-1">
               {isSubmitting ? 'Placing Bid...' : 'Place Bid'}
             </Button>
           </div>
         </form>
+        {isDemoAuction && (
+          <p className="pt-4 text-center text-sm text-muted-foreground">
+            These auctions are demo content. Connect Supabase to enable live bidding.
+          </p>
+        )}
       </DialogContent>
     </Dialog>
   );

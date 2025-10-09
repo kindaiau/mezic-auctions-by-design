@@ -17,42 +17,63 @@ export type Database = {
       auctions: {
         Row: {
           artist: string
+          bidding_history: Json
+          condition_report_available: boolean
           created_at: string
           current_bid: number
           description: string | null
           end_time: string
           id: string
           image_url: string
+          medium: string | null
+          provenance: Json
+          reserve_status: string | null
+          short_description: string | null
           starting_bid: number
           status: string
           title: string
           updated_at: string
+          year: number | null
         }
         Insert: {
           artist: string
+          bidding_history?: Json
+          condition_report_available?: boolean
           created_at?: string
           current_bid: number
           description?: string | null
           end_time: string
           id?: string
           image_url: string
+          medium?: string | null
+          provenance?: Json
+          reserve_status?: string | null
+          short_description?: string | null
           starting_bid: number
           status?: string
           title: string
           updated_at?: string
+          year?: number | null
         }
         Update: {
           artist?: string
+          bidding_history?: Json
+          condition_report_available?: boolean
           created_at?: string
           current_bid?: number
           description?: string | null
           end_time?: string
           id?: string
           image_url?: string
+          medium?: string | null
+          provenance?: Json
+          reserve_status?: string | null
+          short_description?: string | null
           starting_bid?: number
           status?: string
           title?: string
           updated_at?: string
+          year?: number | null
         }
         Relationships: []
       }

@@ -16,7 +16,7 @@ export default function Footer() {
         </p>
         <div className="flex items-center gap-3">
           <a
-            href="https://instagram.com/marianamezic_artist"
+            href="https://www.instagram.com/marianamezic/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 hover:bg-white/10"
