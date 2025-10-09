@@ -123,7 +123,7 @@ export default function Auctions() {
       <div className="mx-auto max-w-6xl">
         <header className="mb-8 md:mb-12 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
           <h2 className="text-white text-3xl md:text-5xl font-semibold text-center md:text-left w-full md:w-auto">Auctions</h2>
-          <a href="#subscribe" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white hover:bg-white/10 transition-colors">
+          <a href="#subscribe" className="text-white/60 text-sm md:text-base hover:text-white/80 transition-colors">
             Register your email and number and get alerts
           </a>
         </header>
