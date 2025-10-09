@@ -33,7 +33,15 @@ const BidRequestSchema = z.object({
     .max(999999, { message: "Bid amount too large" })
     .refine((val) => Number(val.toFixed(2)) === val, {
       message: "Bid amount can only have up to 2 decimal places"
+    }),
+  maximumBid: z
+    .number()
+    .positive({ message: "Maximum bid must be positive" })
+    .max(999999, { message: "Maximum bid too large" })
+    .refine((val) => Number(val.toFixed(2)) === val, {
+      message: "Maximum bid can only have up to 2 decimal places"
     })
+    .optional()
 });
 
 type BidRequest = z.infer<typeof BidRequestSchema>;
@@ -106,7 +114,14 @@ serve(async (req) => {
       );
     }
 
-    const { auctionId, bidderName, bidderEmail, bidderPhone, bidAmount }: BidRequest = validationResult.data;
+    const {
+      auctionId,
+      bidderName,
+      bidderEmail,
+      bidderPhone,
+      bidAmount,
+      maximumBid
+    }: BidRequest = validationResult.data;
 
     logSecure('info', 'Processing bid', { auctionId, bidAmount });
 
@@ -137,9 +152,17 @@ serve(async (req) => {
     }
 
     // Validate bid amount with minimum increment
-    const minimumBid = Number(auction.current_bid) + 1;
+    const bidIncrement = 1;
+    const toCurrency = (value: number) => Number(value.toFixed(2));
+    const minimumBid = toCurrency(Number(auction.current_bid) + bidIncrement);
     if (bidAmount < minimumBid) {
-      throw new Error(`Bid must be at least $${minimumBid} (current bid + $1 minimum increment)`);
+      throw new Error(`Bid must be at least $${minimumBid} (current bid + $${bidIncrement} minimum increment)`);
+    }
+
+    const proxyCeiling = maximumBid ?? bidAmount;
+
+    if (proxyCeiling < bidAmount) {
+      throw new Error('Maximum bid must be greater than or equal to your submitted bid.');
     }
 
     // Get previous highest bidder with locking
@@ -148,13 +171,51 @@ serve(async (req) => {
       .select('*')
       .eq('auction_id', auctionId)
       .eq('status', 'accepted')
+      .order('maximum_bid_amount', { ascending: false })
       .order('bid_amount', { ascending: false })
       .limit(1);
 
-    // Double-check bid is still highest (prevent race condition)
-    if (previousBids && previousBids.length > 0 && bidAmount <= previousBids[0].bid_amount) {
-      throw new Error('Another bid was placed. Please bid higher.');
+    const previousHighest = previousBids && previousBids.length > 0 ? previousBids[0] : null;
+
+    let resultingBidAmount = toCurrency(bidAmount);
+    let currentLeaderStatus: 'leading' | 'outbid' = 'leading';
+    let updatedCurrentBid = toCurrency(bidAmount);
+
+    if (previousHighest) {
+      const previousMax = Number(previousHighest.maximum_bid_amount ?? previousHighest.bid_amount);
+      const previousBidAmount = Number(previousHighest.bid_amount);
+
+      if (proxyCeiling > previousMax) {
+        const minimumToWin = toCurrency(previousMax + bidIncrement);
+        const proxyTarget = Math.min(proxyCeiling, minimumToWin);
+        resultingBidAmount = toCurrency(Math.max(bidAmount, proxyTarget));
+        updatedCurrentBid = resultingBidAmount;
+      } else {
+        currentLeaderStatus = 'outbid';
+        const previousNewAmount = toCurrency(
+          Math.max(previousBidAmount, Math.min(previousMax, toCurrency(proxyCeiling + bidIncrement)))
+        );
+
+        if (previousNewAmount > previousBidAmount) {
+          const { error: prevUpdateError } = await supabase
+            .from('bids')
+            .update({ bid_amount: previousNewAmount })
+            .eq('id', previousHighest.id);
+
+          if (prevUpdateError) {
+            logSecure('error', 'Failed to update previous highest bid', { error: prevUpdateError.message });
+            throw new Error('Failed to update current highest bid. Please try again.');
+          }
+
+          updatedCurrentBid = previousNewAmount;
+        } else {
+          updatedCurrentBid = toCurrency(previousBidAmount);
+        }
+      }
     }
+
+    resultingBidAmount = toCurrency(resultingBidAmount);
+    updatedCurrentBid = toCurrency(updatedCurrentBid);
 
     // Insert new bid atomically
     const { data: newBid, error: bidError } = await supabase
@@ -164,8 +225,10 @@ serve(async (req) => {
         bidder_name: bidderName,
         bidder_email: bidderEmail,
         bidder_phone: bidderPhone || null,
-        bid_amount: bidAmount,
-        status: 'accepted'
+        bid_amount: currentLeaderStatus === 'leading' ? resultingBidAmount : toCurrency(bidAmount),
+        submitted_bid_amount: toCurrency(bidAmount),
+        maximum_bid_amount: toCurrency(proxyCeiling),
+        status: currentLeaderStatus === 'leading' ? 'accepted' : 'outbid'
       })
       .select()
       .single();
@@ -178,7 +241,7 @@ serve(async (req) => {
     // Update auction current bid atomically
     const { error: updateError } = await supabase
       .from('auctions')
-      .update({ current_bid: bidAmount })
+      .update({ current_bid: updatedCurrentBid })
       .eq('id', auctionId)
       .eq('current_bid', auction.current_bid); // Optimistic locking
 
@@ -189,17 +252,15 @@ serve(async (req) => {
       throw new Error('Bid was placed by someone else. Please try again.');
     }
 
-    // Mark previous bids as outbid
-    if (previousBids && previousBids.length > 0) {
+    // Mark previous bids as outbid when a new leader emerges
+    if (currentLeaderStatus === 'leading' && previousHighest) {
       await supabase
         .from('bids')
         .update({ status: 'outbid' })
-        .eq('auction_id', auctionId)
-        .eq('status', 'accepted')
-        .neq('id', newBid.id);
+        .eq('id', previousHighest.id);
 
       // Send outbid notification (async, non-blocking)
-      const previousBidder = previousBids[0];
+      const previousBidder = previousHighest;
       try {
         await resend.emails.send({
           from: 'MEZ Auctions <auctions@resend.dev>',
@@ -209,7 +270,7 @@ serve(async (req) => {
             <h2>You've been outbid!</h2>
             <p>Hi ${previousBidder.bidder_name},</p>
             <p>Someone has placed a higher bid on <strong>${auction.title}</strong> by ${auction.artist}.</p>
-            <p><strong>New highest bid:</strong> $${bidAmount}</p>
+            <p><strong>New highest bid:</strong> $${resultingBidAmount}</p>
             <p><strong>Your bid was:</strong> $${previousBidder.bid_amount}</p>
             <p>Place a new bid to stay in the running!</p>
           `
@@ -231,12 +292,16 @@ serve(async (req) => {
       await resend.emails.send({
         from: 'MEZ Auctions <auctions@resend.dev>',
         to: [bidderEmail],
-        subject: `Bid confirmation for "${auction.title}"`,
+        subject: `${currentLeaderStatus === 'leading' ? 'Bid confirmation' : 'Bid received'} for "${auction.title}"`,
         html: `
           <h2>Bid Placed Successfully!</h2>
           <p>Hi ${bidderName},</p>
           <p>Your bid has been placed on <strong>${auction.title}</strong> by ${auction.artist}.</p>
-          <p><strong>Your bid:</strong> $${bidAmount}</p>
+          <p><strong>Your submitted bid:</strong> $${bidAmount}</p>
+          <p><strong>Your maximum (proxy) bid:</strong> $${proxyCeiling}</p>
+          <p>${currentLeaderStatus === 'leading'
+            ? `You are currently leading at $${resultingBidAmount}. We'll automatically increase your bid in $${bidIncrement} increments if someone else bids, up to your maximum.`
+            : `Another collector's proxy limit is currently higher, so you're outbid at $${updatedCurrentBid}. We'll keep your ceiling on file in case the standings change.`}</p>
           <p><strong>Auction ends:</strong> ${endTime.toLocaleString()}</p>
           <p>We'll notify you if you're outbid or if you win the auction.</p>
           <p>Good luck!</p>
@@ -247,17 +312,27 @@ serve(async (req) => {
         bid_id: newBid.id,
         notification_type: 'bid_confirmation'
       });
-      
+
       logSecure('info', 'Confirmation email sent', { bidId: newBid.id });
     } catch (emailError: any) {
       logSecure('error', 'Failed to send confirmation email', { error: emailError.message });
     }
 
     const duration = Date.now() - startTime;
-    logSecure('info', 'Bid processed successfully', { bidId: newBid.id, duration });
+    logSecure('info', 'Bid processed successfully', { bidId: newBid.id, duration, status: currentLeaderStatus });
 
     return new Response(
-      JSON.stringify({ success: true, bid: { id: newBid.id, amount: newBid.bid_amount } }),
+      JSON.stringify({
+        success: true,
+        status: currentLeaderStatus,
+        bid: {
+          id: newBid.id,
+          amount: Number(newBid.bid_amount),
+          submittedAmount: bidAmount,
+          maximumAmount: proxyCeiling
+        },
+        currentBid: updatedCurrentBid
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
