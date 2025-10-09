@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { BidModal } from './BidModal';
 import valiMyersArtwork from '@/assets/vali-myers-artwork.jpg';
@@ -17,9 +17,9 @@ interface Auction {
 
 export default function Auctions() {
   // Mock test data with the 3 artwork images
-  const mockAuctions: Auction[] = [
+  const mockAuctions: Auction[] = useMemo(() => [
     {
-      id: '1',
+      id: 'mock-vali-myers',
       title: 'Vali Myers Original',
       artist: 'Vali Myers',
       image_url: 'vali-myers',
@@ -28,7 +28,7 @@ export default function Auctions() {
       status: 'live'
     },
     {
-      id: '2',
+      id: 'mock-abstract-emotions',
       title: 'Abstract Emotions',
       artist: 'Contemporary Artist',
       image_url: 'abstract-emotions',
@@ -37,7 +37,7 @@ export default function Auctions() {
       status: 'live'
     },
     {
-      id: '3',
+      id: 'mock-urban-decay',
       title: 'Urban Decay Series',
       artist: 'Street Artist',
       image_url: 'urban-decay',
@@ -45,12 +45,13 @@ export default function Auctions() {
       end_time: new Date(Date.now() + 72 * 60 * 60 * 1000).toISOString(),
       status: 'live'
     }
-  ];
+  ], []);
 
   const [auctions, setAuctions] = useState<Auction[]>(mockAuctions);
   const [selectedAuction, setSelectedAuction] = useState<Auction | null>(null);
   const [isBidModalOpen, setIsBidModalOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isUsingMockData, setIsUsingMockData] = useState(true);
 
   // Static image mapping
   const imageMap: Record<string, string> = {
@@ -59,9 +60,38 @@ export default function Auctions() {
     'urban-decay': urbanDecayArtwork,
   };
 
+  const fetchAuctions = useCallback(async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('auctions')
+        .select('*')
+        .eq('status', 'live')
+        .order('end_time', { ascending: true });
+
+      if (error) throw error;
+      if (Array.isArray(data) && data.length > 0) {
+        setAuctions(data);
+        setIsUsingMockData(false);
+      } else if (Array.isArray(data) && data.length === 0) {
+        setAuctions([]);
+        setIsUsingMockData(false);
+      } else {
+        setAuctions(mockAuctions);
+        setIsUsingMockData(true);
+      }
+    } catch (error) {
+      console.error('Error fetching auctions:', error);
+      setAuctions(mockAuctions);
+      setIsUsingMockData(true);
+    } finally {
+      setLoading(false);
+    }
+  }, [mockAuctions]);
+
   useEffect(() => {
     fetchAuctions();
-    
+
     // Subscribe to realtime updates
     const channel = supabase
       .channel('auctions-changes')
@@ -81,27 +111,7 @@ export default function Auctions() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
-
-  const fetchAuctions = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('auctions')
-        .select('*')
-        .eq('status', 'live')
-        .order('end_time', { ascending: true });
-
-      if (error) throw error;
-      // Use database data if available, otherwise keep mock data
-      if (data && data.length > 0) {
-        setAuctions(data);
-      }
-    } catch (error) {
-      console.error('Error fetching auctions:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [fetchAuctions]);
 
   const handleBidClick = (auction: Auction) => {
     setSelectedAuction(auction);
@@ -151,11 +161,16 @@ export default function Auctions() {
           <h2 className="text-white text-3xl md:text-5xl font-semibold">Auctions</h2>
           <a href="#subscribe" className="text-sm md:text-base underline text-white/70 hover:text-white">Get alerts</a>
         </header>
+        {isUsingMockData && (
+          <p className="mb-6 rounded-md border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/70">
+            Live bidding is disabled while Supabase data is unavailable. The auctions below are demo listings for layout purposes only.
+          </p>
+        )}
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
           {auctions.map((auction) => (
-            <article 
-              key={auction.id} 
+            <article
+              key={auction.id}
               className="group rounded-lg border border-white/10 p-4 bg-white/[0.02] hover:bg-white/[0.05] transition-colors duration-300"
             >
               <div className="aspect-[4/5] overflow-hidden rounded">
@@ -172,12 +187,18 @@ export default function Auctions() {
                     Current bid: ${auction.current_bid} • {formatEndTime(auction.end_time)}
                   </p>
                 </div>
-                <button 
+                <button
                   onClick={() => handleBidClick(auction)}
-                  className="w-full text-sm rounded-md px-4 py-2 border border-white/20 text-white hover:border-white/50 hover:bg-white/10 transition-all duration-200"
+                  disabled={isUsingMockData}
+                  className="w-full text-sm rounded-md px-4 py-2 border border-white/20 text-white hover:border-white/50 hover:bg-white/10 transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   Place Bid
                 </button>
+                {isUsingMockData && (
+                  <p className="text-xs text-white/50 text-center">
+                    Connect Supabase to enable real bidding.
+                  </p>
+                )}
               </div>
             </article>
           ))}
