@@ -59,6 +59,14 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Supabase (Backend & Edge Functions)
+- OpenAI ChatGPT (AI Assistant)
+
+## ChatGPT Integration
+
+This project includes an AI-powered chat assistant using OpenAI's GPT-4o-mini model. The assistant helps users with auction-related questions, artwork information, and general art collecting inquiries.
+
+For detailed setup instructions and configuration, see [CHATGPT_INTEGRATION.md](./CHATGPT_INTEGRATION.md).
 
 ## How can I deploy this project?
 

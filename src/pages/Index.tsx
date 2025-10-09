@@ -5,9 +5,11 @@ import Hero from '@/components/Hero';
 import Auctions from '@/components/Auctions';
 import Footer from '@/components/Footer';
 import EmailSignup from '@/components/EmailSignup';
+import { ChatAssistant, ChatButton } from '@/components/ChatAssistant';
 
 const Index = () => {
   const [showContent, setShowContent] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
     // Show content after pixel intro
@@ -31,6 +33,13 @@ const Index = () => {
             <EmailSignup />
           </main>
           <Footer />
+          
+          {/* AI Chat Assistant */}
+          <ChatButton onClick={() => setIsChatOpen(true)} />
+          <ChatAssistant 
+            isOpen={isChatOpen} 
+            onClose={() => setIsChatOpen(false)} 
+          />
         </>
       )}
     </div>
