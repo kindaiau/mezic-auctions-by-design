@@ -9,19 +9,21 @@ export default function Hero() {
       <div className="scan-overlay" aria-hidden />
       <div className="text-center">
         <motion.div
-          className="flex flex-col items-center gap-4"
+          className="flex flex-col items-center"
           initial={{ y: 24, opacity: 0 }} 
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h1 className="text-[clamp(48px,12vw,220px)] font-black tracking-tight text-gallery-white leading-[0.8]">
-            CLUB
-          </h1>
-          <img 
-            src={mezLogo} 
-            alt="MEZ" 
-            className="w-[clamp(200px,50vw,600px)] h-auto"
-          />
+          <div className="flex items-center gap-4">
+            <h1 className="text-[clamp(48px,12vw,220px)] font-black tracking-tight text-gallery-white leading-[0.8]">
+              CLUB
+            </h1>
+            <img 
+              src={mezLogo} 
+              alt="MEZ" 
+              className="h-[clamp(48px,12vw,220px)] w-auto"
+            />
+          </div>
           <h1 className="text-[clamp(48px,12vw,220px)] font-black tracking-tight text-gallery-white leading-[0.8]">
             AUCTIONS
           </h1>
