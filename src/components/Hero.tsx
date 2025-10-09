@@ -4,7 +4,7 @@ import "./hero.css";
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-[70vh] items-center justify-center px-6 py-20">
+    <section className="relative flex min-h-[50vh] items-center justify-center px-6 py-12">
       <div className="absolute inset-0 -z-10 bg-black" />
       <div className="scan-overlay" aria-hidden />
       <div className="text-center">
