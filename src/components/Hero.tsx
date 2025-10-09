@@ -9,10 +9,18 @@ export default function Hero() {
       <div className="scan-overlay" aria-hidden />
       <div className="text-center">
         <motion.div
+          className="mb-4 text-white/40 text-sm uppercase tracking-widest font-light"
+          initial={{ opacity: 0, y: -10 }} 
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+          Welcome to
+        </motion.div>
+        <motion.div
           className="flex flex-col items-center"
           initial={{ y: 24, opacity: 0 }} 
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
         >
           <div className="flex items-center gap-4">
             <h1 className="text-[clamp(48px,12vw,220px)] font-black tracking-tight text-gallery-white leading-[0.8]">
@@ -32,7 +40,7 @@ export default function Hero() {
           className="mt-6 max-w-2xl text-center text-white/70 text-xl mx-auto"
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
-          transition={{ delay: 0.4, duration: 0.6 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
         >
           Original works auctioned weekly. Bidding starts at $1.
         </motion.p>
