@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-sm" style={{ color: 'hsl(var(--mez-blush))' }}>© {new Date().getFullYear()} Mariana Mezic</p>
         <a
-          href="https://instagram.com/REPLACE" target="_blank" rel="noopener noreferrer"
+          href="https://www.instagram.com/marianamezic/" target="_blank" rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white hover:bg-white/10"
           aria-label="Follow on Instagram"
         >
