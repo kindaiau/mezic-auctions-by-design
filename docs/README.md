@@ -58,8 +58,9 @@ Both together = Best practice for growing auction platforms
 
 ## Next Steps
 
-1. Read [EMAIL_STRATEGY.md](./EMAIL_STRATEGY.md) for detailed comparison
-2. If adding Klaviyo, see [KLAVIYO_INTEGRATION.md](./KLAVIYO_INTEGRATION.md) for implementation guide
+1. See [ARCHITECTURE.md](./ARCHITECTURE.md) for visual diagrams
+2. Read [EMAIL_STRATEGY.md](./EMAIL_STRATEGY.md) for detailed comparison
+3. If adding Klaviyo, see [KLAVIYO_INTEGRATION.md](./KLAVIYO_INTEGRATION.md) for implementation guide
 
 ## Questions?
 
