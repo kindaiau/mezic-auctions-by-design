@@ -8,12 +8,10 @@ export default function Hero() {
       <div className="scan-overlay" aria-hidden />
       <div className="text-center">
         <motion.h1
-          className="glitch text-[clamp(48px,12vw,220px)] font-black tracking-tight text-white leading-[0.8]"
-          data-text="CLUB MEZ AUCTIONS"
+          className="text-[clamp(48px,12vw,220px)] font-black tracking-tight text-gallery-white leading-[0.8]"
           initial={{ y: 24, opacity: 0 }} 
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          whileHover={{ skewX: [-2, 2, -2], rotate: [0, 0.3, 0], transition: { repeat: Infinity, repeatType: "mirror", duration: 0.8 } }}
         >
           CLUB MEZ<br />AUCTIONS
         </motion.h1>
