@@ -136,7 +136,7 @@ export default function Auctions() {
         <div className="mx-auto max-w-6xl">
           <header className="mb-8 md:mb-12 flex items-end justify-between">
             <h2 className="text-white text-3xl md:text-5xl font-semibold">Auctions</h2>
-            <a href="#subscribe" className="text-sm md:text-base underline text-white/70 hover:text-white">Get alerts</a>
+            <a href="#subscribe" className="text-sm md:text-base underline text-white/70 hover:text-white">Register your email and number and get alerts</a>
           </header>
           <p className="text-white/60 text-center py-12">No live auctions at the moment. Subscribe to get alerts when new auctions go live!</p>
         </div>
@@ -149,7 +149,7 @@ export default function Auctions() {
       <div className="mx-auto max-w-6xl">
         <header className="mb-8 md:mb-12 flex items-end justify-between">
           <h2 className="text-white text-3xl md:text-5xl font-semibold">Auctions</h2>
-          <a href="#subscribe" className="text-sm md:text-base underline text-white/70 hover:text-white">Get alerts</a>
+          <a href="#subscribe" className="text-sm md:text-base underline text-white/70 hover:text-white">Register your email and number and get alerts</a>
         </header>
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
