@@ -1,5 +1,6 @@
 import valiMyersArtwork from '@/assets/vali-myers-artwork.jpg';
 import abstractEmotionsArtwork from '@/assets/abstract-emotions-artwork.png';
+import urbanDecayArtwork from '@/assets/urban-decay-artwork.jpg';
 
 const auctionItems = [
   {
@@ -24,7 +25,7 @@ const auctionItems = [
     id: 3,
     title: "Urban Decay Series",
     artist: "David Kim",
-    image: "/artworks/sample.jpg", 
+    image: urbanDecayArtwork, 
     currentBid: "$38",
     endTime: "Ends Tue 9pm",
     status: "Live"
