@@ -25,6 +25,7 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
   const [bidderEmail, setBidderEmail] = useState('');
   const [bidderPhone, setBidderPhone] = useState('');
   const [bidAmount, setBidAmount] = useState('');
+  const [maximumBid, setMaximumBid] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isDemoAuction = useMemo(() => !UUID_REGEX.test(auction.id), [auction.id]);
 
@@ -44,11 +45,22 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
 
     try {
       const amount = parseFloat(bidAmount);
-      
+      const ceiling = maximumBid ? parseFloat(maximumBid) : amount;
+
       if (isNaN(amount) || amount <= auction.currentBid) {
         toast({
           title: 'Invalid bid',
           description: `Bid must be higher than $${auction.currentBid}`,
+          variant: 'destructive'
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (isNaN(ceiling) || ceiling < amount) {
+        toast({
+          title: 'Invalid maximum',
+          description: 'Your maximum bid must be equal to or higher than your submitted bid.',
           variant: 'destructive'
         });
         setIsSubmitting(false);
@@ -61,25 +73,43 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
           bidderName,
           bidderEmail,
           bidderPhone,
-          bidAmount: amount
+          bidAmount: amount,
+          maximumBid: ceiling
         }
       });
 
       if (error) throw error;
 
-      toast({
-        title: 'Bid placed!',
-        description: `Your bid of $${amount} has been placed successfully.`
-      });
+      const response = data as {
+        status?: 'leading' | 'outbid';
+        currentBid?: number;
+        bid?: { maximumAmount?: number; submittedAmount?: number };
+      } | null;
+
+      const max = response?.bid?.maximumAmount ?? ceiling;
+      const current = response?.currentBid ?? amount;
+
+      if (response?.status === 'outbid') {
+        toast({
+          title: 'Bid received — currently outbid',
+          description: `We saved your proxy ceiling of $${max.toFixed(2)}. Another collector is leading at $${current.toFixed(2)}, but we'll automatically raise your offer in $1 increments (just like The Auction Collective) if things change.`
+        });
+      } else {
+        toast({
+          title: 'Proxy bid active!',
+          description: `You're leading at $${current.toFixed(2)}. We'll automatically increase your bid in $1 steps up to your $${max.toFixed(2)} ceiling, following The Auction Collective's proxy guidelines.`
+        });
+      }
 
       onBidPlaced();
       onClose();
-      
+
       // Reset form
       setBidderName('');
       setBidderEmail('');
       setBidderPhone('');
       setBidAmount('');
+      setMaximumBid('');
     } catch (error: any) {
       console.error('Error placing bid:', error);
       toast({
@@ -151,6 +181,22 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
             />
             <p className="text-sm text-muted-foreground">
               Current bid: ${auction.currentBid}
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="maxBid">Maximum Bid ($, optional)</Label>
+            <Input
+              id="maxBid"
+              type="number"
+              step="0.01"
+              min={bidAmount ? parseFloat(bidAmount) : auction.currentBid + 0.01}
+              value={maximumBid}
+              onChange={(e) => setMaximumBid(e.target.value)}
+              placeholder="Let us proxy bid for you"
+            />
+            <p className="text-sm text-muted-foreground">
+              We'll mirror The Auction Collective's approach: your submitted bid is placed now, and we'll automatically bid in $1 increments up to this ceiling if competitors join.
             </p>
           </div>
 
