@@ -203,6 +203,7 @@ export default function Auctions() {
           table: 'auctions'
         },
         () => {
+          setLoading(true);
           fetchAuctions();
         }
       )
@@ -214,6 +215,7 @@ export default function Auctions() {
   }, [fetchAuctions]);
 
   const handleBidClick = (auction: Auction) => {
+    setLoading(false);
     setSelectedAuction(auction);
     setIsBidModalOpen(true);
   };
