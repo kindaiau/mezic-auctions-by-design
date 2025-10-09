@@ -1,4 +1,5 @@
 import valiMyersArtwork from '@/assets/vali-myers-artwork.jpg';
+import abstractEmotionsArtwork from '@/assets/abstract-emotions-artwork.png';
 
 const auctionItems = [
   {
@@ -14,7 +15,7 @@ const auctionItems = [
     id: 2,
     title: "Abstract Emotions #3",
     artist: "Maria Santos", 
-    image: "/artworks/sample.jpg",
+    image: abstractEmotionsArtwork,
     currentBid: "$22",
     endTime: "Ends Mon 6pm",
     status: "Live"
