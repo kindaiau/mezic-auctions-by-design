@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface PixelIntroProps {
   onDone?: () => void;
@@ -7,15 +7,65 @@ interface PixelIntroProps {
 
 const PixelIntro = ({ onDone }: PixelIntroProps) => {
   const [isVisible, setIsVisible] = useState(true);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setIsVisible(false);
       onDone?.();
     }, 1600);
 
-    return () => clearTimeout(timer);
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
   }, [onDone]);
+
+  useEffect(() => {
+    if (!isVisible) {
+      const main = document.querySelector('main') as HTMLElement | null;
+
+      if (!main) {
+        return;
+      }
+
+      const previousTabIndex = main.getAttribute('tabindex');
+
+      if (previousTabIndex === null) {
+        main.setAttribute('tabindex', '-1');
+      }
+
+      main.focus({ preventScroll: true });
+
+      const handleBlur = () => {
+        if (previousTabIndex === null) {
+          main.removeAttribute('tabindex');
+        }
+      };
+
+      main.addEventListener('blur', handleBlur);
+
+      return () => {
+        main.removeEventListener('blur', handleBlur);
+
+        if (previousTabIndex === null && document.activeElement !== main) {
+          main.removeAttribute('tabindex');
+        }
+      };
+    }
+  }, [isVisible]);
+
+  const handleSkip = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+
+    setIsVisible(false);
+    onDone?.();
+  };
 
   // Vibrant color palette
   const colors = [
@@ -38,9 +88,18 @@ const PixelIntro = ({ onDone }: PixelIntroProps) => {
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
       transition={{ duration: 0.3, delay: 1.3 }}
-      style={{ pointerEvents: 'none' }}
     >
-      <div className="grid grid-cols-12 h-full w-full">
+      <div className="relative h-full w-full">
+        <div className="absolute inset-0 flex items-start justify-end p-4">
+          <button
+            type="button"
+            className="rounded bg-white/80 px-4 py-2 text-sm font-medium text-black transition hover:bg-white"
+            onClick={handleSkip}
+          >
+            Skip intro
+          </button>
+        </div>
+        <div className="grid h-full w-full grid-cols-12">
         {pixels.map((pixel) => (
           <motion.div
             key={pixel.id}
@@ -54,6 +113,7 @@ const PixelIntro = ({ onDone }: PixelIntroProps) => {
             }}
           />
         ))}
+        </div>
       </div>
     </motion.div>
   );
