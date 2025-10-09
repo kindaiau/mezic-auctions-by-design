@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import mezLogo from '@/assets/mez-logo.png';
 
 const Header = () => {
   return (
@@ -10,18 +11,17 @@ const Header = () => {
       transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
     >
       <div className="flex items-center justify-between">
-        {/* Brand Name - Left */}
-        <h1 
-          className="text-xl font-bold tracking-tight uppercase md:text-2xl text-gallery-white"
+        {/* Brand Logo - Left */}
+        <img 
+          src={mezLogo} 
+          alt="MEZ" 
+          className="h-8 md:h-10 w-auto"
           style={{ 
             willChange: 'transform',
             backfaceVisibility: 'hidden',
-            transform: 'translateZ(0)',
-            fontWeight: '700'
+            transform: 'translateZ(0)'
           }}
-        >
-          MEZ
-        </h1>
+        />
 
         {/* Desktop Navigation */}
         <div className="flex items-center space-x-6">
