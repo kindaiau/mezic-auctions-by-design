@@ -255,13 +255,6 @@ export type Database = {
             referencedRelation: "water_quotes"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "booking_approvals_quote_id_fkey"
-            columns: ["quote_id"]
-            isOneToOne: false
-            referencedRelation: "water_quotes_secure"
-            referencedColumns: ["id"]
-          },
         ]
       }
       cash_flow_analysis: {
@@ -691,6 +684,7 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string
+          phone: string | null
           updated_at: string
           user_id: string
         }
@@ -699,6 +693,7 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          phone?: string | null
           updated_at?: string
           user_id: string
         }
@@ -707,6 +702,7 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          phone?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -862,13 +858,6 @@ export type Database = {
             referencedRelation: "water_quotes"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "water_bookings_quote_id_fkey"
-            columns: ["quote_id"]
-            isOneToOne: false
-            referencedRelation: "water_quotes_secure"
-            referencedColumns: ["id"]
-          },
         ]
       }
       water_quotes: {
@@ -924,63 +913,7 @@ export type Database = {
       }
     }
     Views: {
-      water_quotes_secure: {
-        Row: {
-          calculated_price: number | null
-          created_at: string | null
-          customer_email: string | null
-          customer_email_masked: string | null
-          customer_name: string | null
-          customer_phone: string | null
-          customer_phone_masked: string | null
-          delivery_address: string | null
-          id: string | null
-          notes: string | null
-          preferred_date: string | null
-          price_breakdown: Json | null
-          quantity_kl: number | null
-          status: string | null
-          updated_at: string | null
-          water_type: string | null
-        }
-        Insert: {
-          calculated_price?: number | null
-          created_at?: string | null
-          customer_email?: string | null
-          customer_email_masked?: never
-          customer_name?: string | null
-          customer_phone?: string | null
-          customer_phone_masked?: never
-          delivery_address?: string | null
-          id?: string | null
-          notes?: string | null
-          preferred_date?: string | null
-          price_breakdown?: Json | null
-          quantity_kl?: number | null
-          status?: string | null
-          updated_at?: string | null
-          water_type?: string | null
-        }
-        Update: {
-          calculated_price?: number | null
-          created_at?: string | null
-          customer_email?: string | null
-          customer_email_masked?: never
-          customer_name?: string | null
-          customer_phone?: string | null
-          customer_phone_masked?: never
-          delivery_address?: string | null
-          id?: string | null
-          notes?: string | null
-          preferred_date?: string | null
-          price_breakdown?: Json | null
-          quantity_kl?: number | null
-          status?: string | null
-          updated_at?: string | null
-          water_type?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       detect_suspicious_access: {
