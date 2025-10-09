@@ -60,6 +60,7 @@ export default function Auctions() {
   };
 
   useEffect(() => {
+    setLoading(true);
     fetchAuctions();
     
     // Subscribe to realtime updates
@@ -73,6 +74,7 @@ export default function Auctions() {
           table: 'auctions'
         },
         () => {
+          setLoading(true);
           fetchAuctions();
         }
       )
@@ -84,6 +86,7 @@ export default function Auctions() {
   }, []);
 
   const fetchAuctions = async () => {
+    setLoading(true);
     try {
       const { data, error } = await supabase
         .from('auctions')
@@ -104,6 +107,7 @@ export default function Auctions() {
   };
 
   const handleBidClick = (auction: Auction) => {
+    setLoading(false);
     setSelectedAuction(auction);
     setIsBidModalOpen(true);
   };
