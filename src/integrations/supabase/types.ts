@@ -14,6 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
+      auctions: {
+        Row: {
+          artist: string
+          created_at: string
+          current_bid: number
+          description: string | null
+          end_time: string
+          id: string
+          image_url: string
+          starting_bid: number
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          artist: string
+          created_at?: string
+          current_bid: number
+          description?: string | null
+          end_time: string
+          id?: string
+          image_url: string
+          starting_bid: number
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          artist?: string
+          created_at?: string
+          current_bid?: number
+          description?: string | null
+          end_time?: string
+          id?: string
+          image_url?: string
+          starting_bid?: number
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      audit_logs: {
+        Row: {
+          created_at: string | null
+          id: string
+          ip_address: unknown | null
+          operation: string
+          record_id: string | null
+          sensitive_data_accessed: Json | null
+          table_name: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          operation: string
+          record_id?: string | null
+          sensitive_data_accessed?: Json | null
+          table_name: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          operation?: string
+          record_id?: string | null
+          sensitive_data_accessed?: Json | null
+          table_name?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       bank_transactions: {
         Row: {
           bank_account_id: string | null
@@ -67,6 +145,124 @@ export type Database = {
           xero_bank_transaction_id?: string
         }
         Relationships: []
+      }
+      bid_notifications: {
+        Row: {
+          bid_id: string | null
+          id: string
+          notification_type: string
+          sent_at: string
+          status: string
+        }
+        Insert: {
+          bid_id?: string | null
+          id?: string
+          notification_type: string
+          sent_at?: string
+          status?: string
+        }
+        Update: {
+          bid_id?: string | null
+          id?: string
+          notification_type?: string
+          sent_at?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bid_notifications_bid_id_fkey"
+            columns: ["bid_id"]
+            isOneToOne: false
+            referencedRelation: "bids"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bids: {
+        Row: {
+          auction_id: string
+          bid_amount: number
+          bid_time: string
+          bidder_email: string
+          bidder_name: string
+          bidder_phone: string | null
+          created_at: string
+          id: string
+          status: string
+        }
+        Insert: {
+          auction_id: string
+          bid_amount: number
+          bid_time?: string
+          bidder_email: string
+          bidder_name: string
+          bidder_phone?: string | null
+          created_at?: string
+          id?: string
+          status?: string
+        }
+        Update: {
+          auction_id?: string
+          bid_amount?: number
+          bid_time?: string
+          bidder_email?: string
+          bidder_name?: string
+          bidder_phone?: string | null
+          created_at?: string
+          id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bids_auction_id_fkey"
+            columns: ["auction_id"]
+            isOneToOne: false
+            referencedRelation: "auctions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      booking_approvals: {
+        Row: {
+          approval_notes: string | null
+          approval_status: string
+          approved_at: string
+          approved_by: string
+          id: string
+          quote_id: string
+        }
+        Insert: {
+          approval_notes?: string | null
+          approval_status: string
+          approved_at?: string
+          approved_by: string
+          id?: string
+          quote_id: string
+        }
+        Update: {
+          approval_notes?: string | null
+          approval_status?: string
+          approved_at?: string
+          approved_by?: string
+          id?: string
+          quote_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_approvals_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "water_quotes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "booking_approvals_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "water_quotes_secure"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       cash_flow_analysis: {
         Row: {
@@ -167,6 +363,78 @@ export type Database = {
           updated_at?: string
           user_id?: string
           week_start?: string
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          admin_notes: string | null
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          ip_address: string | null
+          message: string
+          name: string
+          phone: string
+          status: string
+          submitted_at: string
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          ip_address?: string | null
+          message: string
+          name: string
+          phone: string
+          status?: string
+          submitted_at?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          ip_address?: string | null
+          message?: string
+          name?: string
+          phone?: string
+          status?: string
+          submitted_at?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      email_subscribers: {
+        Row: {
+          email: string
+          id: string
+          phone: string | null
+          preferences: Json | null
+          subscribed_at: string
+        }
+        Insert: {
+          email: string
+          id?: string
+          phone?: string | null
+          preferences?: Json | null
+          subscribed_at?: string
+        }
+        Update: {
+          email?: string
+          id?: string
+          phone?: string | null
+          preferences?: Json | null
+          subscribed_at?: string
         }
         Relationships: []
       }
@@ -528,96 +796,246 @@ export type Database = {
         }
         Relationships: []
       }
-      xero_invoices: {
+      user_roles: {
         Row: {
           created_at: string
-          error_message: string | null
           id: string
-          invoice_id: string | null
-          job_id: string | null
-          sync_status: string | null
-          synced_at: string | null
-          user_id: string | null
-          xero_contact_id: string | null
-          xero_invoice_id: string | null
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at: string
+          user_id: string
         }
         Insert: {
           created_at?: string
-          error_message?: string | null
           id?: string
-          invoice_id?: string | null
-          job_id?: string | null
-          sync_status?: string | null
-          synced_at?: string | null
-          user_id?: string | null
-          xero_contact_id?: string | null
-          xero_invoice_id?: string | null
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+          user_id: string
         }
         Update: {
           created_at?: string
-          error_message?: string | null
           id?: string
-          invoice_id?: string | null
-          job_id?: string | null
-          sync_status?: string | null
-          synced_at?: string | null
-          user_id?: string | null
-          xero_contact_id?: string | null
-          xero_invoice_id?: string | null
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      water_bookings: {
+        Row: {
+          booking_reference: string
+          confirmed_date: string
+          confirmed_price: number
+          created_at: string
+          delivery_notes: string | null
+          delivery_status: string
+          id: string
+          quote_id: string
+          updated_at: string
+        }
+        Insert: {
+          booking_reference: string
+          confirmed_date: string
+          confirmed_price: number
+          created_at?: string
+          delivery_notes?: string | null
+          delivery_status?: string
+          id?: string
+          quote_id: string
+          updated_at?: string
+        }
+        Update: {
+          booking_reference?: string
+          confirmed_date?: string
+          confirmed_price?: number
+          created_at?: string
+          delivery_notes?: string | null
+          delivery_status?: string
+          id?: string
+          quote_id?: string
+          updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: "xero_invoices_invoice_id_fkey"
-            columns: ["invoice_id"]
+            foreignKeyName: "water_bookings_quote_id_fkey"
+            columns: ["quote_id"]
             isOneToOne: false
-            referencedRelation: "invoices"
+            referencedRelation: "water_quotes"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "xero_invoices_job_id_fkey"
-            columns: ["job_id"]
+            foreignKeyName: "water_bookings_quote_id_fkey"
+            columns: ["quote_id"]
             isOneToOne: false
-            referencedRelation: "servicem8_jobs"
+            referencedRelation: "water_quotes_secure"
             referencedColumns: ["id"]
           },
         ]
       }
-      xero_tokens: {
+      water_quotes: {
         Row: {
-          access_token: string | null
-          expires_at: string | null
-          refresh_token: string | null
-          tenant_id: string | null
-          user_id: string
+          calculated_price: number
+          created_at: string
+          customer_email: string
+          customer_name: string
+          customer_phone: string
+          delivery_address: string
+          id: string
+          notes: string | null
+          preferred_date: string
+          price_breakdown: Json
+          quantity_kl: number
+          status: string
+          updated_at: string
+          water_type: string
         }
         Insert: {
-          access_token?: string | null
-          expires_at?: string | null
-          refresh_token?: string | null
-          tenant_id?: string | null
-          user_id: string
+          calculated_price: number
+          created_at?: string
+          customer_email: string
+          customer_name: string
+          customer_phone: string
+          delivery_address: string
+          id?: string
+          notes?: string | null
+          preferred_date: string
+          price_breakdown: Json
+          quantity_kl: number
+          status?: string
+          updated_at?: string
+          water_type: string
         }
         Update: {
-          access_token?: string | null
-          expires_at?: string | null
-          refresh_token?: string | null
-          tenant_id?: string | null
-          user_id?: string
+          calculated_price?: number
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          customer_phone?: string
+          delivery_address?: string
+          id?: string
+          notes?: string | null
+          preferred_date?: string
+          price_breakdown?: Json
+          quantity_kl?: number
+          status?: string
+          updated_at?: string
+          water_type?: string
         }
         Relationships: []
       }
     }
     Views: {
-      [_ in never]: never
+      water_quotes_secure: {
+        Row: {
+          calculated_price: number | null
+          created_at: string | null
+          customer_email: string | null
+          customer_email_masked: string | null
+          customer_name: string | null
+          customer_phone: string | null
+          customer_phone_masked: string | null
+          delivery_address: string | null
+          id: string | null
+          notes: string | null
+          preferred_date: string | null
+          price_breakdown: Json | null
+          quantity_kl: number | null
+          status: string | null
+          updated_at: string | null
+          water_type: string | null
+        }
+        Insert: {
+          calculated_price?: number | null
+          created_at?: string | null
+          customer_email?: string | null
+          customer_email_masked?: never
+          customer_name?: string | null
+          customer_phone?: string | null
+          customer_phone_masked?: never
+          delivery_address?: string | null
+          id?: string | null
+          notes?: string | null
+          preferred_date?: string | null
+          price_breakdown?: Json | null
+          quantity_kl?: number | null
+          status?: string | null
+          updated_at?: string | null
+          water_type?: string | null
+        }
+        Update: {
+          calculated_price?: number | null
+          created_at?: string | null
+          customer_email?: string | null
+          customer_email_masked?: never
+          customer_name?: string | null
+          customer_phone?: string | null
+          customer_phone_masked?: never
+          delivery_address?: string | null
+          id?: string | null
+          notes?: string | null
+          preferred_date?: string | null
+          price_breakdown?: Json | null
+          quantity_kl?: number | null
+          status?: string | null
+          updated_at?: string | null
+          water_type?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      detect_suspicious_access: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          access_count: number
+          first_access: string
+          last_access: string
+          unique_records_accessed: number
+          user_id: string
+        }[]
+      }
+      encrypt_customer_data: {
+        Args: { data: string }
+        Returns: string
+      }
+      ensure_admin_exists: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      get_current_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      is_current_user_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       refresh_job_cost_summary: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      verify_admin_with_audit: {
+        Args: {
+          operation: string
+          record_id?: string
+          sensitive_fields?: Json
+          table_name: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -744,6 +1162,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const

@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, MessageCircle, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const EmailSignup = () => {
   const [email, setEmail] = useState('');
@@ -27,9 +28,11 @@ const EmailSignup = () => {
     setIsSubmitting(true);
     
     try {
-      // TODO: Integrate with Klaviyo API via Supabase Edge Function
-      // For now, simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const { error } = await supabase.functions.invoke('subscribe-newsletter', {
+        body: { email, phone }
+      });
+
+      if (error) throw error;
       
       setIsSuccess(true);
       toast({
@@ -44,10 +47,10 @@ const EmailSignup = () => {
         setIsSuccess(false);
       }, 3000);
       
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Subscription failed",
-        description: "Please try again later or contact us directly.",
+        description: error.message || "Please try again later or contact us directly.",
         variant: "destructive",
       });
     } finally {
