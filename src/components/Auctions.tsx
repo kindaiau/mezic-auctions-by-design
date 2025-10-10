@@ -143,7 +143,7 @@ export default function Auctions() {
                     Current bid: ${auction.current_bid} • {formatEndTime(auction.end_time)}
                   </p>
                 </div>
-                <button onClick={() => handleBidClick(auction)} className="w-full text-sm rounded-md px-4 py-2 border border-white/20 text-white hover:border-white/50 hover:bg-white/10 transition-all duration-200">
+                <button onClick={() => handleBidClick(auction)} className="w-full text-sm rounded-md px-4 py-2 border-2 border-[hsl(350,100%,70%)] text-white hover:border-[hsl(350,100%,80%)] hover:bg-[hsl(350,100%,70%)]/10 transition-all duration-200 shadow-[0_4px_20px_rgba(255,51,102,0.4)]">
                   Place Bid
                 </button>
               </div>
