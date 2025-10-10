@@ -19,7 +19,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gallery-black">
+    <div className="min-h-screen bg-[hsl(349,100%,50%)]">
       <PixelIntro />
       
       {showContent && (
