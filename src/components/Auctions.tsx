@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { BidModal } from './BidModal';
+import { Button } from './ui/button';
 import valiMyersArtwork from '@/assets/vali-myers-artwork.jpg';
 import abstractEmotionsArtwork from '@/assets/abstract-emotions-artwork.png';
 import urbanDecayArtwork from '@/assets/urban-decay-artwork.jpg';
@@ -123,12 +124,13 @@ export default function Auctions() {
       <div className="mx-auto max-w-6xl">
         <header className="mb-8 md:mb-12 flex flex-col items-center gap-4">
           <h2 className="text-white text-3xl md:text-5xl font-semibold text-center">Auctions</h2>
-          <button 
+          <Button 
+            variant="mez"
             onClick={() => document.getElementById('subscribe')?.scrollIntoView({ behavior: 'smooth' })}
-            className="rounded-full bg-[hsl(349,71%,80%)] text-[hsl(0,100%,35%)] font-black border-2 border-[hsl(0,100%,35%)] hover:bg-[hsl(349,71%,75%)] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 px-8 py-3 text-sm uppercase tracking-tight"
+            className="px-8 py-3 text-sm uppercase tracking-tight"
           >
             REGISTER HERE
-          </button>
+          </Button>
         </header>
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
@@ -143,9 +145,13 @@ export default function Auctions() {
                     Current bid: ${auction.current_bid} • {formatEndTime(auction.end_time)}
                   </p>
                 </div>
-                <button onClick={() => handleBidClick(auction)} className="w-full text-sm rounded-full bg-[hsl(349,71%,80%)] text-[hsl(0,100%,35%)] font-black border-2 border-[hsl(0,100%,35%)] hover:bg-[hsl(349,71%,75%)] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 px-4 py-3 uppercase tracking-tight">
+                <Button
+                  onClick={() => handleBidClick(auction)}
+                  variant="mez"
+                  className="w-full px-4 py-3 text-sm uppercase tracking-tight"
+                >
                   PLACE BID
-                </button>
+                </Button>
               </div>
             </article>)}
         </div>
