@@ -47,11 +47,10 @@ const Header = () => {
           </nav>
 
           <Button
-            variant="outline"
-            size="sm"
-            className="text-xs uppercase tracking-wider border-gallery-white/30 text-gallery-white hover:bg-gallery-white hover:text-gallery-black"
+            variant="mez"
+            className="text-xs uppercase tracking-tight px-6 py-2"
           >
-            Contact
+            CONTACT
           </Button>
         </div>
       </div>

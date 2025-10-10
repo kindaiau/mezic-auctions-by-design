@@ -196,12 +196,11 @@ const EmailSignup = () => {
 
                     <Button 
                       type="submit" 
-                      variant="hero" 
-                      size="lg" 
-                      className="w-full"
+                      variant="mez" 
+                      className="w-full py-4 text-sm uppercase tracking-tight"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? 'Subscribing...' : 'Get Auction Alerts'}
+                      {isSubmitting ? 'SUBSCRIBING...' : 'GET AUCTION ALERTS'}
                     </Button>
 
                     <p className="text-xs text-gallery-white/60 text-center">

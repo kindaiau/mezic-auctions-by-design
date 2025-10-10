@@ -125,9 +125,9 @@ export default function Auctions() {
           <h2 className="text-white text-3xl md:text-5xl font-semibold text-center">Auctions</h2>
           <button 
             onClick={() => document.getElementById('subscribe')?.scrollIntoView({ behavior: 'smooth' })}
-            className="rounded-md border-2 border-[hsl(350,100%,70%)] px-6 py-2 text-white text-sm md:text-base hover:border-[hsl(350,100%,80%)] hover:bg-[hsl(350,100%,70%)]/10 transition-all shadow-[0_4px_20px_rgba(255,51,102,0.4)]"
+            className="rounded-full bg-[hsl(349,71%,80%)] text-[hsl(0,100%,35%)] font-black border-2 border-[hsl(0,100%,35%)] hover:bg-[hsl(349,71%,75%)] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 px-8 py-3 text-sm uppercase tracking-tight"
           >
-            Register Here
+            REGISTER HERE
           </button>
         </header>
 
@@ -143,8 +143,8 @@ export default function Auctions() {
                     Current bid: ${auction.current_bid} • {formatEndTime(auction.end_time)}
                   </p>
                 </div>
-                <button onClick={() => handleBidClick(auction)} className="w-full text-sm rounded-md px-4 py-2 border-2 border-[hsl(350,100%,70%)] text-white hover:border-[hsl(350,100%,80%)] hover:bg-[hsl(350,100%,70%)]/10 transition-all duration-200 shadow-[0_4px_20px_rgba(255,51,102,0.4)]">
-                  Place Bid
+                <button onClick={() => handleBidClick(auction)} className="w-full text-sm rounded-full bg-[hsl(349,71%,80%)] text-[hsl(0,100%,35%)] font-black border-2 border-[hsl(0,100%,35%)] hover:bg-[hsl(349,71%,75%)] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 px-4 py-3 uppercase tracking-tight">
+                  PLACE BID
                 </button>
               </div>
             </article>)}

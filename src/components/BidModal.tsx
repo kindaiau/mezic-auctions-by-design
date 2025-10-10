@@ -188,11 +188,11 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
           </div>
 
           <div className="flex gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={onClose} className="flex-1">
-              Cancel
+            <Button type="button" variant="mez" onClick={onClose} className="flex-1 py-3">
+              CANCEL
             </Button>
-            <Button type="submit" disabled={isSubmitting} className="flex-1">
-              {isSubmitting ? 'Placing Bid...' : 'Place Bid'}
+            <Button type="submit" variant="mez" disabled={isSubmitting} className="flex-1 py-3">
+              {isSubmitting ? 'PLACING...' : 'PLACE BID'}
             </Button>
           </div>
         </form>

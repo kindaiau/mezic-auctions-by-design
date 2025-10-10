@@ -93,10 +93,10 @@ const PixelIntro = ({ onDone }: PixelIntroProps) => {
         <div className="absolute inset-0 flex items-start justify-end p-4">
           <button
             type="button"
-            className="rounded bg-white/80 px-4 py-2 text-sm font-medium text-black transition hover:bg-white"
+            className="rounded-full bg-[hsl(349,71%,80%)] text-[hsl(0,100%,35%)] font-black border-2 border-[hsl(0,100%,35%)] hover:bg-[hsl(349,71%,75%)] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 px-6 py-2 text-xs uppercase tracking-tight"
             onClick={handleSkip}
           >
-            Skip intro
+            SKIP
           </button>
         </div>
         <div className="grid h-full w-full grid-cols-12">

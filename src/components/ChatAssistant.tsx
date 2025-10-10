@@ -157,7 +157,8 @@ export function ChatAssistant({ isOpen, onClose, context }: ChatAssistantProps) 
             <Button
               onClick={handleSendMessage}
               disabled={isLoading || !inputMessage.trim()}
-              size="icon"
+              variant="mez"
+              className="w-12 h-12"
             >
               <Send className="w-4 h-4" />
             </Button>
@@ -181,10 +182,12 @@ export function ChatButton({ onClick, className }: ChatButtonProps) {
   return (
     <button
       onClick={onClick}
-      className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-artist-gold hover:bg-artist-gold/90 shadow-lg flex items-center justify-center transition-all hover:scale-110 ${className || ''}`}
+      className={`fixed bottom-6 right-6 z-50 w-28 h-28 rounded-full bg-[hsl(349,71%,80%)] hover:bg-[hsl(349,71%,75%)] shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-0.5 transition-all duration-300 hover:scale-105 border-2 border-[hsl(0,100%,35%)] ${className || ''}`}
       aria-label="Open chat assistant"
     >
-      <MessageCircle className="w-6 h-6 text-charcoal" />
+      <span className="text-[hsl(0,100%,35%)] font-black text-xs leading-tight tracking-tight text-center">
+        HELP<br/>BUTTON
+      </span>
     </button>
   );
 }
