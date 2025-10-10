@@ -125,7 +125,7 @@ export default function Auctions() {
           <h2 className="text-white text-3xl md:text-5xl font-semibold text-center">Auctions</h2>
           <button 
             onClick={() => document.getElementById('subscribe')?.scrollIntoView({ behavior: 'smooth' })}
-            className="rounded-md border border-white/20 px-6 py-2 text-white text-sm md:text-base hover:border-white/50 hover:bg-white/10 transition-all"
+            className="rounded-md border-2 border-[hsl(350,100%,70%)] px-6 py-2 text-white text-sm md:text-base hover:border-[hsl(350,100%,80%)] hover:bg-[hsl(350,100%,70%)]/10 transition-all shadow-[0_4px_20px_rgba(255,51,102,0.4)]"
           >
             Register Here
           </button>
