@@ -23,8 +23,8 @@ const buttonVariants = cva(
         gallery: "border border-artist-gold bg-transparent text-artist-gold hover:bg-artist-gold hover:text-gallery-black transition-all duration-300",
         auction: "bg-charcoal-light text-gallery-white border border-artist-gold/30 hover:border-artist-gold hover:bg-artist-gold/10 transition-all duration-300",
         minimal: "text-gallery-white hover:text-artist-gold transition-colors duration-300",
-        // MEZ Circular variant - pink background with bold red text
-        mez: "rounded-full bg-[hsl(349,71%,80%)] text-[hsl(0,100%,35%)] font-black border-2 border-[hsl(0,100%,35%)] hover:bg-[hsl(349,71%,75%)] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105",
+        // MEZ Circular variant - exact logo colors
+        mez: "rounded-full bg-[hsl(349,100%,83%)] text-[hsl(358,85%,52%)] font-black border-2 border-[hsl(358,85%,52%)] hover:bg-[hsl(349,100%,80%)] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105",
       },
       size: {
         default: "h-10 px-4 py-2",
