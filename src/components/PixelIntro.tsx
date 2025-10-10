@@ -84,7 +84,7 @@ const PixelIntro = ({ onDone }: PixelIntroProps) => {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] bg-gallery-black"
+      className="fixed inset-0 z-[100] bg-[hsl(349,100%,50%)]"
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
       transition={{ duration: 0.3, delay: 1.3 }}
