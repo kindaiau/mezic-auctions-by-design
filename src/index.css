@@ -67,8 +67,8 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    background: hsl(var(--gallery-white));
-    color: hsl(var(--gallery-black));
+    background: hsl(349, 100%, 50%);
+    color: hsl(var(--gallery-white));
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
