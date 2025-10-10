@@ -7,6 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
 const EmailSignup = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,6 +16,15 @@ const EmailSignup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!name) {
+      toast({
+        title: "Name required",
+        description: "Please enter your name.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     if (!email && !phone) {
       toast({
@@ -29,7 +39,7 @@ const EmailSignup = () => {
     
     try {
       const { error } = await supabase.functions.invoke('subscribe-newsletter', {
-        body: { email, phone }
+        body: { name, email, phone }
       });
 
       if (error) throw error;
@@ -42,6 +52,7 @@ const EmailSignup = () => {
       
       // Reset form after success
       setTimeout(() => {
+        setName('');
         setEmail('');
         setPhone('');
         setIsSuccess(false);
@@ -137,6 +148,21 @@ const EmailSignup = () => {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-gallery-white mb-2">
+                        Full Name
+                      </label>
+                      <Input
+                        id="name"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Your name"
+                        required
+                        className="bg-charcoal border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
+                      />
+                    </div>
+
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gallery-white mb-2">
                         Email Address

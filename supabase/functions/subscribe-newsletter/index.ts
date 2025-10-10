@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-import { Resend } from "npm:resend@2.0.0";
+import { Resend } from "npm:resend@4.0.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
@@ -15,6 +15,10 @@ const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 
 // Input validation schema
 const SubscribeRequestSchema = z.object({
+  name: z.string()
+    .trim()
+    .min(1, { message: "Name is required" })
+    .max(100, { message: "Name must be less than 100 characters" }),
   email: z.string()
     .trim()
     .email({ message: "Invalid email address" })
@@ -95,7 +99,7 @@ serve(async (req) => {
       );
     }
 
-    const { email, phone }: SubscribeRequest = validationResult.data;
+    const { name, email, phone }: SubscribeRequest = validationResult.data;
 
     logSecure('info', 'Processing subscription');
 
@@ -103,6 +107,7 @@ serve(async (req) => {
     const { data, error } = await supabase
       .from('email_subscribers')
       .insert({ 
+        name,
         email, 
         phone: phone || null 
       })
@@ -126,7 +131,7 @@ serve(async (req) => {
         to: [email],
         subject: 'Welcome to MEZ Auction Alerts!',
         html: `
-          <h2>Thank you for subscribing!</h2>
+          <h2>Thank you for subscribing, ${name}!</h2>
           <p>You'll now receive alerts about new auctions and exclusive art pieces.</p>
           <p>Stay tuned for exciting updates!</p>
         `
