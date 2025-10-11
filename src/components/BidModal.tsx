@@ -128,6 +128,7 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
               onChange={(e) => setBidderName(e.target.value)}
               required
               placeholder="John Doe"
+              className="text-foreground"
             />
           </div>
 
@@ -140,6 +141,7 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
               onChange={(e) => setBidderEmail(e.target.value)}
               required
               placeholder="john@example.com"
+              className="text-foreground"
             />
           </div>
 
@@ -151,6 +153,7 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
               value={bidderPhone}
               onChange={(e) => setBidderPhone(e.target.value)}
               placeholder="+1 (555) 123-4567"
+              className="text-foreground"
             />
           </div>
 
@@ -165,6 +168,7 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
               onChange={(e) => setBidAmount(e.target.value)}
               required
               placeholder={`Minimum: $${auction.currentBid + 1}`}
+              className="text-foreground"
             />
             <p className="text-sm text-muted-foreground">
               Current bid: ${auction.currentBid}
@@ -181,6 +185,7 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
               value={maximumBid}
               onChange={(e) => setMaximumBid(e.target.value)}
               placeholder="Let us proxy bid for you"
+              className="text-foreground"
             />
             <p className="text-sm text-muted-foreground">
               We'll mirror The Auction Collective's approach: your submitted bid is placed now, and we'll automatically bid in $1 increments up to this ceiling if competitors join.

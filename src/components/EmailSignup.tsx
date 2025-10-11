@@ -159,7 +159,7 @@ const EmailSignup = () => {
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Your name"
                         required
-                        className="bg-charcoal border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
+                        className="bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
                       />
                     </div>
 
@@ -173,7 +173,7 @@ const EmailSignup = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="your.email@example.com"
-                        className="bg-charcoal border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
+                        className="bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
                       />
                     </div>
 
@@ -187,7 +187,7 @@ const EmailSignup = () => {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+61 4XX XXX XXX"
-                        className="bg-charcoal border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
+                        className="bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
                       />
                       <p className="text-xs text-gallery-white/60 mt-1">
                         For urgent auction notifications via SMS
