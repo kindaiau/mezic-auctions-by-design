@@ -126,7 +126,12 @@ export default function Auctions() {
           <h2 className="text-white text-3xl md:text-5xl font-semibold text-center">Auctions</h2>
           <Button 
             variant="mez"
-            onClick={() => document.getElementById('subscribe')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => {
+              const subscribeSection = document.getElementById('subscribe');
+              if (subscribeSection) {
+                subscribeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
             className="px-8 py-3 text-sm uppercase tracking-tight"
           >
             REGISTER HERE
