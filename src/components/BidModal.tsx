@@ -97,11 +97,12 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
       setBidderPhone('');
       setBidAmount('');
       setMaximumBid('');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error placing bid:', error);
+      const message = error instanceof Error ? error.message : 'Failed to place bid';
       toast({
         title: 'Error',
-        description: error.message || 'Failed to place bid',
+        description: message,
         variant: 'destructive'
       });
     } finally {
@@ -193,7 +194,7 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
           </div>
 
           <div className="flex gap-3 pt-4">
-            <Button type="button" variant="mez" onClick={onClose} className="flex-1 py-3">
+            <Button type="button" variant="outline" onClick={onClose} className="flex-1 py-3">
               CANCEL
             </Button>
             <Button type="submit" variant="mez" disabled={isSubmitting} className="flex-1 py-3">

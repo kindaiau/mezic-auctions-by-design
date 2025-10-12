@@ -17,7 +17,7 @@ interface Auction {
 export default function Auctions() {
   // Mock test data with the 3 artwork images
   const mockAuctions: Auction[] = [{
-    id: '1',
+    id: '7a0b9c2d-2f4d-4a7d-90a1-29d5aef6b101',
     title: 'Vali Myers Original',
     artist: 'Vali Myers',
     image_url: 'vali-myers',
@@ -25,7 +25,7 @@ export default function Auctions() {
     end_time: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
     status: 'live'
   }, {
-    id: '2',
+    id: 'e3c70544-9ff9-4f7a-973b-42a6e9ea9f9d',
     title: 'Abstract Emotions',
     artist: 'Contemporary Artist',
     image_url: 'abstract-emotions',
@@ -33,7 +33,7 @@ export default function Auctions() {
     end_time: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(),
     status: 'live'
   }, {
-    id: '3',
+    id: 'd120a60c-3022-4c8f-9eb2-2df1c9f4d0b5',
     title: 'Urban Decay Series',
     artist: 'Street Artist',
     image_url: 'urban-decay',

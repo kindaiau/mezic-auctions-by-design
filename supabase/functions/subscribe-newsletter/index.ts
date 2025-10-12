@@ -55,11 +55,13 @@ function checkRateLimit(ip: string): boolean {
 }
 
 // Secure logging - sanitize PII
-function logSecure(level: 'info' | 'error', message: string, data?: Record<string, any>) {
+function logSecure(level: 'info' | 'error', message: string, data?: Record<string, unknown>) {
+  const email = typeof data?.email === 'string' ? data.email : undefined;
+  const phone = typeof data?.phone === 'string' ? data.phone : undefined;
   const sanitized = data ? {
     ...data,
-    email: data.email ? '***@' + data.email.split('@')[1] : undefined,
-    phone: data.phone ? '***' + data.phone.slice(-4) : undefined,
+    email: email ? `***@${email.split('@')[1] ?? ''}` : undefined,
+    phone: phone ? `***${phone.slice(-4)}` : undefined,
   } : {};
   
   console[level](`[${level.toUpperCase()}] ${message}`, sanitized);
@@ -144,8 +146,9 @@ serve(async (req) => {
         });
         
         logSecure('info', 'Welcome email sent', { subscriberId: data.id });
-      } catch (emailError: any) {
-        logSecure('error', 'Failed to send welcome email', { error: emailError.message });
+      } catch (emailError: unknown) {
+        const message = emailError instanceof Error ? emailError.message : 'Unknown email error';
+        logSecure('error', 'Failed to send welcome email', { error: message });
       }
     }
 
@@ -157,12 +160,13 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     const duration = Date.now() - startTime;
-    logSecure('error', 'Error processing subscription', { error: error.message, duration });
-    
+    const message = error instanceof Error ? error.message : 'An error occurred processing your subscription';
+    logSecure('error', 'Error processing subscription', { error: message, duration });
+
     return new Response(
-      JSON.stringify({ error: error.message || 'An error occurred processing your subscription' }),
+      JSON.stringify({ error: message }),
       { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
