@@ -132,7 +132,8 @@ export default function Auctions() {
                 subscribeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }
             }}
-            className="px-8 py-3 text-sm uppercase tracking-tight"
+            className="px-8 py-3 text-sm uppercase tracking-tight min-h-[44px]"
+            aria-label="Register for auction alerts"
           >
             REGISTER HERE
           </Button>
@@ -153,7 +154,8 @@ export default function Auctions() {
                 <Button
                   onClick={() => handleBidClick(auction)}
                   variant="mez"
-                  className="w-full px-4 py-3 text-sm uppercase tracking-tight"
+                  className="w-full px-4 py-3 text-sm uppercase tracking-tight min-h-[44px]"
+                  aria-label={`Place bid on ${auction.title}`}
                 >
                   PLACE BID
                 </Button>
