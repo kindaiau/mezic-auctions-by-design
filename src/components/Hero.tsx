@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import mezLogo from "@/assets/mez-logo-optimized.webp";
+import mezCircleLogo from "@/assets/mez-circle-logo.png";
 import "./hero.css";
 
 export default function Hero() {
@@ -14,9 +14,12 @@ export default function Hero() {
               CLUB
             </h1>
             <img 
-              src={mezLogo} 
+              src={mezCircleLogo} 
               alt="MEZ" 
               className="h-[clamp(48px,12vw,220px)] w-auto"
+              style={{ 
+                mixBlendMode: 'multiply'
+              }}
             />
           </div>
           <h1 className="text-[clamp(48px,12vw,220px)] font-black tracking-tight text-black leading-[0.8]">
