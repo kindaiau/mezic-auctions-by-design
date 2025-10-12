@@ -19,7 +19,7 @@ export default function Footer() {
             href="https://instagram.com/marianamezic_artist"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-black/20 px-4 py-2 text-black text-sm font-semibold hover:bg-black/10"
+            className="inline-flex items-center gap-2 rounded-full border border-black/20 px-4 py-2 text-black text-sm font-semibold hover:bg-black/10 transition-all duration-200 hover:border-black/40 hover:shadow-md min-h-[44px]"
             aria-label="Follow on Instagram"
           >
             <svg
@@ -36,7 +36,7 @@ export default function Footer() {
             href="https://www.facebook.com/therealmarianamezic"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-black/20 px-4 py-2 text-black text-sm font-semibold hover:bg-black/10 whitespace-nowrap"
+            className="inline-flex items-center gap-2 rounded-full border border-black/20 px-4 py-2 text-black text-sm font-semibold hover:bg-black/10 whitespace-nowrap transition-all duration-200 hover:border-black/40 hover:shadow-md min-h-[44px]"
             aria-label="Follow on Facebook"
           >
             <svg

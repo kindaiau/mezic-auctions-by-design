@@ -121,11 +121,12 @@ const EmailSignup = () => {
                         }}
                         placeholder="Your name"
                         required
+                        autoComplete="name"
                         aria-invalid={Boolean(errors.name)}
                         aria-describedby={errors.name ? 'name-error' : undefined}
                         className={cn(
-                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold",
-                          errors.name && "border-destructive focus:border-destructive"
+                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-visible:ring-artist-gold/50",
+                          errors.name && "border-destructive focus:border-destructive focus-visible:ring-destructive"
                         )}
                       />
                       {errors.name && (
@@ -150,11 +151,12 @@ const EmailSignup = () => {
                           }
                         }}
                         placeholder="your.email@example.com"
+                        autoComplete="email"
                         aria-invalid={Boolean(errors.contact)}
                         aria-describedby={errors.contact ? 'contact-error' : undefined}
                         className={cn(
-                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold",
-                          errors.contact && "border-destructive focus:border-destructive"
+                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-visible:ring-artist-gold/50",
+                          errors.contact && "border-destructive focus:border-destructive focus-visible:ring-destructive"
                         )}
                       />
                     </div>
@@ -174,14 +176,15 @@ const EmailSignup = () => {
                           }
                         }}
                         placeholder="+61 4XX XXX XXX"
+                        autoComplete="tel"
                         aria-invalid={Boolean(errors.contact)}
-                        aria-describedby={errors.contact ? 'contact-error' : undefined}
+                        aria-describedby={errors.contact ? 'contact-error' : 'phone-hint'}
                         className={cn(
-                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold",
-                          errors.contact && "border-destructive focus:border-destructive"
+                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-visible:ring-artist-gold/50",
+                          errors.contact && "border-destructive focus:border-destructive focus-visible:ring-destructive"
                         )}
                       />
-                      <p className="text-xs text-gallery-white/60 mt-1">
+                      <p id="phone-hint" className="text-xs text-gallery-white/60 mt-1">
                         For urgent auction notifications via SMS
                       </p>
                       {errors.contact && (
@@ -194,10 +197,18 @@ const EmailSignup = () => {
                     <Button
                       type="submit"
                       variant="mez"
-                      className="w-full py-4 text-sm uppercase tracking-tight"
+                      className="w-full py-4 text-sm uppercase tracking-tight min-h-[44px]"
                       disabled={isSubmitting}
+                      aria-live="polite"
                     >
-                      {isSubmitting ? 'SUBSCRIBING...' : 'GET AUCTION ALERTS'}
+                      {isSubmitting ? (
+                        <>
+                          <span className="inline-block animate-pulse">SUBSCRIBING...</span>
+                          <span className="sr-only">Subscribing, please wait</span>
+                        </>
+                      ) : (
+                        'GET AUCTION ALERTS'
+                      )}
                     </Button>
 
                     {errors.submit && (
