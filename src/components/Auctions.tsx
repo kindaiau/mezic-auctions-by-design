@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { BidModal } from './BidModal';
 import { Button } from './ui/button';
-import valiMyersArtwork from '@/assets/vali-myers-artwork.jpg';
-import abstractEmotionsArtwork from '@/assets/abstract-emotions-artwork.png';
-import urbanDecayArtwork from '@/assets/urban-decay-artwork.jpg';
+import valiMyersArtwork from '@/assets/vali-myers-artwork-optimized.webp';
+import abstractEmotionsArtwork from '@/assets/abstract-emotions-artwork-optimized.webp';
+import urbanDecayArtwork from '@/assets/urban-decay-artwork-optimized.webp';
 interface Auction {
   id: string;
   title: string;

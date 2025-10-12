@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import mezLogo from "@/assets/mez-logo.png";
+import mezLogo from "@/assets/mez-logo-optimized.webp";
 import "./hero.css";
 
 export default function Hero() {
