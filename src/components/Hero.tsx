@@ -10,7 +10,7 @@ export default function Hero() {
       <div className="text-center">
         <div className="flex flex-col items-center">
           <div className="flex items-center gap-4">
-            <h1 className="text-[clamp(48px,12vw,220px)] font-black tracking-tight text-gallery-white leading-[0.8]">
+            <h1 className="text-[clamp(48px,12vw,220px)] font-black tracking-tight text-black leading-[0.8]">
               CLUB
             </h1>
             <img 
@@ -19,7 +19,7 @@ export default function Hero() {
               className="h-[clamp(48px,12vw,220px)] w-auto"
             />
           </div>
-          <h1 className="text-[clamp(48px,12vw,220px)] font-black tracking-tight text-gallery-white leading-[0.8]">
+          <h1 className="text-[clamp(48px,12vw,220px)] font-black tracking-tight text-black leading-[0.8]">
             AUCTIONS
           </h1>
         </div>

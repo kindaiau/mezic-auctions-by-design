@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import mezLogo from '@/assets/mez-logo.png';
+import mezLogo from '@/assets/mez-logo-optimized.webp';
 
 const Header = () => {
   return (
@@ -28,19 +28,19 @@ const Header = () => {
           <nav className="hidden md:flex items-center space-x-8">
             <a
               href="#work"
-              className="text-sm text-gallery-white hover:text-gallery-white/70 transition-colors"
+              className="text-sm text-black hover:text-black/70 transition-colors"
             >
               Work
             </a>
             <a
               href="#about"
-              className="text-sm text-gallery-white hover:text-gallery-white/70 transition-colors"
+              className="text-sm text-black hover:text-black/70 transition-colors"
             >
               About
             </a>
             <a
               href="#auctions"
-              className="text-sm text-gallery-white hover:text-gallery-white/70 transition-colors"
+              className="text-sm text-black hover:text-black/70 transition-colors"
             >
               Auctions
             </a>
