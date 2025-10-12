@@ -67,8 +67,8 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    background: hsl(349, 100%, 50%);
-    color: hsl(var(--gallery-white));
+    background: #fff;
+    color: #000;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -149,19 +149,19 @@
 
   /* Custom utilities */
   .text-gallery-white {
-    color: hsl(var(--gallery-white));
+    color: #000;
   }
 
   .text-gallery-gold {
-    color: hsl(var(--gallery-white));
+    color: #000;
   }
 
   .bg-gallery-gold {
-    background-color: hsl(var(--gallery-white));
+    background-color: #fff;
   }
 
   .bg-gallery-black {
-    background-color: hsl(var(--gallery-black));
+    background-color: #fff;
   }
 
   .bg-charcoal {

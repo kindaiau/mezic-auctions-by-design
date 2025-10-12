@@ -29,7 +29,7 @@ export default function Hero() {
           </h1>
         </motion.div>
         <motion.p
-          className="mt-6 max-w-2xl text-center text-white/70 text-xl mx-auto"
+          className="mt-6 max-w-2xl text-center text-black/70 text-xl mx-auto"
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
           transition={{ delay: 0.4, duration: 0.6 }}

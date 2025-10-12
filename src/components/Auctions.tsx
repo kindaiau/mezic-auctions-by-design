@@ -103,7 +103,7 @@ export default function Auctions() {
   if (loading) {
     return <section id="auctions" className="px-6 py-16 md:py-24">
         <div className="mx-auto max-w-6xl text-center">
-          <p className="text-white text-xl">Loading auctions...</p>
+          <p className="text-black text-xl">Loading auctions...</p>
         </div>
       </section>;
   }
@@ -111,19 +111,19 @@ export default function Auctions() {
     return <section id="auctions" className="px-6 py-16 md:py-24">
         <div className="mx-auto max-w-6xl">
           <header className="mb-8 md:mb-12 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
-            <h2 className="text-white text-3xl md:text-5xl font-semibold">Auctions</h2>
-            <a href="#subscribe" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white hover:bg-white/10 transition-colors">
+            <h2 className="text-black text-3xl md:text-5xl font-semibold">Auctions</h2>
+            <a href="#subscribe" className="inline-flex items-center gap-2 rounded-full border border-black/20 px-4 py-2 text-black hover:bg-black/10 transition-colors">
               Register your email and number and get alerts
             </a>
           </header>
-          <p className="text-white/60 text-center py-12">No live auctions at the moment. Subscribe to get alerts when new auctions go live!</p>
+          <p className="text-black/60 text-center py-12">No live auctions at the moment. Subscribe to get alerts when new auctions go live!</p>
         </div>
       </section>;
   }
   return <section id="auctions" className="py-16 md:py-24 my-0 mx-[4px] px-[31px]">
       <div className="mx-auto max-w-6xl">
         <header className="mb-8 md:mb-12 flex flex-col items-center gap-4">
-          <h2 className="text-white text-3xl md:text-5xl font-semibold text-center">Auctions</h2>
+          <h2 className="text-black text-3xl md:text-5xl font-semibold text-center">Auctions</h2>
           <Button 
             variant="mez"
             onClick={() => {
@@ -139,14 +139,14 @@ export default function Auctions() {
         </header>
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
-          {auctions.map(auction => <article key={auction.id} className="group rounded-lg border border-white/10 p-4 bg-white/[0.02] hover:bg-white/[0.05] transition-colors duration-300">
+          {auctions.map(auction => <article key={auction.id} className="group rounded-lg border border-black/10 p-4 bg-black/[0.02] hover:bg-black/[0.05] transition-colors duration-300">
               <div className="aspect-[4/5] overflow-hidden rounded">
                 <img src={imageMap[auction.image_url] || auction.image_url} alt={auction.title} className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
               </div>
               <div className="mt-4 space-y-3">
                 <div>
-                  <h3 className="text-white text-lg md:text-xl font-medium">{auction.title}</h3>
-                  <p className="text-white/60 text-sm mt-1">
+                  <h3 className="text-black text-lg md:text-xl font-medium">{auction.title}</h3>
+                  <p className="text-black/60 text-sm mt-1">
                     Current bid: ${auction.current_bid} • {formatEndTime(auction.end_time)}
                   </p>
                 </div>

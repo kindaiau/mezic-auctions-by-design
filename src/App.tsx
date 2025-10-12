@@ -12,7 +12,7 @@ export default function App() {
   return (
     <>
       {!loaded && <PixelIntro onDone={() => setLoaded(true)} />}
-      <main className="bg-black text-white">
+      <main className="bg-white text-black">
         <Hero />
         <Auctions />
         {/* signup & about go here */}

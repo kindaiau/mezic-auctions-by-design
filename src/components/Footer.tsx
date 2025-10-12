@@ -9,7 +9,7 @@ const alternateColors = (text: string) => {
 
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-white/10">
+    <footer className="mt-24 border-t border-black/10">
       <div className="mx-auto max-w-6xl px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-sm">
           {alternateColors(`© ${new Date().getFullYear()} Mariana Mezic`)}
@@ -19,7 +19,7 @@ export default function Footer() {
             href="https://instagram.com/marianamezic_artist"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white text-sm hover:bg-white/10"
+            className="inline-flex items-center gap-2 rounded-full border border-black/20 px-4 py-2 text-black text-sm hover:bg-black/10"
             aria-label="Follow on Instagram"
           >
             <svg
@@ -36,7 +36,7 @@ export default function Footer() {
             href="https://www.facebook.com/therealmarianamezic"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white text-sm hover:bg-white/10 whitespace-nowrap"
+            className="inline-flex items-center gap-2 rounded-full border border-black/20 px-4 py-2 text-black text-sm hover:bg-black/10 whitespace-nowrap"
             aria-label="Follow on Facebook"
           >
             <svg
