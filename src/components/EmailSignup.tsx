@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, MessageCircle, CheckCircle } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -74,61 +74,38 @@ const EmailSignup = () => {
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gallery-white">
-            Stay <span className="text-artist-gold">Updated</span>
+            Get Auction Alerts First
           </h2>
           <p className="text-xl text-gallery-white/80 max-w-2xl mx-auto">
-            Get notified about new auctions, exclusive previews, and behind-the-scenes content from Mariana's studio.
+            Reserve a front-row seat for Mariana&apos;s drops. We send one sharp alert when bidding opens, plus the occasional studio story you won&apos;t find on social.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Benefits */}
-          <div className="lg:col-span-1 space-y-6">
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-artist-gold/20 rounded-full flex items-center justify-center">
-                <Mail className="w-6 h-6 text-artist-gold" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-gallery-white mb-2">
-                  Auction Alerts
-                </h3>
-                <p className="text-gallery-white/70">
-                  Be the first to know when new pieces go up for auction
-                </p>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr,1fr] gap-10 items-start">
+          <div className="space-y-6 text-center lg:text-left">
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold text-gallery-white uppercase tracking-[0.2em]">
+                What you&apos;ll receive
+              </h3>
+              <p className="text-gallery-white/75 text-base leading-relaxed">
+                Carefully timed reminders, provenance notes, and market insights that help you plan your bids instead of reacting last-minute.
+              </p>
             </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-artist-gold/20 rounded-full flex items-center justify-center">
-                <MessageCircle className="w-6 h-6 text-artist-gold" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-gallery-white mb-2">
-                  SMS Notifications
-                </h3>
-                <p className="text-gallery-white/70">
-                  Instant text alerts for time-sensitive auction updates
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-artist-gold/20 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-6 h-6 text-artist-gold" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-gallery-white mb-2">
-                  Exclusive Access
-                </h3>
-                <p className="text-gallery-white/70">
-                  Early previews and behind-the-scenes studio content
-                </p>
-              </div>
+            <div className="space-y-4 text-left text-gallery-white/80">
+              <p className="leading-relaxed">
+                <span className="text-gallery-white font-medium">Launch-day countdowns:</span> precise timing updates so you never miss opening bids.
+              </p>
+              <p className="leading-relaxed">
+                <span className="text-gallery-white font-medium">Condition &amp; provenance notes:</span> the story behind each piece before it hits the lot page.
+              </p>
+              <p className="leading-relaxed">
+                <span className="text-gallery-white font-medium">Private studio previews:</span> occasional behind-the-scenes looks reserved for collectors and bidders.
+              </p>
             </div>
           </div>
 
           {/* Signup Form */}
-          <div className="lg:col-span-2">
+          <div className="w-full">
             <Card className="bg-charcoal-light border-artist-gold/30 shadow-2xl">
               <CardHeader>
                 <CardTitle className="text-2xl text-gallery-white text-center">
@@ -194,9 +171,9 @@ const EmailSignup = () => {
                       </p>
                     </div>
 
-                    <Button 
-                      type="submit" 
-                      variant="mez" 
+                    <Button
+                      type="submit"
+                      variant="mez"
                       className="w-full py-4 text-sm uppercase tracking-tight"
                       disabled={isSubmitting}
                     >
@@ -204,7 +181,7 @@ const EmailSignup = () => {
                     </Button>
 
                     <p className="text-xs text-gallery-white/60 text-center">
-                      By subscribing, you agree to receive marketing communications. 
+                      By subscribing, you agree to receive marketing communications.
                       You can unsubscribe at any time.
                     </p>
                   </form>
