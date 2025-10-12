@@ -120,7 +120,10 @@ export default function Auctions() {
         </div>
       </section>;
   }
-  return <section id="auctions" className="py-16 md:py-24 my-0 mx-[4px] px-[31px]">
+  return <section
+      id="auctions"
+      className="py-16 md:py-24 px-6 sm:px-8 lg:px-12"
+    >
       <div className="mx-auto max-w-6xl">
         <header className="mb-8 md:mb-12 flex flex-col items-center gap-4">
           <h2 className="text-black text-3xl md:text-5xl font-semibold text-center">Auctions</h2>

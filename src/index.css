@@ -42,12 +42,13 @@
     --radius: 0.75rem;
 
     /* Custom Design Tokens */
-    --gallery-black: 0 0% 0%;
-    --gallery-white: 0 0% 100%;
-    --artist-gold: 0 0% 0%;
-    --artist-gold-muted: 0 0% 20%;
-    --charcoal: 0 0% 95%;
-    --mez-blush: 350 100% 88%;
+    --gallery-black: 218 28% 10%;
+    --gallery-white: 36 33% 95%;
+    --artist-gold: 42 92% 62%;
+    --artist-gold-muted: 42 60% 48%;
+    --charcoal: 220 16% 18%;
+    --charcoal-light: 220 14% 26%;
+    --mez-blush: 350 88% 82%;
     
     /* Typography Scale - Kierkegaard Style */
     --text-hero: clamp(3rem, 12vw, 12rem);
@@ -149,19 +150,19 @@
 
   /* Custom utilities */
   .text-gallery-white {
-    color: #000;
+    color: hsl(var(--gallery-white));
   }
 
   .text-gallery-gold {
-    color: #000;
+    color: hsl(var(--artist-gold));
   }
 
   .bg-gallery-gold {
-    background-color: #fff;
+    background-color: hsl(var(--artist-gold));
   }
 
   .bg-gallery-black {
-    background-color: #fff;
+    background-color: hsl(var(--gallery-black));
   }
 
   .bg-charcoal {
