@@ -182,11 +182,13 @@ export function ChatButton({ onClick, className }: ChatButtonProps) {
   return (
     <button
       onClick={onClick}
-      className={`fixed bottom-6 right-6 z-[999] w-[60px] h-[60px] rounded-full bg-[hsl(349,100%,83%)/0.4] hover:bg-[hsl(349,100%,83%)/0.6] shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-0.5 transition-all duration-300 hover:scale-105 border-2 border-[hsl(358,85%,52%)] ${className || ''}`}
-      aria-label="Open chat assistant"
+      className={`fixed bottom-6 right-6 z-[999] w-[60px] h-[60px] rounded-full bg-mez-blush/40 hover:bg-mez-blush/60 shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-0.5 transition-all duration-300 hover:scale-105 border-2 border-mez-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-artist-gold focus-visible:ring-offset-2 ${className || ''}`}
+      aria-label="Open chat assistant - Get help with auctions and artworks"
+      title="Chat with our AI assistant"
     >
-      <span className="text-mez-blush font-black text-[9px] leading-tight tracking-tight text-center">
-        HELP<br/>BUTTON
+      <MessageCircle className="w-6 h-6 text-mez-red" aria-hidden="true" />
+      <span className="text-mez-red font-bold text-[10px] leading-tight tracking-tight">
+        HELP
       </span>
     </button>
   );

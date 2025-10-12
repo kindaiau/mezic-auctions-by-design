@@ -61,6 +61,7 @@ export default {
 				'charcoal': 'hsl(var(--charcoal))',
 				'charcoal-light': 'hsl(var(--charcoal-light))',
 				'mez-blush': 'hsl(var(--mez-blush))',
+				'mez-red': 'hsl(var(--mez-red))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
