@@ -176,7 +176,7 @@ const KierkegaardGrid = () => {
                 />
               </div>
               
-              <button className="w-full rounded-full bg-[hsl(349,71%,80%)] text-[hsl(0,100%,35%)] font-black border-2 border-[hsl(0,100%,35%)] hover:bg-[hsl(349,71%,75%)] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 py-3 text-xs uppercase tracking-tight">
+              <button className="w-full rounded-full bg-mez-blush text-mez-red font-black border-2 border-mez-red hover:bg-mez-blush/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-artist-gold focus-visible:ring-offset-2 py-3 text-xs uppercase tracking-tight">
                 SUBSCRIBE TO ALERTS
               </button>
               

@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-artist-gold focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -19,12 +19,12 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         // Gallery-specific variants
-        hero: "bg-gradient-to-r from-artist-gold to-artist-gold-muted text-gallery-black font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105",
-        gallery: "border border-artist-gold bg-transparent text-artist-gold hover:bg-artist-gold hover:text-gallery-black transition-all duration-300",
-        auction: "bg-charcoal-light text-gallery-white border border-artist-gold/30 hover:border-artist-gold hover:bg-artist-gold/10 transition-all duration-300",
-        minimal: "text-gallery-white hover:text-artist-gold transition-colors duration-300",
-        // MEZ Circular variant - exact logo colors
-        mez: "rounded-full bg-[hsl(349,100%,83%)] text-[hsl(358,85%,52%)] font-black border-2 border-[hsl(358,85%,52%)] hover:bg-[hsl(349,100%,80%)] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105",
+        hero: "bg-gradient-to-r from-artist-gold to-artist-gold-muted text-gallery-black font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus-visible:ring-artist-gold",
+        gallery: "border border-artist-gold bg-transparent text-artist-gold hover:bg-artist-gold hover:text-gallery-black transition-all duration-300 focus-visible:ring-artist-gold",
+        auction: "bg-charcoal-light text-gallery-white border border-artist-gold/30 hover:border-artist-gold hover:bg-artist-gold/10 transition-all duration-300 focus-visible:ring-artist-gold",
+        minimal: "text-gallery-white hover:text-artist-gold transition-colors duration-300 focus-visible:ring-artist-gold",
+        // MEZ Circular variant - uses semantic color tokens
+        mez: "rounded-full bg-mez-blush text-mez-red font-black border-2 border-mez-red hover:bg-mez-blush/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus-visible:ring-mez-red",
       },
       size: {
         default: "h-10 px-4 py-2",

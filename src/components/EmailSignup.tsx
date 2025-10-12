@@ -72,6 +72,12 @@ const EmailSignup = () => {
   return (
     <section id="subscribe" className="py-20 px-4 bg-transparent">
       <div className="container mx-auto max-w-4xl">
+        {/* Screen reader announcements for form states */}
+        <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+          {isSubmitting && "Submitting your subscription..."}
+          {isSuccess && "Successfully subscribed! You'll receive alerts about upcoming auctions."}
+        </div>
+        
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gallery-white">
             Get Auction Alerts First
@@ -127,7 +133,7 @@ const EmailSignup = () => {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gallery-white mb-2">
-                        Full Name
+                        Full Name <span className="text-mez-red">*</span>
                       </label>
                       <Input
                         id="name"
@@ -136,7 +142,8 @@ const EmailSignup = () => {
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Your name"
                         required
-                        className="bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
+                        aria-required="true"
+                        className="bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-gold"
                       />
                     </div>
 
@@ -150,7 +157,8 @@ const EmailSignup = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="your.email@example.com"
-                        className="bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
+                        aria-describedby="email-description"
+                        className="bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-gold"
                       />
                     </div>
 
@@ -164,9 +172,10 @@ const EmailSignup = () => {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+61 4XX XXX XXX"
-                        className="bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
+                        aria-describedby="phone-description"
+                        className="bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-gold"
                       />
-                      <p className="text-xs text-gallery-white/60 mt-1">
+                      <p id="phone-description" className="text-xs text-gallery-white/60 mt-1">
                         For urgent auction notifications via SMS
                       </p>
                     </div>

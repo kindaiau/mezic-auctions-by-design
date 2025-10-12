@@ -33,7 +33,7 @@ export default function Hero() {
           <Button
             variant="hero"
             size="lg"
-            className="px-8 py-4 text-base uppercase tracking-tight"
+            className="px-8 py-4 text-base uppercase tracking-tight animate-fade-in-up"
             onClick={() => {
               const auctionsSection = document.getElementById("auctions");
               if (auctionsSection) {
@@ -46,7 +46,7 @@ export default function Hero() {
           <Button
             variant="gallery"
             size="lg"
-            className="px-8 py-4 text-base uppercase tracking-tight"
+            className="px-8 py-4 text-base uppercase tracking-tight animate-fade-in-up delay-100"
             onClick={() => {
               const signupSection = document.getElementById("subscribe");
               if (signupSection) {
