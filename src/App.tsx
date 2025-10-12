@@ -2,6 +2,7 @@ import { useState } from "react";
 import PixelIntro from "./components/PixelIntro";
 import Hero from "./components/Hero";
 import Auctions from "./components/Auctions";
+import EmailSignup from "./components/EmailSignup";
 import Footer from "./components/Footer";
 import { ChatAssistant, ChatButton } from "./components/ChatAssistant";
 
@@ -15,7 +16,7 @@ export default function App() {
       <main className="bg-white text-black">
         <Hero />
         <Auctions />
-        {/* signup & about go here */}
+        <EmailSignup />
         <Footer />
       </main>
       
