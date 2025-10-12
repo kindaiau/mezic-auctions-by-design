@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, MessageCircle, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { cn } from '@/lib/utils';
 
 const EmailSignup = () => {
   const [name, setName] = useState('');
@@ -13,37 +14,36 @@ const EmailSignup = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
+  const [errors, setErrors] = useState<{ name?: string; contact?: string; submit?: string }>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!name) {
-      toast({
-        title: "Name required",
-        description: "Please enter your name.",
-        variant: "destructive",
-      });
+
+    setErrors({});
+
+    if (!name.trim()) {
+      setErrors({ name: 'Please enter your name.' });
       return;
     }
-    
-    if (!email && !phone) {
-      toast({
-        title: "Please provide contact information",
-        description: "Enter either an email or phone number to receive auction alerts.",
-        variant: "destructive",
-      });
+
+    if (!email.trim() && !phone.trim()) {
+      setErrors({ contact: 'Enter either an email or phone number to receive auction alerts.' });
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
-      const { error } = await supabase.functions.invoke('subscribe-newsletter', {
+      const { data, error } = await supabase.functions.invoke('subscribe-newsletter', {
         body: { name, email, phone }
       });
 
       if (error) throw error;
-      
+
+      if (data && typeof data === 'object' && 'error' in data && data.error) {
+        throw new Error(String(data.error));
+      }
+
       setIsSuccess(true);
       toast({
         title: "Successfully subscribed!",
@@ -58,10 +58,12 @@ const EmailSignup = () => {
         setIsSuccess(false);
       }, 3000);
       
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Please try again later or contact us directly.';
+      setErrors({ submit: message });
       toast({
         title: "Subscription failed",
-        description: error.message || "Please try again later or contact us directly.",
+        description: message,
         variant: "destructive",
       });
     } finally {
@@ -156,11 +158,26 @@ const EmailSignup = () => {
                         id="name"
                         type="text"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => {
+                          setName(e.target.value);
+                          if (errors.name) {
+                            setErrors(prev => ({ ...prev, name: undefined }));
+                          }
+                        }}
                         placeholder="Your name"
                         required
-                        className="bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
+                        aria-invalid={Boolean(errors.name)}
+                        aria-describedby={errors.name ? 'name-error' : undefined}
+                        className={cn(
+                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold",
+                          errors.name && "border-destructive focus:border-destructive"
+                        )}
                       />
+                      {errors.name && (
+                        <p id="name-error" className="mt-2 text-sm text-destructive" role="alert">
+                          {errors.name}
+                        </p>
+                      )}
                     </div>
 
                     <div>
@@ -171,9 +188,19 @@ const EmailSignup = () => {
                         id="email"
                         type="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          if (errors.contact) {
+                            setErrors(prev => ({ ...prev, contact: undefined }));
+                          }
+                        }}
                         placeholder="your.email@example.com"
-                        className="bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
+                        aria-invalid={Boolean(errors.contact)}
+                        aria-describedby={errors.contact ? 'contact-error' : undefined}
+                        className={cn(
+                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold",
+                          errors.contact && "border-destructive focus:border-destructive"
+                        )}
                       />
                     </div>
 
@@ -185,26 +212,47 @@ const EmailSignup = () => {
                         id="phone"
                         type="tel"
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        onChange={(e) => {
+                          setPhone(e.target.value);
+                          if (errors.contact) {
+                            setErrors(prev => ({ ...prev, contact: undefined }));
+                          }
+                        }}
                         placeholder="+61 4XX XXX XXX"
-                        className="bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold"
+                        aria-invalid={Boolean(errors.contact)}
+                        aria-describedby={errors.contact ? 'contact-error' : undefined}
+                        className={cn(
+                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold",
+                          errors.contact && "border-destructive focus:border-destructive"
+                        )}
                       />
                       <p className="text-xs text-gallery-white/60 mt-1">
                         For urgent auction notifications via SMS
                       </p>
+                      {errors.contact && (
+                        <p id="contact-error" className="mt-2 text-sm text-destructive" role="alert">
+                          {errors.contact}
+                        </p>
+                      )}
                     </div>
 
-                    <Button 
-                      type="submit" 
-                      variant="mez" 
+                    <Button
+                      type="submit"
+                      variant="mez"
                       className="w-full py-4 text-sm uppercase tracking-tight"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? 'SUBSCRIBING...' : 'GET AUCTION ALERTS'}
                     </Button>
 
+                    {errors.submit && (
+                      <p className="text-sm text-destructive text-center" role="alert">
+                        {errors.submit}
+                      </p>
+                    )}
+
                     <p className="text-xs text-gallery-white/60 text-center">
-                      By subscribing, you agree to receive marketing communications. 
+                      By subscribing, you agree to receive marketing communications.
                       You can unsubscribe at any time.
                     </p>
                   </form>

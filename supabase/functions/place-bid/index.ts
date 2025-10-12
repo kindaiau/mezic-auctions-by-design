@@ -65,11 +65,13 @@ function checkRateLimit(ip: string): boolean {
 }
 
 // Secure logging - sanitize PII
-function logSecure(level: 'info' | 'error', message: string, data?: Record<string, any>) {
+function logSecure(level: 'info' | 'error', message: string, data?: Record<string, unknown>) {
+  const bidderEmail = typeof data?.bidderEmail === 'string' ? data.bidderEmail : undefined;
+  const bidderPhone = typeof data?.bidderPhone === 'string' ? data.bidderPhone : undefined;
   const sanitized = data ? {
     ...data,
-    bidderEmail: data.bidderEmail ? '***@' + data.bidderEmail.split('@')[1] : undefined,
-    bidderPhone: data.bidderPhone ? '***' + data.bidderPhone.slice(-4) : undefined,
+    bidderEmail: bidderEmail ? `***@${bidderEmail.split('@')[1] ?? ''}` : undefined,
+    bidderPhone: bidderPhone ? `***${bidderPhone.slice(-4)}` : undefined,
   } : {};
   
   console[level](`[${level.toUpperCase()}] ${message}`, sanitized);
@@ -279,8 +281,9 @@ serve(async (req) => {
         });
         
         logSecure('info', 'Outbid notification sent', { previousBidderId: previousBidder.id });
-      } catch (emailError: any) {
-        logSecure('error', 'Failed to send outbid email', { error: emailError.message });
+      } catch (emailError: unknown) {
+        const message = emailError instanceof Error ? emailError.message : 'Unknown email error';
+        logSecure('error', 'Failed to send outbid email', { error: message });
       }
     }
 
@@ -311,8 +314,9 @@ serve(async (req) => {
       });
 
       logSecure('info', 'Confirmation email sent', { bidId: newBid.id });
-    } catch (emailError: any) {
-      logSecure('error', 'Failed to send confirmation email', { error: emailError.message });
+    } catch (emailError: unknown) {
+      const message = emailError instanceof Error ? emailError.message : 'Unknown email error';
+      logSecure('error', 'Failed to send confirmation email', { error: message });
     }
 
     const duration = Date.now() - startTime;
@@ -333,12 +337,13 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     const duration = Date.now() - startTime;
-    logSecure('error', 'Error processing bid', { error: error.message, duration });
-    
+    const message = error instanceof Error ? error.message : 'An error occurred processing your bid';
+    logSecure('error', 'Error processing bid', { error: message, duration });
+
     return new Response(
-      JSON.stringify({ error: error.message || 'An error occurred processing your bid' }),
+      JSON.stringify({ error: message }),
       { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

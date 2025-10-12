@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -107,9 +107,9 @@ export function ChatAssistant({ isOpen, onClose, context }: ChatAssistantProps) 
               </div>
               <div>
                 <DialogTitle>AI Art Assistant</DialogTitle>
-                <p className="text-sm text-muted-foreground">
-                  Powered by ChatGPT
-                </p>
+                <DialogDescription className="text-sm text-muted-foreground">
+                  Powered by ChatGPT. Ask questions about live auctions, bidding rules, or specific artworks.
+                </DialogDescription>
               </div>
             </div>
           </div>
@@ -159,6 +159,7 @@ export function ChatAssistant({ isOpen, onClose, context }: ChatAssistantProps) 
               disabled={isLoading || !inputMessage.trim()}
               variant="mez"
               className="w-12 h-12"
+              aria-label="Send message"
             >
               <Send className="w-4 h-4" />
             </Button>
