@@ -22,11 +22,16 @@ const SubscribeRequestSchema = z.object({
   email: z.string()
     .trim()
     .email({ message: "Invalid email address" })
-    .max(255, { message: "Email must be less than 255 characters" }),
+    .max(255, { message: "Email must be less than 255 characters" })
+    .optional()
+    .or(z.literal('')),
   phone: z.string()
     .trim()
     .max(20, { message: "Phone must be less than 20 characters" })
     .optional()
+    .or(z.literal(''))
+}).refine((data) => data.email || data.phone, {
+  message: "Either email or phone number is required"
 });
 
 type SubscribeRequest = z.infer<typeof SubscribeRequestSchema>;
@@ -108,7 +113,7 @@ serve(async (req) => {
       .from('email_subscribers')
       .insert({ 
         name,
-        email, 
+        email: email || null, 
         phone: phone || null 
       })
       .select()
@@ -124,22 +129,24 @@ serve(async (req) => {
       throw error;
     }
 
-    // Send welcome email (async, non-blocking)
-    try {
-      await resend.emails.send({
-        from: 'MEZ Auctions <auctions@resend.dev>',
-        to: [email],
-        subject: 'Welcome to MEZ Auction Alerts!',
-        html: `
-          <h2>Thank you for subscribing, ${name}!</h2>
-          <p>You'll now receive alerts about new auctions and exclusive art pieces.</p>
-          <p>Stay tuned for exciting updates!</p>
-        `
-      });
-      
-      logSecure('info', 'Welcome email sent', { subscriberId: data.id });
-    } catch (emailError: any) {
-      logSecure('error', 'Failed to send welcome email', { error: emailError.message });
+    // Send welcome email (async, non-blocking) - only if email provided
+    if (email) {
+      try {
+        await resend.emails.send({
+          from: 'MEZ Auctions <auctions@resend.dev>',
+          to: [email],
+          subject: 'Welcome to MEZ Auction Alerts!',
+          html: `
+            <h2>Thank you for subscribing, ${name}!</h2>
+            <p>You'll now receive alerts about new auctions and exclusive art pieces.</p>
+            <p>Stay tuned for exciting updates!</p>
+          `
+        });
+        
+        logSecure('info', 'Welcome email sent', { subscriberId: data.id });
+      } catch (emailError: any) {
+        logSecure('error', 'Failed to send welcome email', { error: emailError.message });
+      }
     }
 
     const duration = Date.now() - startTime;
