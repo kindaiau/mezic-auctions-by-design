@@ -8,12 +8,7 @@ export default function Hero() {
       <div className="absolute inset-0 -z-10 bg-transparent" />
       <div className="scan-overlay" aria-hidden />
       <div className="text-center">
-        <motion.div
-          className="flex flex-col items-center"
-          initial={{ y: 24, opacity: 0 }} 
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
+        <div className="flex flex-col items-center">
           <div className="flex items-center gap-4">
             <h1 className="text-[clamp(48px,12vw,220px)] font-black tracking-tight text-gallery-white leading-[0.8]">
               CLUB
@@ -27,15 +22,10 @@ export default function Hero() {
           <h1 className="text-[clamp(48px,12vw,220px)] font-black tracking-tight text-gallery-white leading-[0.8]">
             AUCTIONS
           </h1>
-        </motion.div>
-        <motion.p
-          className="mt-6 max-w-2xl text-center text-black/70 text-xl mx-auto"
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
-          transition={{ delay: 0.4, duration: 0.6 }}
-        >
+        </div>
+        <p className="mt-6 max-w-2xl text-center text-black/70 text-xl mx-auto">
           Original works auctioned weekly. Bidding starts at $1.
-        </motion.p>
+        </p>
       </div>
     </section>
   );
