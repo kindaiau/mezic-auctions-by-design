@@ -125,15 +125,12 @@ serve(async (req) => {
 
     logSecure('info', 'Processing bid', { auctionId, bidAmount });
 
-    // Begin transaction with row-level locking to prevent race conditions
+    // Get auction data with optimistic locking (using current_bid for version control)
     const { data: auction, error: auctionError } = await supabase
-      .rpc('begin_transaction')
-      .then(() => supabase
-        .from('auctions')
-        .select('*')
-        .eq('id', auctionId)
-        .single()
-      );
+      .from('auctions')
+      .select('*')
+      .eq('id', auctionId)
+      .single();
 
     if (auctionError || !auction) {
       logSecure('error', 'Auction not found', { auctionId });

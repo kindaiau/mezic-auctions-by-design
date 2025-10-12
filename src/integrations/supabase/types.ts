@@ -134,7 +134,9 @@ export type Database = {
           bidder_phone: string | null
           created_at: string
           id: string
+          maximum_bid_amount: number
           status: string
+          submitted_bid_amount: number
         }
         Insert: {
           auction_id: string
@@ -145,7 +147,9 @@ export type Database = {
           bidder_phone?: string | null
           created_at?: string
           id?: string
+          maximum_bid_amount: number
           status?: string
+          submitted_bid_amount: number
         }
         Update: {
           auction_id?: string
@@ -156,7 +160,9 @@ export type Database = {
           bidder_phone?: string | null
           created_at?: string
           id?: string
+          maximum_bid_amount?: number
           status?: string
+          submitted_bid_amount?: number
         }
         Relationships: [
           {
