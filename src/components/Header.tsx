@@ -12,15 +12,16 @@ const Header = () => {
     >
       <div className="flex items-center justify-between">
         {/* Brand Logo - Left */}
-        <div className="bg-transparent">
+        <div className="bg-white p-1 rounded">
           <img 
             src={mezLogo} 
             alt="MEZ" 
-            className="h-8 md:h-10 w-auto mix-blend-multiply"
+            className="h-8 md:h-10 w-auto"
             style={{ 
               willChange: 'transform',
               backfaceVisibility: 'hidden',
-              transform: 'translateZ(0)'
+              transform: 'translateZ(0)',
+              filter: 'brightness(0)'
             }}
           />
         </div>

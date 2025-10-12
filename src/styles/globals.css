@@ -1,5 +1,5 @@
 :root{ --mez-blush:348 71% 80%; --mez-red:349 100% 50%; } /* HSL format for proper color rendering */
-html,body,#root{height:100%;background:#fff;}
+html,body,#root{height:100%;background:#fff;margin:0;padding:0;}
 body{color:#000;}
 /* prevent accidental global margins creating big gaps */
 section{margin:0;padding:0;}
