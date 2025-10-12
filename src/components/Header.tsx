@@ -5,23 +5,25 @@ import mezLogo from '@/assets/mez-logo-optimized.webp';
 const Header = () => {
   return (
     <motion.header 
-      className="fixed top-0 left-0 right-0 z-50 p-4 md:p-6"
+      className="fixed top-0 left-0 right-0 z-50 p-4 md:p-6 bg-transparent"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
     >
       <div className="flex items-center justify-between">
         {/* Brand Logo - Left */}
-        <img 
-          src={mezLogo} 
-          alt="MEZ" 
-          className="h-8 md:h-10 w-auto"
-          style={{ 
-            willChange: 'transform',
-            backfaceVisibility: 'hidden',
-            transform: 'translateZ(0)'
-          }}
-        />
+        <div className="bg-transparent">
+          <img 
+            src={mezLogo} 
+            alt="MEZ" 
+            className="h-8 md:h-10 w-auto mix-blend-multiply"
+            style={{ 
+              willChange: 'transform',
+              backfaceVisibility: 'hidden',
+              transform: 'translateZ(0)'
+            }}
+          />
+        </div>
 
         {/* Desktop Navigation */}
         <div className="flex items-center space-x-6">
