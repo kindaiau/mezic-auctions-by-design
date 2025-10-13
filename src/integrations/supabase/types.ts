@@ -305,7 +305,22 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      auction_bid_counts: {
+        Row: {
+          auction_id: string | null
+          bid_count: number | null
+          current_high_bid: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bids_auction_id_fkey"
+            columns: ["auction_id"]
+            isOneToOne: false
+            referencedRelation: "auctions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       detect_suspicious_access: {
@@ -329,6 +344,17 @@ export type Database = {
       get_current_user_role: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      get_my_bids: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          auction_id: string
+          bid_amount: number
+          bid_time: string
+          id: string
+          status: string
+          submitted_bid_amount: number
+        }[]
       }
       has_role: {
         Args: {
