@@ -46,11 +46,14 @@ export default function Auctions() {
   const [isBidModalOpen, setIsBidModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Static image mapping
+  // Static image mapping - handles both short names and full filenames from database
   const imageMap: Record<string, string> = {
     'vali-myers': valiMyersArtwork,
+    'vali-myers-artwork.jpg': valiMyersArtwork,
     'abstract-emotions': abstractEmotionsArtwork,
-    'urban-decay': urbanDecayArtwork
+    'abstract-emotions-artwork.png': abstractEmotionsArtwork,
+    'urban-decay': urbanDecayArtwork,
+    'urban-decay-artwork.jpg': urbanDecayArtwork
   };
   useEffect(() => {
     fetchAuctions();
