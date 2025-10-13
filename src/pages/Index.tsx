@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import Header from '@/components/Header';
 import PixelIntro from '@/components/PixelIntro';
-import Hero from '@/components/Hero';
 import Auctions from '@/components/Auctions';
 import Footer from '@/components/Footer';
 import EmailSignup from '@/components/EmailSignup';
@@ -26,9 +24,7 @@ const Index = () => {
       
       {showContent && (
         <>
-          <Header />
-          <main>
-            <Hero />
+          <main className="pt-8">
             <Auctions />
             <EmailSignup />
           </main>
