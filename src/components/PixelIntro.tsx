@@ -67,12 +67,8 @@ const PixelIntro = ({ onDone }: PixelIntroProps) => {
     onDone?.();
   };
 
-  // Vibrant color palette
-  const colors = [
-    'bg-pink-500', 'bg-pink-400', 'bg-fuchsia-500', 'bg-rose-500',
-    'bg-blue-500', 'bg-blue-400', 'bg-cyan-500', 'bg-sky-500',
-    'bg-green-500', 'bg-green-400', 'bg-emerald-500', 'bg-teal-500'
-  ];
+  // Brand color palette
+  const colors = ['#FFA7BC', '#F8FF0A', '#2C4C3A'];
 
   // Create 12x12 grid (144 pixels) with random colors
   const pixels = Array.from({ length: 144 }, (_, i) => ({
@@ -103,7 +99,7 @@ const PixelIntro = ({ onDone }: PixelIntroProps) => {
         {pixels.map((pixel) => (
           <motion.div
             key={pixel.id}
-            className={pixel.color}
+            style={{ backgroundColor: pixel.color }}
             initial={{ opacity: 1, scale: 1 }}
             animate={{ opacity: 0, scale: 0.8 }}
             transition={{
