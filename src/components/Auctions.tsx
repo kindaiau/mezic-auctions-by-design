@@ -132,17 +132,17 @@ export default function Auctions() {
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
           {auctions.map(auction => <article key={auction.id} className="group rounded-lg border border-black/10 p-4 bg-black/[0.02] hover:bg-black/[0.05] transition-colors duration-300">
-              <div className="aspect-[4/5] overflow-hidden rounded">
-                <img src={imageMap[auction.image_url] || auction.image_url} alt={auction.title} className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]" />
+              <div className="aspect-square overflow-hidden rounded">
+                <img src={imageMap[auction.image_url] || auction.image_url} alt={auction.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
               </div>
-              <div className="mt-4 space-y-3">
-                <div>
-                  <h3 className="text-black text-lg md:text-xl font-medium">{auction.title}</h3>
-                  <p className="text-black/60 text-sm mt-1">
+              <div className="mt-4 flex flex-col justify-between" style={{ minHeight: '120px' }}>
+                <div className="space-y-2">
+                  <h3 className="text-black text-lg md:text-xl font-medium line-clamp-2">{auction.title}</h3>
+                  <p className="text-black/60 text-sm line-clamp-1">
                     Current bid: ${auction.current_bid} • {formatEndTime(auction.end_time)}
                   </p>
                 </div>
-                <Button onClick={() => handleBidClick(auction)} variant="mez" className="w-full px-4 py-3 text-sm uppercase tracking-tight min-h-[44px]" aria-label={`Place bid on ${auction.title}`}>
+                <Button onClick={() => handleBidClick(auction)} variant="mez" className="w-full px-4 py-3 text-sm uppercase tracking-tight min-h-[44px] mt-3" aria-label={`Place bid on ${auction.title}`}>
                   PLACE BID
                 </Button>
               </div>
