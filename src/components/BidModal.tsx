@@ -95,9 +95,9 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
       const { data, error } = await supabase.functions.invoke('place-bid', {
         body: {
           auctionId: auction.id,
-          bidderName,
-          bidderEmail,
-          bidderPhone,
+          bidderName: bidderName,
+          bidderEmail: bidderEmail,
+          bidderPhone: bidderPhone || undefined,
           bidAmount: amount,
           maximumBid: ceiling
         }
