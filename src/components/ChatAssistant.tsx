@@ -183,7 +183,7 @@ export function ChatButton({ onClick, className }: ChatButtonProps) {
   return (
     <button
       onClick={onClick}
-      className={`fixed bottom-24 right-6 z-[999] w-[80px] h-[80px] rounded-full bg-[hsl(349,100%,83%)/0.4] hover:bg-[hsl(349,100%,83%)/0.6] shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-0.5 transition-all duration-300 hover:scale-105 border-2 border-[hsl(358,85%,52%)] ${className || ''}`}
+      className={`fixed bottom-32 right-6 z-[999] w-[80px] h-[80px] rounded-full bg-[hsl(349,100%,83%)/0.4] hover:bg-[hsl(349,100%,83%)/0.6] shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-0.5 transition-all duration-300 hover:scale-105 border-2 border-[hsl(358,85%,52%)] ${className || ''}`}
       aria-label="Open chat assistant"
     >
       <span className="text-mez-red font-black text-[9px] leading-tight tracking-tight text-center">
