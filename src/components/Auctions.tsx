@@ -124,19 +124,7 @@ export default function Auctions() {
       <div className="mx-auto max-w-6xl">
         <header className="mb-8 md:mb-12 flex flex-col items-center gap-4">
           <h2 className="text-black text-3xl md:text-5xl font-semibold text-center">Auctions</h2>
-          <Button 
-            variant="mez"
-            onClick={() => {
-              const subscribeSection = document.getElementById('subscribe');
-              if (subscribeSection) {
-                subscribeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-            }}
-            className="px-8 py-3 text-sm uppercase tracking-tight min-h-[44px]"
-            aria-label="Register for auction alerts"
-          >
-            REGISTER HERE
-          </Button>
+          
         </header>
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
@@ -151,12 +139,7 @@ export default function Auctions() {
                     Current bid: ${auction.current_bid} • {formatEndTime(auction.end_time)}
                   </p>
                 </div>
-                <Button
-                  onClick={() => handleBidClick(auction)}
-                  variant="mez"
-                  className="w-full px-4 py-3 text-sm uppercase tracking-tight min-h-[44px]"
-                  aria-label={`Place bid on ${auction.title}`}
-                >
+                <Button onClick={() => handleBidClick(auction)} variant="mez" className="w-full px-4 py-3 text-sm uppercase tracking-tight min-h-[44px]" aria-label={`Place bid on ${auction.title}`}>
                   PLACE BID
                 </Button>
               </div>
