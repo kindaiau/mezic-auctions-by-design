@@ -77,10 +77,30 @@ export default function AuctionManagement() {
 
       if (error) throw error;
 
-      toast({
-        title: 'Success',
-        description: `Auction ${newStatus === 'live' ? 'published' : 'unpublished'}`,
-      });
+      // Send notifications if auction is being published
+      if (newStatus === 'live') {
+        try {
+          await supabase.functions.invoke('notify-auction-start', {
+            body: { auctionId: id },
+          });
+          
+          toast({
+            title: 'Success',
+            description: 'Auction published and subscribers notified via SMS',
+          });
+        } catch (notifyError: any) {
+          console.error('Notification error:', notifyError);
+          toast({
+            title: 'Auction Published',
+            description: 'Auction is live, but some notifications may have failed',
+          });
+        }
+      } else {
+        toast({
+          title: 'Success',
+          description: 'Auction status updated',
+        });
+      }
 
       fetchAuctions();
     } catch (error: any) {
