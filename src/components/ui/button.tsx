@@ -25,6 +25,9 @@ const buttonVariants = cva(
         minimal: "text-gallery-white hover:text-artist-gold transition-colors duration-300",
         // MEZ Circular variant - exact logo colors
         mez: "rounded-full bg-[hsl(349,100%,83%)] text-[hsl(358,85%,52%)] font-black border-2 border-[hsl(358,85%,52%)] hover:bg-[hsl(349,100%,80%)] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105",
+        // Gold button variants
+        "gold-solid": "bg-[#D4AF37] text-black font-semibold hover:bg-[#C5A028] transition-all duration-300 shadow-lg hover:shadow-xl",
+        "gold-outline": "border-2 border-[#D4AF37] bg-transparent text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-all duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",

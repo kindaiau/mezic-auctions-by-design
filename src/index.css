@@ -44,8 +44,9 @@
     /* Custom Design Tokens */
     --gallery-black: 0 0% 0%;
     --gallery-white: 0 0% 100%;
-    --artist-gold: 0 0% 0%;
-    --artist-gold-muted: 0 0% 20%;
+    --artist-gold: 45 100% 51%;
+    --artist-gold-muted: 45 90% 45%;
+    --artist-gold-glow: 45 100% 60%;
     --charcoal: 0 0% 95%;
     --mez-blush: 350 100% 88%;
     
@@ -186,5 +187,23 @@
     .grid-kierkegaard {
       grid-template-columns: 1fr;
     }
+  }
+
+  /* Gold glow animation */
+  @keyframes gold-glow {
+    0%, 100% {
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3),
+                  0 0 20px rgba(212, 175, 55, 0.2),
+                  0 0 30px rgba(212, 175, 55, 0.1);
+    }
+    50% {
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4),
+                  0 0 25px rgba(212, 175, 55, 0.3),
+                  0 0 35px rgba(212, 175, 55, 0.2);
+    }
+  }
+
+  .gold-glow-subtle {
+    animation: gold-glow 3s ease-in-out infinite;
   }
 }

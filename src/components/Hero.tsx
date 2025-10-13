@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import mezCircleLogo from "@/assets/mez-circle-logo.png";
+import { Button } from "./ui/button";
 import "./hero.css";
 
 export default function Hero() {
@@ -29,6 +30,36 @@ export default function Hero() {
         <p className="mt-6 max-w-2xl text-center text-black/70 text-xl mx-auto">
           Original works auctioned weekly. Bidding starts at $1.
         </p>
+        <div className="mt-8 flex flex-col md:flex-row gap-4 justify-center items-center">
+          <Button
+            variant="gold-solid"
+            size="lg"
+            className="gold-glow-subtle px-8 py-3 text-sm uppercase tracking-tight min-h-[48px]"
+            onClick={() => {
+              const auctionsSection = document.getElementById('auctions');
+              if (auctionsSection) {
+                auctionsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
+            aria-label="View live auctions"
+          >
+            VIEW LIVE AUCTIONS
+          </Button>
+          <Button
+            variant="gold-outline"
+            size="lg"
+            className="gold-glow-subtle px-8 py-3 text-sm uppercase tracking-tight min-h-[48px]"
+            onClick={() => {
+              const subscribeSection = document.getElementById('subscribe');
+              if (subscribeSection) {
+                subscribeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
+            aria-label="Register to bid"
+          >
+            REGISTER TO BID
+          </Button>
+        </div>
       </div>
     </section>
   );
