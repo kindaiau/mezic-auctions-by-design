@@ -81,12 +81,10 @@ const EmailSignup = () => {
   return <section id="subscribe" className="py-20 px-4 bg-transparent">
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gallery-white">
-            Stay <span className="text-artist-gold">Informed</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gallery-white text-center mx-0 px-[38px] py-[153px]">
+            Stay <span className="text-artist-gold text-center">Stay Informed</span>
           </h2>
-          <p className="text-xl text-gallery-white/80 max-w-2xl mx-auto">
-            Get notified about new auctions, exclusive previews, and behind-the-scenes content from Mariana's studio.
-          </p>
+          
         </div>
 
         <div className="grid grid-cols-1 gap-8">
@@ -94,9 +92,7 @@ const EmailSignup = () => {
           <div className="max-w-2xl mx-auto w-full">
             <Card className="bg-charcoal-light border-artist-gold/30 shadow-2xl">
               <CardHeader>
-                <CardTitle className="text-2xl text-gallery-white text-center">
-                  Join the Auction Community
-                </CardTitle>
+                
               </CardHeader>
               <CardContent>
                 {isSuccess ? <div className="text-center py-8">
@@ -112,80 +108,48 @@ const EmailSignup = () => {
                       <label htmlFor="name" className="block text-sm font-medium text-gallery-white mb-2">
                         Full Name
                       </label>
-                      <Input
-                        id="name"
-                        type="text"
-                        value={name}
-                        onChange={(e) => {
-                          setName(e.target.value);
-                          if (errors.name) {
-                            setErrors(prev => ({ ...prev, name: undefined }));
-                          }
-                        }}
-                        placeholder="Your name"
-                        required
-                        autoComplete="name"
-                        aria-invalid={Boolean(errors.name)}
-                        aria-describedby={errors.name ? 'name-error' : undefined}
-                        className={cn(
-                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-visible:ring-artist-gold/50",
-                          errors.name && "border-destructive focus:border-destructive focus-visible:ring-destructive"
-                        )}
-                      />
-                      {errors.name && (
-                        <p id="name-error" className="mt-2 text-sm text-destructive" role="alert">
+                      <Input id="name" type="text" value={name} onChange={e => {
+                    setName(e.target.value);
+                    if (errors.name) {
+                      setErrors(prev => ({
+                        ...prev,
+                        name: undefined
+                      }));
+                    }
+                  }} placeholder="Your name" required autoComplete="name" aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'name-error' : undefined} className={cn("bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-visible:ring-artist-gold/50", errors.name && "border-destructive focus:border-destructive focus-visible:ring-destructive")} />
+                      {errors.name && <p id="name-error" className="mt-2 text-sm text-destructive" role="alert">
                           {errors.name}
-                        </p>)}
+                        </p>}
                     </div>
 
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gallery-white mb-2">
                         Email Address
                       </label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                          if (errors.contact) {
-                            setErrors(prev => ({ ...prev, contact: undefined }));
-                          }
-                        }}
-                        placeholder="your.email@example.com"
-                        autoComplete="email"
-                        aria-invalid={Boolean(errors.contact)}
-                        aria-describedby={errors.contact ? 'contact-error' : undefined}
-                        className={cn(
-                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-visible:ring-artist-gold/50",
-                          errors.contact && "border-destructive focus:border-destructive focus-visible:ring-destructive"
-                        )}
-                      />
+                      <Input id="email" type="email" value={email} onChange={e => {
+                    setEmail(e.target.value);
+                    if (errors.contact) {
+                      setErrors(prev => ({
+                        ...prev,
+                        contact: undefined
+                      }));
+                    }
+                  }} placeholder="your.email@example.com" autoComplete="email" aria-invalid={Boolean(errors.contact)} aria-describedby={errors.contact ? 'contact-error' : undefined} className={cn("bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-visible:ring-artist-gold/50", errors.contact && "border-destructive focus:border-destructive focus-visible:ring-destructive")} />
                     </div>
 
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium text-gallery-white mb-2">
                         Phone Number (Optional)
                       </label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        value={phone}
-                        onChange={(e) => {
-                          setPhone(e.target.value);
-                          if (errors.contact) {
-                            setErrors(prev => ({ ...prev, contact: undefined }));
-                          }
-                        }}
-                        placeholder="+61 4XX XXX XXX"
-                        autoComplete="tel"
-                        aria-invalid={Boolean(errors.contact)}
-                        aria-describedby={errors.contact ? 'contact-error' : 'phone-hint'}
-                        className={cn(
-                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-visible:ring-artist-gold/50",
-                          errors.contact && "border-destructive focus:border-destructive focus-visible:ring-destructive"
-                        )}
-                      />
+                      <Input id="phone" type="tel" value={phone} onChange={e => {
+                    setPhone(e.target.value);
+                    if (errors.contact) {
+                      setErrors(prev => ({
+                        ...prev,
+                        contact: undefined
+                      }));
+                    }
+                  }} placeholder="+61 4XX XXX XXX" autoComplete="tel" aria-invalid={Boolean(errors.contact)} aria-describedby={errors.contact ? 'contact-error' : 'phone-hint'} className={cn("bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-visible:ring-artist-gold/50", errors.contact && "border-destructive focus:border-destructive focus-visible:ring-destructive")} />
                       <p id="phone-hint" className="text-xs text-gallery-white/60 mt-1">
                         For urgent auction notifications via SMS
                       </p>
@@ -194,21 +158,11 @@ const EmailSignup = () => {
                         </p>}
                     </div>
 
-                    <Button
-                      type="submit"
-                      variant="mez"
-                      className="w-full py-4 text-sm uppercase tracking-tight min-h-[44px]"
-                      disabled={isSubmitting}
-                      aria-live="polite"
-                    >
-                      {isSubmitting ? (
-                        <>
+                    <Button type="submit" variant="mez" className="w-full py-4 text-sm uppercase tracking-tight min-h-[44px]" disabled={isSubmitting} aria-live="polite">
+                      {isSubmitting ? <>
                           <span className="inline-block animate-pulse">SUBSCRIBING...</span>
                           <span className="sr-only">Subscribing, please wait</span>
-                        </>
-                      ) : (
-                        'GET AUCTION ALERTS'
-                      )}
+                        </> : 'GET AUCTION ALERTS'}
                     </Button>
 
                     {errors.submit && <p className="text-sm text-destructive text-center" role="alert">
