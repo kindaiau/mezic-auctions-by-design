@@ -1,9 +1,27 @@
 const alternateColors = (text: string) => {
   return text.split('').map((char, index) => {
-    const color = index % 2 === 0 
-      ? 'hsl(var(--mez-red))' 
-      : 'hsl(var(--mez-blush))';
-    return <span key={index} style={{ color }}>{char}</span>;
+    let color: string;
+    if (index % 3 === 2) {
+      color = 'hsl(var(--artist-gold))';
+    } else if (index % 2 === 0) {
+      color = 'hsl(var(--mez-red))';
+    } else {
+      color = 'hsl(var(--mez-blush))';
+    }
+    
+    const isBlush = index % 2 !== 0 && index % 3 !== 2;
+    return (
+      <span 
+        key={index} 
+        style={{ 
+          color,
+          fontWeight: isBlush ? '900' : 'inherit',
+          textShadow: isBlush ? '0 0 2px currentColor' : 'none'
+        }}
+      >
+        {char}
+      </span>
+    );
   });
 };
 
