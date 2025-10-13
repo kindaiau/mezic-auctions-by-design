@@ -150,7 +150,7 @@ const EmailSignup = () => {
                     </p>}
                 </div>
 
-                <Button type="submit" className="w-full bg-[#e9989f] hover:bg-[#d88891] text-[#3a3f47] font-semibold py-3 text-sm uppercase tracking-wide min-h-[44px] rounded-full" disabled={isSubmitting} aria-live="polite">
+                <Button type="submit" variant="mez" className="w-full py-3 text-xs uppercase tracking-wide min-h-[44px]" disabled={isSubmitting} aria-live="polite">
                   {isSubmitting ? <>
                       <span className="inline-block animate-pulse">SUBSCRIBING...</span>
                       <span className="sr-only">Subscribing, please wait</span>
