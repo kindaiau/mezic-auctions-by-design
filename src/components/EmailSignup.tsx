@@ -78,11 +78,11 @@ const EmailSignup = () => {
       setIsSubmitting(false);
     }
   };
-  return <section id="subscribe" className="py-20 px-4 bg-transparent">
+  return <section id="subscribe" className="pt-8 pb-20 px-4 bg-transparent">
       <div className="container mx-auto max-w-4xl">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gallery-white text-center mx-0 px-[38px] py-[153px]">
-            Stay <span className="text-artist-gold mx-0 px-[47px] my-0 font-bold text-center text-sm">Informed</span>
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gallery-white">
+            Stay informed
           </h2>
           
         </div>
