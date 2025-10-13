@@ -1,37 +1,30 @@
-import { useState } from "react";
-import PixelIntro from "./components/PixelIntro";
-import Hero from "./components/Hero";
-import Auctions from "./components/Auctions";
-import EmailSignup from "./components/EmailSignup";
-import Footer from "./components/Footer";
-import { ChatAssistant, ChatButton } from "./components/ChatAssistant";
-import { Toaster } from "./components/ui/toaster";
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Index from "./pages/Index";
+import Admin from "./pages/Admin";
+import Auth from "./pages/Auth";
+import NotFound from "./pages/NotFound";
 
-export default function App() {
-  const [loaded, setLoaded] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  
-  return (
-    <>
-      {!loaded && <PixelIntro onDone={() => setLoaded(true)} />}
-      <main className="bg-white text-black">
-        <Hero />
-        <Auctions />
-        <EmailSignup />
-        <Footer />
-      </main>
+const queryClient = new QueryClient();
 
-      {/* AI Chat Assistant */}
-      {loaded && (
-        <>
-          <ChatButton onClick={() => setIsChatOpen(true)} />
-          <ChatAssistant
-            isOpen={isChatOpen}
-            onClose={() => setIsChatOpen(false)}
-          />
-        </>
-      )}
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
       <Toaster />
-    </>
-  );
-}
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
+
+export default App;
