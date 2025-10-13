@@ -3,6 +3,10 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
+const TWILIO_ACCOUNT_SID = Deno.env.get("TWILIO_ACCOUNT_SID");
+const TWILIO_AUTH_TOKEN = Deno.env.get("TWILIO_AUTH_TOKEN");
+const TWILIO_PHONE_NUMBER = Deno.env.get("TWILIO_PHONE_NUMBER");
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -75,6 +79,38 @@ function logSecure(level: 'info' | 'error', message: string, data?: Record<strin
   } : {};
   
   console[level](`[${level.toUpperCase()}] ${message}`, sanitized);
+}
+
+// Send SMS notification via Twilio
+async function sendSMS(to: string, body: string): Promise<void> {
+  if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_PHONE_NUMBER) {
+    console.warn('Twilio credentials not configured, skipping SMS');
+    return;
+  }
+
+  const auth = btoa(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`);
+  
+  const formData = new URLSearchParams();
+  formData.append('To', to);
+  formData.append('From', TWILIO_PHONE_NUMBER);
+  formData.append('Body', body);
+
+  const response = await fetch(
+    `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`,
+    {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${auth}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData.toString(),
+    }
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Twilio SMS failed: ${errorText}`);
+  }
 }
 
 serve(async (req) => {
@@ -275,6 +311,20 @@ serve(async (req) => {
           `
         });
 
+        // Send SMS if phone number available
+        if (previousBidder.bidder_phone) {
+          try {
+            await sendSMS(
+              previousBidder.bidder_phone,
+              `MEZ Auctions: You've been outbid on "${auction.title}". New bid: $${resultingBidAmount}. Place a new bid to stay in the running!`
+            );
+            logSecure('info', 'Outbid SMS sent', { previousBidderId: previousBidder.id });
+          } catch (smsError: unknown) {
+            const smsMessage = smsError instanceof Error ? smsError.message : 'Unknown SMS error';
+            logSecure('error', 'Failed to send outbid SMS', { error: smsMessage });
+          }
+        }
+
         await supabase.from('bid_notifications').insert({
           bid_id: previousBidder.id,
           notification_type: 'outbid'
@@ -307,6 +357,20 @@ serve(async (req) => {
           <p>Good luck!</p>
         `
       });
+
+      // Send SMS confirmation if phone number provided
+      if (bidderPhone) {
+        try {
+          await sendSMS(
+            bidderPhone,
+            `MEZ Auctions: Bid confirmed for "${auction.title}". ${currentLeaderStatus === 'leading' ? `You're leading at $${resultingBidAmount}!` : `Current bid: $${updatedCurrentBid}`}`
+          );
+          logSecure('info', 'Confirmation SMS sent', { bidId: newBid.id });
+        } catch (smsError: unknown) {
+          const smsMessage = smsError instanceof Error ? smsError.message : 'Unknown SMS error';
+          logSecure('error', 'Failed to send confirmation SMS', { error: smsMessage });
+        }
+      }
 
       await supabase.from('bid_notifications').insert({
         bid_id: newBid.id,
