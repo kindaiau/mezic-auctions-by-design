@@ -21,7 +21,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[hsl(349,100%,50%)]">
+    <div className="min-h-screen bg-white">
       <PixelIntro />
       
       {showContent && (
