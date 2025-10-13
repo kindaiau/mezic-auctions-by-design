@@ -82,7 +82,7 @@ const EmailSignup = () => {
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gallery-white">
-            Stay 
+            Stay <span className="text-artist-gold">Informed</span>
           </h2>
           <p className="text-xl text-gallery-white/80 max-w-2xl mx-auto">
             Get notified about new auctions, exclusive previews, and behind-the-scenes content from Mariana's studio.
