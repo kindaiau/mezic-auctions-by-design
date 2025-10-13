@@ -50,7 +50,7 @@ const Header = () => {
           </nav>
 
           <Button
-            variant="mez"
+            variant="gold-solid"
             className="text-xs uppercase tracking-tight px-6 py-2"
           >
             CONTACT
