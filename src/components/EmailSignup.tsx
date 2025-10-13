@@ -81,15 +81,17 @@ const EmailSignup = () => {
   return <section id="subscribe" className="pt-8 pb-20 px-4 bg-transparent">
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-6">
-          <h2 className="text-xl md:text-2xl font-semibold mb-4 text-artist-gold">
-            Stay informed
-          </h2>
+          <a href="#signup-form" className="inline-block">
+            <h2 className="text-xl md:text-2xl font-semibold mb-4 text-artist-gold uppercase border border-artist-gold/20 shadow-lg shadow-artist-gold/10 px-6 py-3 rounded-lg">
+              Stay informed
+            </h2>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 gap-8">
           {/* Signup Form */}
-          <div className="max-w-2xl mx-auto w-full">
-            <Card className="bg-charcoal-light border-artist-gold/30 shadow-2xl">
+          <div id="signup-form" className="max-w-2xl mx-auto w-full">
+            <Card className="bg-charcoal-light border border-artist-gold/20 shadow-2xl shadow-artist-gold/10">
               <CardHeader>
                 
               </CardHeader>
