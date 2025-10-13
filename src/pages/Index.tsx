@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Header from '@/components/Header';
 import PixelIntro from '@/components/PixelIntro';
 import Auctions from '@/components/Auctions';
 import Footer from '@/components/Footer';
@@ -24,6 +25,7 @@ const Index = () => {
       
       {showContent && (
         <>
+          <Header />
           <main className="pt-8">
             <Auctions />
             <EmailSignup />
