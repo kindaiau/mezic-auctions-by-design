@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import Header from '@/components/Header';
+import { useState } from 'react';
 import PixelIntro from '@/components/PixelIntro';
 import Hero from '@/components/Hero';
 import Auctions from '@/components/Auctions';
@@ -8,41 +7,29 @@ import EmailSignup from '@/components/EmailSignup';
 import { ChatAssistant, ChatButton } from '@/components/ChatAssistant';
 
 const Index = () => {
-  const [showContent, setShowContent] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  useEffect(() => {
-    // Show content after pixel intro
-    const timer = setTimeout(() => {
-      setShowContent(true);
-    }, 1800);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-[hsl(349,100%,50%)]">
-      <PixelIntro />
-      
-      {showContent && (
+    <>
+      {!loaded && <PixelIntro onDone={() => setLoaded(true)} />}
+      <main className="bg-white text-black">
+        <Hero />
+        <Auctions />
+        <EmailSignup />
+        <Footer />
+      </main>
+
+      {loaded && (
         <>
-          <Header />
-          <main>
-            <Hero />
-            <Auctions />
-            <EmailSignup />
-          </main>
-          <Footer />
-          
-          {/* AI Chat Assistant */}
           <ChatButton onClick={() => setIsChatOpen(true)} />
-          <ChatAssistant 
-            isOpen={isChatOpen} 
-            onClose={() => setIsChatOpen(false)} 
+          <ChatAssistant
+            isOpen={isChatOpen}
+            onClose={() => setIsChatOpen(false)}
           />
         </>
       )}
-    </div>
+    </>
   );
 };
 
