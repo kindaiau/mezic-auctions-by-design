@@ -80,11 +80,10 @@ const EmailSignup = () => {
   };
   return <section id="subscribe" className="pt-8 pb-20 px-4 bg-transparent">
       <div className="container mx-auto max-w-4xl">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gallery-white">
+        <div className="text-center mb-6">
+          <h2 className="text-xl md:text-2xl font-semibold mb-4 text-artist-gold">
             Stay informed
           </h2>
-          
         </div>
 
         <div className="grid grid-cols-1 gap-8">
