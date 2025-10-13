@@ -88,10 +88,24 @@ async function sendSMS(to: string, body: string): Promise<void> {
     return;
   }
 
+  // Normalize phone number to international format
+  let normalizedPhone = to.trim();
+  
+  // If Australian number starting with 0, convert to +61
+  if (normalizedPhone.startsWith('0') && normalizedPhone.length === 10) {
+    normalizedPhone = '+61' + normalizedPhone.substring(1);
+  }
+  // If it doesn't start with +, assume it needs one
+  else if (!normalizedPhone.startsWith('+')) {
+    normalizedPhone = '+' + normalizedPhone;
+  }
+
+  console.log('Sending SMS to:', normalizedPhone.substring(0, 5) + '***');
+
   const auth = btoa(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`);
   
   const formData = new URLSearchParams();
-  formData.append('To', to);
+  formData.append('To', normalizedPhone);
   formData.append('From', TWILIO_PHONE_NUMBER);
   formData.append('Body', body);
 
@@ -109,8 +123,11 @@ async function sendSMS(to: string, body: string): Promise<void> {
 
   if (!response.ok) {
     const errorText = await response.text();
+    console.error('Twilio SMS error:', errorText);
     throw new Error(`Twilio SMS failed: ${errorText}`);
   }
+  
+  console.log('SMS sent successfully to:', normalizedPhone.substring(0, 5) + '***');
 }
 
 serve(async (req) => {
