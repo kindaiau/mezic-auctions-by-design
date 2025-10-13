@@ -1,7 +1,5 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Shield } from 'lucide-react';
 import mezLogo from '@/assets/mez-logo-optimized.webp';
 
 const Header = () => {
@@ -49,13 +47,6 @@ const Header = () => {
             >
               Auctions
             </a>
-            <Link
-              to="/auth"
-              className="text-sm text-black hover:text-black/70 transition-colors flex items-center gap-1"
-            >
-              <Shield className="h-4 w-4" />
-              Admin
-            </Link>
           </nav>
 
           <Button
