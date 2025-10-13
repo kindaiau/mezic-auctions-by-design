@@ -112,49 +112,81 @@ const EmailSignup = () => {
                       <label htmlFor="name" className="block text-sm font-medium text-gallery-white mb-2">
                         Full Name
                       </label>
-                      <Input id="name" type="text" value={name} onChange={e => {
-                    setName(e.target.value);
-                    if (errors.name) {
-                      setErrors(prev => ({
-                        ...prev,
-                        name: undefined
-                      }));
-                    }
-                  }} placeholder="Your name" required aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'name-error' : undefined} className={cn("bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold", errors.name && "border-destructive focus:border-destructive")} />
-                      {errors.name && <p id="name-error" className="mt-2 text-sm text-destructive" role="alert">
+                      <Input
+                        id="name"
+                        type="text"
+                        value={name}
+                        onChange={(e) => {
+                          setName(e.target.value);
+                          if (errors.name) {
+                            setErrors(prev => ({ ...prev, name: undefined }));
+                          }
+                        }}
+                        placeholder="Your name"
+                        required
+                        autoComplete="name"
+                        aria-invalid={Boolean(errors.name)}
+                        aria-describedby={errors.name ? 'name-error' : undefined}
+                        className={cn(
+                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-visible:ring-artist-gold/50",
+                          errors.name && "border-destructive focus:border-destructive focus-visible:ring-destructive"
+                        )}
+                      />
+                      {errors.name && (
+                        <p id="name-error" className="mt-2 text-sm text-destructive" role="alert">
                           {errors.name}
-                        </p>}
+                        </p>)}
                     </div>
 
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gallery-white mb-2">
                         Email Address
                       </label>
-                      <Input id="email" type="email" value={email} onChange={e => {
-                    setEmail(e.target.value);
-                    if (errors.contact) {
-                      setErrors(prev => ({
-                        ...prev,
-                        contact: undefined
-                      }));
-                    }
-                  }} placeholder="your.email@example.com" aria-invalid={Boolean(errors.contact)} aria-describedby={errors.contact ? 'contact-error' : undefined} className={cn("bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold", errors.contact && "border-destructive focus:border-destructive")} />
+                      <Input
+                        id="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          if (errors.contact) {
+                            setErrors(prev => ({ ...prev, contact: undefined }));
+                          }
+                        }}
+                        placeholder="your.email@example.com"
+                        autoComplete="email"
+                        aria-invalid={Boolean(errors.contact)}
+                        aria-describedby={errors.contact ? 'contact-error' : undefined}
+                        className={cn(
+                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-visible:ring-artist-gold/50",
+                          errors.contact && "border-destructive focus:border-destructive focus-visible:ring-destructive"
+                        )}
+                      />
                     </div>
 
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium text-gallery-white mb-2">
                         Phone Number (Optional)
                       </label>
-                      <Input id="phone" type="tel" value={phone} onChange={e => {
-                    setPhone(e.target.value);
-                    if (errors.contact) {
-                      setErrors(prev => ({
-                        ...prev,
-                        contact: undefined
-                      }));
-                    }
-                  }} placeholder="+61 4XX XXX XXX" aria-invalid={Boolean(errors.contact)} aria-describedby={errors.contact ? 'contact-error' : undefined} className={cn("bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold", errors.contact && "border-destructive focus:border-destructive")} />
-                      <p className="text-xs text-gallery-white/60 mt-1">
+                      <Input
+                        id="phone"
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => {
+                          setPhone(e.target.value);
+                          if (errors.contact) {
+                            setErrors(prev => ({ ...prev, contact: undefined }));
+                          }
+                        }}
+                        placeholder="+61 4XX XXX XXX"
+                        autoComplete="tel"
+                        aria-invalid={Boolean(errors.contact)}
+                        aria-describedby={errors.contact ? 'contact-error' : 'phone-hint'}
+                        className={cn(
+                          "bg-black/80 border-artist-gold/30 text-gallery-white placeholder:text-gallery-white/50 focus:border-artist-gold focus-visible:ring-artist-gold/50",
+                          errors.contact && "border-destructive focus:border-destructive focus-visible:ring-destructive"
+                        )}
+                      />
+                      <p id="phone-hint" className="text-xs text-gallery-white/60 mt-1">
                         For urgent auction notifications via SMS
                       </p>
                       {errors.contact && <p id="contact-error" className="mt-2 text-sm text-destructive" role="alert">
@@ -162,8 +194,21 @@ const EmailSignup = () => {
                         </p>}
                     </div>
 
-                    <Button type="submit" variant="mez" className="w-full py-4 text-sm uppercase tracking-tight" disabled={isSubmitting}>
-                      {isSubmitting ? 'SUBSCRIBING...' : 'GET AUCTION ALERTS'}
+                    <Button
+                      type="submit"
+                      variant="mez"
+                      className="w-full py-4 text-sm uppercase tracking-tight min-h-[44px]"
+                      disabled={isSubmitting}
+                      aria-live="polite"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <span className="inline-block animate-pulse">SUBSCRIBING...</span>
+                          <span className="sr-only">Subscribing, please wait</span>
+                        </>
+                      ) : (
+                        'GET AUCTION ALERTS'
+                      )}
                     </Button>
 
                     {errors.submit && <p className="text-sm text-destructive text-center" role="alert">

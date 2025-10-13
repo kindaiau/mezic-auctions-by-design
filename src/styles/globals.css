@@ -3,5 +3,15 @@ html,body,#root{height:100%;background:#fff;margin:0;padding:0;}
 body{color:#000;}
 /* prevent accidental global margins creating big gaps */
 section{margin:0;padding:0;}
-/* focus ring for dark UI */
-:focus-visible{outline:2px solid rgba(255,255,255,.5);outline-offset:2px;}
+/* Enhanced focus ring for better keyboard navigation visibility */
+:focus-visible{
+  outline:3px solid rgba(255,215,0,.8);
+  outline-offset:2px;
+  border-radius:2px;
+}
+/* Dark UI specific focus styles */
+[class*="bg-black"] :focus-visible,
+[class*="bg-charcoal"] :focus-visible{
+  outline:3px solid rgba(255,215,0,.9);
+  outline-offset:2px;
+}
