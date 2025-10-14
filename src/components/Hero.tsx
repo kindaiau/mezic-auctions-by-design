@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import mezCircleLogo from "@/assets/mez-circle-logo.png";
+import mezCircleLogo from "@/assets/mez-circle-logo.webp";
 import { Button } from "./ui/button";
 import "./hero.css";
 
