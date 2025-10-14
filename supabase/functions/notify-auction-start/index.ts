@@ -1,5 +1,11 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
+import { Resend } from 'npm:resend@2.0.0';
+import React from 'npm:react@18.3.1';
+import { renderAsync } from 'npm:@react-email/components@0.0.22';
+import { AuctionStart } from '../_shared/email-templates/auction-start.tsx';
+
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const TWILIO_ACCOUNT_SID = Deno.env.get("TWILIO_ACCOUNT_SID")?.trim();
 const TWILIO_AUTH_TOKEN = Deno.env.get("TWILIO_AUTH_TOKEN")?.trim();
@@ -118,6 +124,37 @@ serve(async (req) => {
     });
 
     await Promise.all(smsPromises);
+
+    // Send email notifications to subscribers with email addresses
+    const emailPromises = (subscribers || [])
+      .filter(sub => sub.email)
+      .map(async (subscriber) => {
+        try {
+          const html = await renderAsync(
+            React.createElement(AuctionStart, {
+              auctionTitle: auction.title,
+              artist: auction.artist,
+              startingBid: Number(auction.starting_bid),
+              endDate: new Date(auction.end_time).toLocaleDateString()
+            })
+          );
+          
+          await resend.emails.send({
+            from: 'MEZ Auctions <auctions@mezauctions.com>',
+            to: [subscriber.email],
+            subject: `🎨 New Auction: ${auction.title}`,
+            html
+          });
+          
+          console.log(`[INFO] Auction start email sent to subscriber`);
+        } catch (error: any) {
+          console.error(`[ERROR] Failed to send auction start email`, {
+            error: error.message
+          });
+        }
+      });
+
+    await Promise.all(emailPromises);
 
     return new Response(
       JSON.stringify({

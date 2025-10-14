@@ -2,6 +2,10 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import React from 'npm:react@18.3.1';
+import { renderAsync } from 'npm:@react-email/components@0.0.22';
+import { BidConfirmation } from '../_shared/email-templates/bid-confirmation.tsx';
+import { OutbidNotification } from '../_shared/email-templates/outbid-notification.tsx';
 
 const TWILIO_ACCOUNT_SID = Deno.env.get("TWILIO_ACCOUNT_SID")?.trim();
 const TWILIO_AUTH_TOKEN = Deno.env.get("TWILIO_AUTH_TOKEN")?.trim();
@@ -361,23 +365,24 @@ serve(async (req) => {
 
     // Send confirmation email to new bidder (async, non-blocking)
     try {
+      const html = await renderAsync(
+        React.createElement(BidConfirmation, {
+          bidderName,
+          auctionTitle: auction.title,
+          artist: auction.artist,
+          bidAmount,
+          maxBid: proxyCeiling,
+          currentBid: resultingBidAmount,
+          isLeading: currentLeaderStatus === 'leading',
+          endTime: endTime.toLocaleString()
+        })
+      );
+
       await resend.emails.send({
-        from: 'MEZ Auctions <auctions@resend.dev>',
+        from: 'MEZ Auctions <auctions@mezauctions.com>',
         to: [bidderEmail],
         subject: `${currentLeaderStatus === 'leading' ? 'Bid confirmation' : 'Bid received'} for "${auction.title}"`,
-        html: `
-          <h2>Bid Placed Successfully!</h2>
-          <p>Hi ${bidderName},</p>
-          <p>Your bid has been placed on <strong>${auction.title}</strong> by ${auction.artist}.</p>
-          <p><strong>Your submitted bid:</strong> $${bidAmount}</p>
-          <p><strong>Your maximum (proxy) bid:</strong> $${proxyCeiling}</p>
-          <p>${currentLeaderStatus === 'leading'
-            ? `You are currently leading at $${resultingBidAmount}. We'll automatically increase your bid in $${bidIncrement} increments if someone else bids, up to your maximum.`
-            : `Another collector's proxy limit is currently higher, so you're outbid at $${updatedCurrentBid}. We'll keep your ceiling on file in case the standings change.`}</p>
-          <p><strong>Auction ends:</strong> ${endTime.toLocaleString()}</p>
-          <p>We'll notify you if you're outbid or if you win the auction.</p>
-          <p>Good luck!</p>
-        `
+        html,
       });
 
       // Send SMS confirmation if phone number provided

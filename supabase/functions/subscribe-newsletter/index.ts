@@ -2,6 +2,9 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import React from 'npm:react@18.3.1';
+import { renderAsync } from 'npm:@react-email/components@0.0.22';
+import { WelcomeEmail } from '../_shared/email-templates/welcome-email.tsx';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -134,15 +137,17 @@ serve(async (req) => {
     // Send welcome email (async, non-blocking) - only if email provided
     if (email) {
       try {
+        const html = await renderAsync(
+          React.createElement(WelcomeEmail, {
+            name
+          })
+        );
+
         await resend.emails.send({
-          from: 'MEZ Auctions <auctions@resend.dev>',
+          from: 'MEZ Auctions <auctions@mezauctions.com>',
           to: [email],
           subject: 'Welcome to MEZ Auction Alerts!',
-          html: `
-            <h2>Thank you for subscribing, ${name}!</h2>
-            <p>You'll now receive alerts about new auctions and exclusive art pieces.</p>
-            <p>Stay tuned for exciting updates!</p>
-          `
+          html,
         });
         
         logSecure('info', 'Welcome email sent', { subscriberId: data.id });
