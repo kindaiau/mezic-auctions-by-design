@@ -26,36 +26,13 @@ const Header = () => {
           />
         </div>
 
-        {/* Desktop Navigation */}
-        <div className="flex items-center space-x-6">
-          <nav className="hidden md:flex items-center space-x-8">
-            <a
-              href="#work"
-              className="text-sm text-black hover:text-black/70 transition-colors"
-            >
-              Work
-            </a>
-            <a
-              href="#about"
-              className="text-sm text-black hover:text-black/70 transition-colors"
-            >
-              About
-            </a>
-            <a
-              href="#auctions"
-              className="text-sm text-black hover:text-black/70 transition-colors"
-            >
-              Auctions
-            </a>
-          </nav>
-
-          <Button
-            variant="gold-solid"
-            className="text-xs uppercase tracking-tight px-6 py-2"
-          >
-            CONTACT
-          </Button>
-        </div>
+        {/* Contact Button */}
+        <Button
+          variant="gold-solid"
+          className="text-xs uppercase tracking-tight px-6 py-2"
+        >
+          CONTACT
+        </Button>
       </div>
     </motion.header>
   );
