@@ -8,6 +8,7 @@ import AuctionManagement from '@/components/admin/AuctionManagement';
 import BidsView from '@/components/admin/BidsView';
 import SubscribersView from '@/components/admin/SubscribersView';
 import ContactsView from '@/components/admin/ContactsView';
+import PendingSubmissions from '@/components/admin/PendingSubmissions';
 
 export default function Admin() {
   const [loading, setLoading] = useState(true);
@@ -86,8 +87,9 @@ export default function Admin() {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="auctions" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8">
+          <TabsList className="grid w-full grid-cols-5 mb-8">
             <TabsTrigger value="auctions">Auctions</TabsTrigger>
+            <TabsTrigger value="pending">Pending</TabsTrigger>
             <TabsTrigger value="bids">Bids</TabsTrigger>
             <TabsTrigger value="subscribers">Subscribers</TabsTrigger>
             <TabsTrigger value="contacts">Contacts</TabsTrigger>
@@ -95,6 +97,10 @@ export default function Admin() {
 
           <TabsContent value="auctions">
             <AuctionManagement />
+          </TabsContent>
+
+          <TabsContent value="pending">
+            <PendingSubmissions />
           </TabsContent>
 
           <TabsContent value="bids">

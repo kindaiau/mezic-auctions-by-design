@@ -14,6 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
+      auction_submissions: {
+        Row: {
+          admin_notes: string | null
+          artist: string
+          created_at: string
+          description: string | null
+          end_time: string
+          id: string
+          image_url: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          starting_bid: number
+          status: string
+          submitted_at: string
+          submitted_by: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          artist: string
+          created_at?: string
+          description?: string | null
+          end_time: string
+          id?: string
+          image_url?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          starting_bid: number
+          status?: string
+          submitted_at?: string
+          submitted_by?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          artist?: string
+          created_at?: string
+          description?: string | null
+          end_time?: string
+          id?: string
+          image_url?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          starting_bid?: number
+          status?: string
+          submitted_at?: string
+          submitted_by?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       auctions: {
         Row: {
           artist: string

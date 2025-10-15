@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Index from './pages/Index.tsx'
 import Auth from './pages/Auth.tsx'
 import Admin from './pages/Admin.tsx'
+import SubmitAuction from './pages/SubmitAuction.tsx'
 import NotFound from './pages/NotFound.tsx'
 import { Toaster } from './components/ui/toaster'
 import './index.css'
@@ -14,6 +15,7 @@ createRoot(document.getElementById("root")!).render(
       <Route path="/" element={<Index />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/submit-auction" element={<SubmitAuction />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
     <Toaster />
