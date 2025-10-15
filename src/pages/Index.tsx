@@ -6,10 +6,18 @@ import ShopLink from '@/components/ShopLink';
 import Footer from '@/components/Footer';
 import EmailSignup from '@/components/EmailSignup';
 import { ChatAssistant, ChatButton } from '@/components/ChatAssistant';
+import { useTrafficSource } from '@/hooks/useTrafficSource';
+import { useScrollDepth } from '@/hooks/useScrollDepth';
 
 const Index = () => {
   const [loaded, setLoaded] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+
+  // Initialize traffic source tracking
+  useTrafficSource();
+  
+  // Track scroll depth
+  useScrollDepth();
 
   return (
     <>

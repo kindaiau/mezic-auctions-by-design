@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import mezCircleLogo from "@/assets/mez-circle-logo.png";
 import { Button } from "./ui/button";
 import "./hero.css";
+import { trackCTAClick } from "@/lib/tracking";
 
 export default function Hero() {
   return (
@@ -36,6 +37,7 @@ export default function Hero() {
             size="lg"
             className="gold-glow-subtle px-8 py-3 text-sm uppercase tracking-tight min-h-[48px]"
             onClick={() => {
+              trackCTAClick('View Live Auctions', '#auctions');
               const auctionsSection = document.getElementById('auctions');
               if (auctionsSection) {
                 auctionsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -50,6 +52,7 @@ export default function Hero() {
             size="lg"
             className="gold-glow-subtle px-8 py-3 text-sm uppercase tracking-tight min-h-[48px]"
             onClick={() => {
+              trackCTAClick('Register to Bid', '#subscribe');
               const subscribeSection = document.getElementById('subscribe');
               if (subscribeSection) {
                 subscribeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });

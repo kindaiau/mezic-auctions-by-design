@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { BidModal } from './BidModal';
 import { Button } from './ui/button';
 import valiMyersArtwork from '@/assets/vali-myers-artwork-optimized.webp';
 import abstractEmotionsArtwork from '@/assets/abstract-emotions-artwork-optimized.webp';
 import urbanDecayArtwork from '@/assets/urban-decay-artwork-optimized.webp';
+import { trackAuctionView, trackAuctionClick, trackBidModalOpen } from '@/lib/tracking';
 interface Auction {
   id: string;
   title: string;
@@ -45,6 +46,7 @@ export default function Auctions() {
   const [selectedAuction, setSelectedAuction] = useState<Auction | null>(null);
   const [isBidModalOpen, setIsBidModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const auctionsTracked = useRef<Set<string>>(new Set());
 
   // Static image mapping - handles both short names and full filenames from database
   const imageMap: Record<string, string> = {
@@ -90,9 +92,38 @@ export default function Auctions() {
     }
   };
   const handleBidClick = (auction: Auction) => {
+    trackAuctionClick(auction.id, auction.title);
+    trackBidModalOpen(auction.id, auction.title, auction.current_bid);
     setSelectedAuction(auction);
     setIsBidModalOpen(true);
   };
+
+  // Track auction views when they appear on screen
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.5, // Track when 50% of auction is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const auctionId = entry.target.getAttribute('data-auction-id');
+          const auctionTitle = entry.target.getAttribute('data-auction-title');
+          
+          if (auctionId && auctionTitle && !auctionsTracked.current.has(auctionId)) {
+            auctionsTracked.current.add(auctionId);
+            trackAuctionView(auctionId, auctionTitle);
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all auction cards
+    const auctionCards = document.querySelectorAll('[data-auction-id]');
+    auctionCards.forEach(card => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, [auctions]);
   const formatEndTime = (endTime: string) => {
     const date = new Date(endTime);
     const now = new Date();
@@ -131,7 +162,11 @@ export default function Auctions() {
         </header>
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
-          {auctions.map(auction => <article key={auction.id} className="group rounded-lg border border-black/10 p-4 bg-black/[0.02] hover:bg-black/[0.05] transition-colors duration-300">
+          {auctions.map(auction => <article 
+              key={auction.id} 
+              data-auction-id={auction.id}
+              data-auction-title={auction.title}
+              className="group rounded-lg border border-black/10 p-4 bg-black/[0.02] hover:bg-black/[0.05] transition-colors duration-300">
               <div className="aspect-square overflow-hidden rounded">
                 <img src={imageMap[auction.image_url] || auction.image_url} alt={auction.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
               </div>

@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { trackBidSubmit, trackBidSuccess, trackBidFail, getBidAmountRange } from '@/lib/tracking';
 
 interface BidModalProps {
   isOpen: boolean;
@@ -70,6 +71,9 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
       const amount = parseFloat(bidAmount);
       const ceiling = maximumBid ? parseFloat(maximumBid) : amount;
 
+      // Track bid submission
+      trackBidSubmit(auction.id, getBidAmountRange(amount));
+
       if (isNaN(amount) || amount <= auction.currentBid) {
         setErrors({ bidAmount: `Bid must be higher than $${auction.currentBid}` });
         toast({
@@ -114,6 +118,9 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
       const max = response?.bid?.maximumAmount ?? ceiling;
       const current = response?.currentBid ?? amount;
 
+      // Track successful bid
+      trackBidSuccess(auction.id, getBidAmountRange(amount));
+
       if (response?.status === 'outbid') {
         toast({
           title: 'Bid received — currently outbid',
@@ -139,6 +146,10 @@ export function BidModal({ isOpen, onClose, auction, onBidPlaced }: BidModalProp
     } catch (error: unknown) {
       console.error('Error placing bid:', error);
       const message = error instanceof Error ? error.message : 'Failed to place bid';
+      
+      // Track bid failure
+      trackBidFail(auction.id, message);
+      
       toast({
         title: 'Error',
         description: message,

@@ -6,6 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { supabase } from '@/integrations/supabase/client';
 import { MessageCircle, Send, X, Loader2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { trackChatOpen, trackChatMessage, trackChatClose } from '@/lib/tracking';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -34,6 +35,15 @@ export function ChatAssistant({ isOpen, onClose, context }: ChatAssistantProps) 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Track chat open/close
+  useEffect(() => {
+    if (isOpen) {
+      trackChatOpen();
+    } else if (messages.length > 1) { // Only track close if user actually used it
+      trackChatClose();
+    }
+  }, [isOpen]);
+
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -44,6 +54,9 @@ export function ChatAssistant({ isOpen, onClose, context }: ChatAssistantProps) 
 
     const userMessage = inputMessage.trim();
     setInputMessage('');
+
+    // Track chat message
+    trackChatMessage();
 
     // Add user message to chat
     const newMessages: Message[] = [...messages, { role: 'user', content: userMessage }];

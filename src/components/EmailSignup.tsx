@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,12 +6,14 @@ import { CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { trackEmailSignupView, trackEmailSignupSubmit, trackEmailSignupSuccess } from '@/lib/tracking';
 const EmailSignup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const hasTrackedView = useRef(false);
   const {
     toast
   } = useToast();
@@ -20,6 +22,29 @@ const EmailSignup = () => {
     contact?: string;
     submit?: string;
   }>({});
+
+  // Track email signup form view
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.5,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasTrackedView.current) {
+          hasTrackedView.current = true;
+          trackEmailSignupView();
+        }
+      });
+    }, observerOptions);
+
+    const signupSection = document.getElementById('subscribe');
+    if (signupSection) {
+      observer.observe(signupSection);
+    }
+
+    return () => observer.disconnect();
+  }, []);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
@@ -36,6 +61,10 @@ const EmailSignup = () => {
       return;
     }
     setIsSubmitting(true);
+    
+    // Track signup submission
+    trackEmailSignupSubmit();
+    
     try {
       const {
         data,
@@ -51,6 +80,10 @@ const EmailSignup = () => {
       if (data && typeof data === 'object' && 'error' in data && data.error) {
         throw new Error(String(data.error));
       }
+      
+      // Track successful signup
+      trackEmailSignupSuccess();
+      
       setIsSuccess(true);
       toast({
         title: "Successfully subscribed!",
