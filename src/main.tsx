@@ -15,7 +15,7 @@ createRoot(document.getElementById("root")!).render(
       <Route path="/" element={<Index />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/admin" element={<Admin />} />
-      <Route path="/submit-auction" element={<SubmitAuction />} />
+      <Route path="/uploadart" element={<SubmitAuction />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
     <Toaster />
