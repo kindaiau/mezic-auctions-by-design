@@ -71,8 +71,8 @@ export default function PendingSubmissions() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
 
-      // Create auction from submission
-      const { error: auctionError } = await supabase
+      // Create auction from submission as live
+      const { data: newAuction, error: auctionError } = await supabase
         .from('auctions')
         .insert({
           title: submission.title,
@@ -82,8 +82,10 @@ export default function PendingSubmissions() {
           current_bid: submission.starting_bid,
           end_time: submission.end_time,
           image_url: submission.image_url,
-          status: 'draft',
-        });
+          status: 'live',
+        })
+        .select()
+        .single();
 
       if (auctionError) throw auctionError;
 
@@ -99,9 +101,21 @@ export default function PendingSubmissions() {
 
       if (updateError) throw updateError;
 
+      // Notify subscribers about the new live auction
+      if (newAuction?.id) {
+        try {
+          await supabase.functions.invoke('notify-auction-start', {
+            body: { auctionId: newAuction.id },
+          });
+        } catch (notifyError) {
+          console.error('Failed to send notifications:', notifyError);
+          // Don't fail the whole operation if notifications fail
+        }
+      }
+
       toast({
-        title: 'Approved!',
-        description: `"${submission.title}" has been created as a draft auction.`,
+        title: 'Approved & Live!',
+        description: `"${submission.title}" is now live and subscribers have been notified.`,
       });
 
       fetchSubmissions();
