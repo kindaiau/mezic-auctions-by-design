@@ -16,12 +16,11 @@ import { trackEventWithSource } from '@/lib/tracking';
 export default function SubmitAuction() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string>('');
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [endDate, setEndDate] = useState<Date>();
   const [formData, setFormData] = useState({
     title: '',
-    artist: '',
     description: '',
     starting_bid: '',
     submitted_by: '',
@@ -30,8 +29,19 @@ export default function SubmitAuction() {
   const navigate = useNavigate();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    if (imageFiles.length >= 2) {
+      toast({
+        title: 'Maximum images reached',
+        description: 'You can only upload 2 photos',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const file = files[0];
 
     if (file.size > 5 * 1024 * 1024) {
       toast({
@@ -51,21 +61,26 @@ export default function SubmitAuction() {
       return;
     }
 
-    setImageFile(file);
+    setImageFiles(prev => [...prev, file]);
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImagePreview(reader.result as string);
+      setImagePreviews(prev => [...prev, reader.result as string]);
     };
     reader.readAsDataURL(file);
+  };
+
+  const removeImage = (index: number) => {
+    setImageFiles(prev => prev.filter((_, i) => i !== index));
+    setImagePreviews(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!imageFile) {
+    if (imageFiles.length === 0) {
       toast({
         title: 'Image required',
-        description: 'Please upload an image of the artwork',
+        description: 'Please upload at least one photo of the artwork',
         variant: 'destructive',
       });
       return;
@@ -92,29 +107,36 @@ export default function SubmitAuction() {
     setLoading(true);
 
     try {
-      // Upload image
-      const fileExt = imageFile.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const { error: uploadError, data } = await supabase.storage
-        .from('auction-images')
-        .upload(fileName, imageFile);
+      // Upload all images
+      const uploadPromises = imageFiles.map(async (file) => {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const { error: uploadError } = await supabase.storage
+          .from('auction-images')
+          .upload(fileName, file);
 
-      if (uploadError) throw uploadError;
+        if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('auction-images')
-        .getPublicUrl(fileName);
+        const { data: { publicUrl } } = supabase.storage
+          .from('auction-images')
+          .getPublicUrl(fileName);
+
+        return publicUrl;
+      });
+
+      const imageUrls = await Promise.all(uploadPromises);
+      const primaryImageUrl = imageUrls[0];
 
       // Submit to database
       const { error: insertError } = await supabase
         .from('auction_submissions')
         .insert({
           title: formData.title,
-          artist: formData.artist,
+          artist: 'Mez', // Default artist name
           description: formData.description || null,
           starting_bid: parseFloat(formData.starting_bid),
           end_time: endDate.toISOString(),
-          image_url: publicUrl,
+          image_url: primaryImageUrl,
           submitted_by: formData.submitted_by || null,
         });
 
@@ -122,8 +144,8 @@ export default function SubmitAuction() {
 
       trackEventWithSource('auction_submission_complete', {
         title: formData.title,
-        artist: formData.artist,
         starting_bid: formData.starting_bid,
+        image_count: imageFiles.length,
       });
 
       setSuccess(true);
@@ -135,13 +157,12 @@ export default function SubmitAuction() {
       // Reset form
       setFormData({
         title: '',
-        artist: '',
         description: '',
         starting_bid: '',
         submitted_by: '',
       });
-      setImageFile(null);
-      setImagePreview('');
+      setImageFiles([]);
+      setImagePreviews([]);
       setEndDate(undefined);
 
     } catch (error: any) {
@@ -203,32 +224,42 @@ export default function SubmitAuction() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Image Upload */}
           <div className="space-y-2">
-            <Label htmlFor="image" className="text-lg">Artwork Image *</Label>
-            <div className="border-2 border-dashed rounded-lg p-8 text-center hover:border-primary transition-colors">
-              {imagePreview ? (
-                <div className="space-y-4">
-                  <img
-                    src={imagePreview}
-                    alt="Preview"
-                    className="max-h-64 mx-auto rounded-lg"
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => {
-                      setImageFile(null);
-                      setImagePreview('');
-                    }}
-                  >
-                    Change Image
-                  </Button>
-                </div>
-              ) : (
+            <Label className="text-lg">Artwork Photos * (up to 2)</Label>
+            
+            {/* Display uploaded images */}
+            {imagePreviews.length > 0 && (
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                {imagePreviews.map((preview, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={preview}
+                      alt={`Preview ${index + 1}`}
+                      className="w-full h-48 object-cover rounded-lg"
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="sm"
+                      className="absolute top-2 right-2"
+                      onClick={() => removeImage(index)}
+                    >
+                      Remove
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Upload button */}
+            {imageFiles.length < 2 && (
+              <div className="border-2 border-dashed rounded-lg p-8 text-center hover:border-primary transition-colors">
                 <label htmlFor="image" className="cursor-pointer block">
                   <Upload className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-                  <p className="text-lg font-medium mb-2">Tap to upload photo</p>
+                  <p className="text-lg font-medium mb-2">
+                    Tap to upload photo {imageFiles.length + 1}
+                  </p>
                   <p className="text-sm text-muted-foreground">
-                    PNG, JPG or WEBP (max 5MB)
+                    PNG, JPG or WEBP (max 5MB) • {imageFiles.length}/2 uploaded
                   </p>
                   <input
                     id="image"
@@ -238,8 +269,8 @@ export default function SubmitAuction() {
                     className="hidden"
                   />
                 </label>
-              )}
-            </div>
+              </div>
+            )}
           </div>
 
           {/* Title */}
@@ -250,20 +281,6 @@ export default function SubmitAuction() {
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="e.g., Urban Dreams"
-              required
-              maxLength={100}
-              className="text-lg h-12"
-            />
-          </div>
-
-          {/* Artist */}
-          <div className="space-y-2">
-            <Label htmlFor="artist" className="text-lg">Artist Name *</Label>
-            <Input
-              id="artist"
-              value={formData.artist}
-              onChange={(e) => setFormData({ ...formData, artist: e.target.value })}
-              placeholder="e.g., Vali Myers"
               required
               maxLength={100}
               className="text-lg h-12"
