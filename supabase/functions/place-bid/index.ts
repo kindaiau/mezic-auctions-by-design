@@ -10,6 +10,7 @@ import { OutbidNotification } from '../_shared/email-templates/outbid-notificati
 const TWILIO_ACCOUNT_SID = Deno.env.get("TWILIO_ACCOUNT_SID")?.trim();
 const TWILIO_AUTH_TOKEN = Deno.env.get("TWILIO_AUTH_TOKEN")?.trim();
 const TWILIO_PHONE_NUMBER = Deno.env.get("TWILIO_PHONE_NUMBER")?.trim();
+const ADMIN_NOTIFICATION_PHONE = "0422331992"; // Mariana's phone
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -408,6 +409,18 @@ serve(async (req) => {
     } catch (emailError: unknown) {
       const message = emailError instanceof Error ? emailError.message : 'Unknown email error';
       logSecure('error', 'Failed to send confirmation email', { error: message });
+    }
+
+    // Send admin notification SMS (async, non-blocking)
+    try {
+      await sendSMS(
+        ADMIN_NOTIFICATION_PHONE,
+        `MEZ Auctions: New bid by ${bidderName} on "${auction.title}" - $${resultingBidAmount} (${currentLeaderStatus})`
+      );
+      logSecure('info', 'Admin notification SMS sent', { bidId: newBid.id });
+    } catch (adminSmsError: unknown) {
+      const adminSmsMessage = adminSmsError instanceof Error ? adminSmsError.message : 'Unknown SMS error';
+      logSecure('error', 'Failed to send admin notification SMS', { error: adminSmsMessage });
     }
 
     const duration = Date.now() - startTime;
