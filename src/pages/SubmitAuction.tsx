@@ -8,7 +8,8 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, Upload, CheckCircle } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { CalendarIcon, Upload, CheckCircle, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { trackEventWithSource } from '@/lib/tracking';
@@ -19,6 +20,7 @@ export default function SubmitAuction() {
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [endDate, setEndDate] = useState<Date>();
+  const [endTime, setEndTime] = useState({ hour: '9', minute: '00', period: 'PM' });
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -95,10 +97,20 @@ export default function SubmitAuction() {
       return;
     }
 
-    if (endDate <= new Date()) {
+    // Combine date and time
+    const combinedDateTime = new Date(endDate);
+    let hour = parseInt(endTime.hour);
+    if (endTime.period === 'PM' && hour !== 12) {
+      hour += 12;
+    } else if (endTime.period === 'AM' && hour === 12) {
+      hour = 0;
+    }
+    combinedDateTime.setHours(hour, parseInt(endTime.minute), 0, 0);
+
+    if (combinedDateTime <= new Date()) {
       toast({
-        title: 'Invalid date',
-        description: 'End date must be in the future',
+        title: 'Invalid date/time',
+        description: 'End date and time must be in the future',
         variant: 'destructive',
       });
       return;
@@ -135,7 +147,7 @@ export default function SubmitAuction() {
           artist: 'Mez', // Default artist name
           description: formData.description || null,
           starting_bid: parseFloat(formData.starting_bid),
-          end_time: endDate.toISOString(),
+          end_time: combinedDateTime.toISOString(),
           image_url: primaryImageUrl,
           submitted_by: formData.submitted_by || null,
         });
@@ -164,6 +176,7 @@ export default function SubmitAuction() {
       setImageFiles([]);
       setImagePreviews([]);
       setEndDate(undefined);
+      setEndTime({ hour: '9', minute: '00', period: 'PM' });
 
     } catch (error: any) {
       console.error('Submission error:', error);
@@ -323,9 +336,11 @@ export default function SubmitAuction() {
             </div>
           </div>
 
-          {/* End Date */}
+          {/* End Date & Time */}
           <div className="space-y-2">
-            <Label className="text-lg">Auction End Date *</Label>
+            <Label className="text-lg">Auction End Date & Time *</Label>
+            
+            {/* Date Picker */}
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -350,6 +365,54 @@ export default function SubmitAuction() {
                 />
               </PopoverContent>
             </Popover>
+
+            {/* Time Picker */}
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-muted-foreground" />
+              <div className="flex gap-2 flex-1">
+                <Select value={endTime.hour} onValueChange={(value) => setEndTime({ ...endTime, hour: value })}>
+                  <SelectTrigger className="h-12 text-lg">
+                    <SelectValue placeholder="Hour" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
+                      <SelectItem key={hour} value={hour.toString()}>
+                        {hour}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={endTime.minute} onValueChange={(value) => setEndTime({ ...endTime, minute: value })}>
+                  <SelectTrigger className="h-12 text-lg">
+                    <SelectValue placeholder="Min" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {['00', '15', '30', '45'].map((minute) => (
+                      <SelectItem key={minute} value={minute}>
+                        {minute}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={endTime.period} onValueChange={(value) => setEndTime({ ...endTime, period: value })}>
+                  <SelectTrigger className="h-12 text-lg">
+                    <SelectValue placeholder="AM/PM" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="AM">AM</SelectItem>
+                    <SelectItem value="PM">PM</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {endDate && (
+              <p className="text-sm text-muted-foreground">
+                Auction ends: {format(endDate, "PPP")} at {endTime.hour}:{endTime.minute} {endTime.period}
+              </p>
+            )}
           </div>
 
           {/* Submitted By (Optional) */}
