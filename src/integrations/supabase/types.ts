@@ -357,6 +357,60 @@ export type Database = {
         }
         Relationships: []
       }
+      water_quotes: {
+        Row: {
+          additional_notes: string | null
+          admin_notes: string | null
+          calculated_price: number
+          created_at: string
+          customer_email: string
+          customer_name: string
+          customer_phone: string | null
+          delivery_address: string
+          id: string
+          preferred_date: string
+          price_breakdown: Json | null
+          quantity_kl: number
+          status: string
+          updated_at: string
+          water_type: string
+        }
+        Insert: {
+          additional_notes?: string | null
+          admin_notes?: string | null
+          calculated_price: number
+          created_at?: string
+          customer_email: string
+          customer_name: string
+          customer_phone?: string | null
+          delivery_address: string
+          id?: string
+          preferred_date: string
+          price_breakdown?: Json | null
+          quantity_kl: number
+          status?: string
+          updated_at?: string
+          water_type: string
+        }
+        Update: {
+          additional_notes?: string | null
+          admin_notes?: string | null
+          calculated_price?: number
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          customer_phone?: string | null
+          delivery_address?: string
+          id?: string
+          preferred_date?: string
+          price_breakdown?: Json | null
+          quantity_kl?: number
+          status?: string
+          updated_at?: string
+          water_type?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       auction_bid_counts: {
