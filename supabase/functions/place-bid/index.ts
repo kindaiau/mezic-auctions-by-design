@@ -143,7 +143,14 @@ async function sendSMS(to: string, body: string): Promise<void> {
 }
 
 serve(async (req) => {
+  console.log('🔵 place-bid function invoked', { 
+    method: req.method, 
+    timestamp: new Date().toISOString(),
+    url: req.url 
+  });
+
   if (req.method === 'OPTIONS') {
+    console.log('✅ CORS preflight handled');
     return new Response(null, { headers: corsHeaders });
   }
 
@@ -155,31 +162,45 @@ serve(async (req) => {
                      req.headers.get('x-real-ip') || 
                      'unknown';
     
+    console.log('🔍 Checking rate limit for IP:', clientIP);
+    
     // Check rate limit
     if (!checkRateLimit(clientIP)) {
+      console.log('❌ Rate limit exceeded for IP:', clientIP);
       logSecure('error', 'Rate limit exceeded', { ip: clientIP });
       return new Response(
         JSON.stringify({ error: 'Too many bid attempts. Please wait a minute and try again.' }),
         { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+    
+    console.log('✅ Rate limit check passed');
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
+    console.log('📥 Parsing request body...');
     // Parse and validate input
     const rawBody = await req.json();
+    console.log('📦 Request body received:', { 
+      hasAuctionId: !!rawBody.auctionId,
+      hasBidderName: !!rawBody.bidderName,
+      hasBidAmount: !!rawBody.bidAmount 
+    });
     const validationResult = BidRequestSchema.safeParse(rawBody);
     
     if (!validationResult.success) {
       const errors = validationResult.error.errors.map(e => e.message).join(', ');
+      console.log('❌ Validation failed:', errors);
       logSecure('error', 'Validation failed', { errors });
       return new Response(
         JSON.stringify({ error: `Validation error: ${errors}` }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+    
+    console.log('✅ Validation passed');
 
     const {
       auctionId,
@@ -191,6 +212,7 @@ serve(async (req) => {
     }: BidRequest = validationResult.data;
 
     logSecure('info', 'Processing bid', { auctionId, bidAmount });
+    console.log('🔍 Fetching auction data for:', auctionId);
 
     // Get auction data with optimistic locking (using current_bid for version control)
     const { data: auction, error: auctionError } = await supabase
@@ -200,9 +222,12 @@ serve(async (req) => {
       .single();
 
     if (auctionError || !auction) {
+      console.log('❌ Auction not found:', auctionId, auctionError);
       logSecure('error', 'Auction not found', { auctionId });
       throw new Error('Auction not found');
     }
+    
+    console.log('✅ Auction found:', { title: auction.title, status: auction.status, currentBid: auction.current_bid });
 
     // Validate auction is still live
     if (auction.status !== 'live') {
@@ -281,6 +306,8 @@ serve(async (req) => {
     resultingBidAmount = toCurrency(resultingBidAmount);
     updatedCurrentBid = toCurrency(updatedCurrentBid);
 
+    console.log('💾 Inserting new bid into database...');
+    
     // Insert new bid atomically
     const { data: newBid, error: bidError } = await supabase
       .from('bids')
@@ -298,9 +325,12 @@ serve(async (req) => {
       .single();
 
     if (bidError) {
+      console.log('❌ Failed to insert bid:', bidError.message);
       logSecure('error', 'Failed to insert bid', { error: bidError.message });
       throw bidError;
     }
+    
+    console.log('✅ Bid inserted successfully:', newBid.id);
 
     // Update auction current bid atomically
     const { error: updateError } = await supabase
