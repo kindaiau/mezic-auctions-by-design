@@ -16,33 +16,7 @@ interface Auction {
   status: string;
 }
 export default function Auctions() {
-  // Mock test data with the 3 artwork images
-  const mockAuctions: Auction[] = [{
-    id: '7a0b9c2d-2f4d-4a7d-90a1-29d5aef6b101',
-    title: 'Vali Myers Original',
-    artist: 'Vali Myers',
-    image_url: 'vali-myers',
-    current_bid: 2500,
-    end_time: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-    status: 'live'
-  }, {
-    id: 'e3c70544-9ff9-4f7a-973b-42a6e9ea9f9d',
-    title: 'Abstract Emotions',
-    artist: 'Contemporary Artist',
-    image_url: 'abstract-emotions',
-    current_bid: 1800,
-    end_time: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(),
-    status: 'live'
-  }, {
-    id: 'd120a60c-3022-4c8f-9eb2-2df1c9f4d0b5',
-    title: 'Urban Decay Series',
-    artist: 'Street Artist',
-    image_url: 'urban-decay',
-    current_bid: 3200,
-    end_time: new Date(Date.now() + 72 * 60 * 60 * 1000).toISOString(),
-    status: 'live'
-  }];
-  const [auctions, setAuctions] = useState<Auction[]>(mockAuctions);
+  const [auctions, setAuctions] = useState<Auction[]>([]);
   const [selectedAuction, setSelectedAuction] = useState<Auction | null>(null);
   const [isBidModalOpen, setIsBidModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -81,10 +55,7 @@ export default function Auctions() {
         ascending: true
       });
       if (error) throw error;
-      // Use database data if available, otherwise keep mock data
-      if (data && data.length > 0) {
-        setAuctions(data);
-      }
+      setAuctions(data || []);
     } catch (error) {
       console.error('Error fetching auctions:', error);
     } finally {
