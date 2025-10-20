@@ -6,11 +6,13 @@ import React from 'npm:react@18.3.1';
 import { renderAsync } from 'npm:@react-email/components@0.0.22';
 import { BidConfirmation } from '../_shared/email-templates/bid-confirmation.tsx';
 import { OutbidNotification } from '../_shared/email-templates/outbid-notification.tsx';
+import { AdminBidNotification } from '../_shared/email-templates/admin-bid-notification.tsx';
 
 const TWILIO_ACCOUNT_SID = Deno.env.get("TWILIO_ACCOUNT_SID")?.trim();
 const TWILIO_AUTH_TOKEN = Deno.env.get("TWILIO_AUTH_TOKEN")?.trim();
 const TWILIO_PHONE_NUMBER = Deno.env.get("TWILIO_PHONE_NUMBER")?.trim();
 const ADMIN_NOTIFICATION_PHONE = "0422331992"; // Mariana's phone
+const ADMIN_EMAIL = "mariana@getgas.net.au"; // Mariana's email
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -421,6 +423,39 @@ serve(async (req) => {
     } catch (adminSmsError: unknown) {
       const adminSmsMessage = adminSmsError instanceof Error ? adminSmsError.message : 'Unknown SMS error';
       logSecure('error', 'Failed to send admin notification SMS', { error: adminSmsMessage });
+    }
+
+    // Send admin notification email (async, non-blocking)
+    try {
+      const adminEmailHtml = await renderAsync(
+        React.createElement(AdminBidNotification, {
+          auctionTitle: auction.title,
+          artistName: auction.artist_name,
+          bidderName,
+          bidderEmail,
+          bidderPhone: bidderPhone || undefined,
+          bidAmount: resultingBidAmount,
+          maximumBid: maximumBidAmount,
+          status: currentLeaderStatus,
+          timestamp: new Date().toLocaleString('en-AU', { 
+            timeZone: 'Australia/Sydney',
+            dateStyle: 'full',
+            timeStyle: 'long'
+          }),
+        })
+      );
+
+      await resend.emails.send({
+        from: "MEZ Auctions <onboarding@resend.dev>",
+        to: [ADMIN_EMAIL],
+        subject: `🎨 New Bid: ${bidderName} - ${auction.title}`,
+        html: adminEmailHtml,
+      });
+
+      logSecure('info', 'Admin notification email sent', { bidId: newBid.id });
+    } catch (adminEmailError: unknown) {
+      const adminEmailMessage = adminEmailError instanceof Error ? adminEmailError.message : 'Unknown email error';
+      logSecure('error', 'Failed to send admin notification email', { error: adminEmailMessage });
     }
 
     const duration = Date.now() - startTime;
