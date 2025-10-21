@@ -39,27 +39,27 @@ export const CountdownTimer = ({ endTime }: CountdownTimerProps) => {
     <div className="flex gap-2 justify-center items-center">
       {timeLeft.days > 0 && (
         <div className="flex flex-col items-center">
-          <span className="text-black text-lg font-bold">{timeLeft.days}</span>
+          <span className="text-red-600 text-lg font-bold">{timeLeft.days}</span>
           <span className="text-black/60 text-[10px] uppercase">Days</span>
         </div>
       )}
       {(timeLeft.days > 0 || timeLeft.hours > 0) && (
         <>
-          {timeLeft.days > 0 && <span className="text-black/40">:</span>}
+          {timeLeft.days > 0 && <span className="text-red-600/40">:</span>}
           <div className="flex flex-col items-center">
-            <span className="text-black text-lg font-bold">{String(timeLeft.hours).padStart(2, '0')}</span>
+            <span className="text-red-600 text-lg font-bold">{String(timeLeft.hours).padStart(2, '0')}</span>
             <span className="text-black/60 text-[10px] uppercase">Hours</span>
           </div>
         </>
       )}
-      <span className="text-black/40">:</span>
+      <span className="text-red-600/40">:</span>
       <div className="flex flex-col items-center">
-        <span className="text-black text-lg font-bold">{String(timeLeft.minutes).padStart(2, '0')}</span>
+        <span className="text-red-600 text-lg font-bold">{String(timeLeft.minutes).padStart(2, '0')}</span>
         <span className="text-black/60 text-[10px] uppercase">Mins</span>
       </div>
-      <span className="text-black/40">:</span>
+      <span className="text-red-600/40">:</span>
       <div className="flex flex-col items-center">
-        <span className="text-black text-lg font-bold">{String(timeLeft.seconds).padStart(2, '0')}</span>
+        <span className="text-red-600 text-lg font-bold">{String(timeLeft.seconds).padStart(2, '0')}</span>
         <span className="text-black/60 text-[10px] uppercase">Secs</span>
       </div>
     </div>
