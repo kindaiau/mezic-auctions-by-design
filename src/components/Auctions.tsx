@@ -138,9 +138,16 @@ export default function Auctions() {
               data-auction-title={auction.title}
               className="group rounded-lg border border-black/10 p-4 bg-black/[0.02] hover:bg-black/[0.05] transition-colors duration-300">
               <div className="aspect-square overflow-hidden rounded">
-                <img src={imageMap[auction.image_url] || auction.image_url} alt={auction.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
+                <img 
+                  src={imageMap[auction.image_url] || auction.image_url} 
+                  alt={auction.title} 
+                  width="308"
+                  height="308"
+                  loading="eager"
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" 
+                />
               </div>
-              <div className="mt-4 flex flex-col justify-between" style={{ minHeight: '120px' }}>
+              <div className="mt-4 flex flex-col justify-between" style={{ minHeight: '200px' }}>
                 <div className="space-y-3">
                   <h3 className="text-black text-lg md:text-xl font-medium line-clamp-2 text-center">{auction.title}</h3>
                   <div className="text-center space-y-1">
@@ -148,7 +155,7 @@ export default function Auctions() {
                     <p className="text-gallery-gold text-2xl font-bold">
                       ${auction.current_bid}
                     </p>
-                    <div className="mt-3 mb-2">
+                    <div className="mt-3 mb-2" style={{ minHeight: '60px' }}>
                       <CountdownTimer endTime={auction.end_time} />
                     </div>
                     <p className="text-black/60 text-xs">

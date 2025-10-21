@@ -16,6 +16,8 @@ const Header = () => {
           <img 
             src={mezLogo} 
             alt="MEZ" 
+            width="56"
+            height="50"
             className="h-8 md:h-10 w-auto"
             style={{ 
               willChange: 'transform',
