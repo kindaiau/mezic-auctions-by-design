@@ -6,6 +6,7 @@ import valiMyersArtwork from '@/assets/vali-myers-artwork-optimized.webp';
 import abstractEmotionsArtwork from '@/assets/abstract-emotions-artwork-optimized.webp';
 import urbanDecayArtwork from '@/assets/urban-decay-artwork-optimized.webp';
 import { trackAuctionView, trackAuctionClick, trackBidModalOpen } from '@/lib/tracking';
+import { CountdownTimer } from './CountdownTimer';
 interface Auction {
   id: string;
   title: string;
@@ -97,19 +98,9 @@ export default function Auctions() {
   }, [auctions]);
   const formatEndTime = (endTime: string) => {
     const date = new Date(endTime);
-    const now = new Date();
-    const diff = date.getTime() - now.getTime();
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    
     const dateString = date.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
     const timeString = date.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', hour12: true });
-    
-    if (hours < 24) {
-      return `${hours}h ${minutes}m ${dateString} ${timeString}`;
-    }
-    const days = Math.floor(hours / 24);
-    return `${days}d ${dateString} ${timeString}`;
+    return `${dateString} ${timeString}`;
   };
   if (loading) {
     return <section id="auctions" className="px-6 py-16 md:py-24">
@@ -155,6 +146,9 @@ export default function Auctions() {
                     <p className="text-gallery-gold text-2xl font-bold">
                       ${auction.current_bid}
                     </p>
+                    <div className="mt-3 mb-2">
+                      <CountdownTimer endTime={auction.end_time} />
+                    </div>
                     <p className="text-black/60 text-xs">
                       Ends: {formatEndTime(auction.end_time)}
                     </p>
