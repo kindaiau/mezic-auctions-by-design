@@ -142,14 +142,17 @@ export default function Auctions() {
                 <img src={imageMap[auction.image_url] || auction.image_url} alt={auction.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
               </div>
               <div className="mt-4 flex flex-col justify-between" style={{ minHeight: '120px' }}>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <h3 className="text-black text-lg md:text-xl font-medium line-clamp-2">{auction.title}</h3>
-                  <p className="text-black/80 text-sm font-semibold">
-                    Current bid: ${auction.current_bid}
-                  </p>
-                  <p className="text-black/60 text-xs">
-                    Ends {formatEndTime(auction.end_time)}
-                  </p>
+                  <div className="text-center space-y-1">
+                    <p className="text-black/70 text-xs uppercase tracking-wider">Current Bid</p>
+                    <p className="text-gallery-gold text-2xl font-bold">
+                      ${auction.current_bid}
+                    </p>
+                    <p className="text-black/60 text-xs">
+                      Ends {formatEndTime(auction.end_time)}
+                    </p>
+                  </div>
                 </div>
                 <Button onClick={() => handleBidClick(auction)} variant="mez" className="w-full px-4 py-3 text-sm uppercase tracking-tight min-h-[44px] mt-3" aria-label={`Place bid on ${auction.title}`}>
                   PLACE BID
