@@ -102,12 +102,14 @@ export default function Auctions() {
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     
+    const dateString = date.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
+    const timeString = date.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', hour12: true });
+    
     if (hours < 24) {
-      return `${hours}h ${minutes}m`;
+      return `${hours}h ${minutes}m (${dateString} ${timeString})`;
     }
     const days = Math.floor(hours / 24);
-    const timeString = date.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', hour12: true });
-    return `${days}d at ${timeString}`;
+    return `${days}d (${dateString} ${timeString})`;
   };
   if (loading) {
     return <section id="auctions" className="px-6 py-16 md:py-24">
