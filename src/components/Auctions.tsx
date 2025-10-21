@@ -1,12 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { BidModal } from './BidModal';
 import { Button } from './ui/button';
 import valiMyersArtwork from '@/assets/vali-myers-artwork-optimized.webp';
 import abstractEmotionsArtwork from '@/assets/abstract-emotions-artwork-optimized.webp';
 import urbanDecayArtwork from '@/assets/urban-decay-artwork-optimized.webp';
 import { trackAuctionView, trackAuctionClick, trackBidModalOpen } from '@/lib/tracking';
 import { CountdownTimer } from './CountdownTimer';
+
+// Lazy load BidModal - only loads when user clicks to place bid
+const BidModal = lazy(() => import('./BidModal').then(module => ({ default: module.BidModal })));
 interface Auction {
   id: string;
   title: string;
@@ -162,11 +164,15 @@ export default function Auctions() {
         </div>
       </div>
 
-      {selectedAuction && <BidModal isOpen={isBidModalOpen} onClose={() => setIsBidModalOpen(false)} auction={{
-      id: selectedAuction.id,
-      title: selectedAuction.title,
-      artist: selectedAuction.artist,
-      currentBid: selectedAuction.current_bid
-    }} onBidPlaced={fetchAuctions} />}
+      {selectedAuction && (
+        <Suspense fallback={null}>
+          <BidModal isOpen={isBidModalOpen} onClose={() => setIsBidModalOpen(false)} auction={{
+            id: selectedAuction.id,
+            title: selectedAuction.title,
+            artist: selectedAuction.artist,
+            currentBid: selectedAuction.current_bid
+          }} onBidPlaced={fetchAuctions} />
+        </Suspense>
+      )}
     </section>;
 }
