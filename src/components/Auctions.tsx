@@ -139,7 +139,9 @@ export default function Auctions() {
               className="group rounded-lg border border-black/10 p-4 bg-black/[0.02] hover:bg-black/[0.05] transition-colors duration-300">
               <div className="aspect-square overflow-hidden rounded">
                 <img 
-                  src={imageMap[auction.image_url] || auction.image_url} 
+                  src={imageMap[auction.image_url] || (auction.image_url.includes('supabase.co') 
+                    ? `${auction.image_url}?width=400&height=400&quality=80&format=webp` 
+                    : auction.image_url)} 
                   alt={auction.title} 
                   width="308"
                   height="308"

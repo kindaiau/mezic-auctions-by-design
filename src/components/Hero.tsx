@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import mezCircleLogo from "@/assets/mez-circle-logo.png";
+import mezCircleLogo from "@/assets/mez-circle-logo-optimized.webp";
 import { Button } from "./ui/button";
 import "./hero.css";
 import { trackCTAClick } from "@/lib/tracking";
@@ -17,7 +17,9 @@ export default function Hero() {
             </h1>
             <img 
               src={mezCircleLogo} 
-              alt="MEZ" 
+              alt="MEZ"
+              width="220"
+              height="195"
               className="h-[clamp(48px,12vw,220px)] w-auto"
               style={{ 
                 mixBlendMode: 'multiply'
