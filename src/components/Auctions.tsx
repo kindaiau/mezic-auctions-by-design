@@ -132,7 +132,7 @@ export default function Auctions() {
         </header>
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
-          {auctions.map(auction => <article 
+          {auctions.map((auction, index) => <article
               key={auction.id} 
               data-auction-id={auction.id}
               data-auction-title={auction.title}
@@ -144,6 +144,7 @@ export default function Auctions() {
                   width="308"
                   height="308"
                   loading="eager"
+                  fetchPriority={index === 0 ? "high" : "auto"}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" 
                 />
               </div>
