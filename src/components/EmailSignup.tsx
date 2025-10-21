@@ -7,6 +7,30 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { trackEmailSignupView, trackEmailSignupSubmit, trackEmailSignupSuccess } from '@/lib/tracking';
+import { z } from 'zod';
+
+// Validation schema matching server-side validation
+const subscribeSchema = z.object({
+  name: z.string()
+    .trim()
+    .min(1, { message: "Name is required" })
+    .max(100, { message: "Name must be less than 100 characters" }),
+  email: z.string()
+    .trim()
+    .email({ message: "Invalid email address" })
+    .max(255, { message: "Email must be less than 255 characters" })
+    .optional()
+    .or(z.literal('')),
+  phone: z.string()
+    .trim()
+    .regex(/^[\d\s+()-]*$/, { message: "Invalid phone number format" })
+    .max(20, { message: "Phone number must be less than 20 characters" })
+    .optional()
+    .or(z.literal('')),
+}).refine(
+  (data) => data.email || data.phone,
+  { message: "Either email or phone number is required", path: ["contact"] }
+);
 const EmailSignup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -48,18 +72,23 @@ const EmailSignup = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
-    if (!name.trim()) {
-      setErrors({
-        name: 'Please enter your name.'
+
+    // Validate using zod schema
+    const validationResult = subscribeSchema.safeParse({ name, email, phone });
+    
+    if (!validationResult.success) {
+      const fieldErrors: { name?: string; contact?: string } = {};
+      validationResult.error.errors.forEach((err) => {
+        if (err.path[0] === 'name') {
+          fieldErrors.name = err.message;
+        } else if (err.path[0] === 'email' || err.path[0] === 'phone' || err.path[0] === 'contact') {
+          fieldErrors.contact = err.message;
+        }
       });
+      setErrors(fieldErrors);
       return;
     }
-    if (!email.trim() && !phone.trim()) {
-      setErrors({
-        contact: 'Enter either an email or phone number to receive auction alerts.'
-      });
-      return;
-    }
+
     setIsSubmitting(true);
     
     // Track signup submission

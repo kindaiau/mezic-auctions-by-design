@@ -1,1 +1,13 @@
 project_id = "ccwbdarlfwmqbeftppzk"
+
+[functions.chat-assistant]
+verify_jwt = true
+
+[functions.notify-auction-start]
+verify_jwt = false
+
+[functions.place-bid]
+verify_jwt = false
+
+[functions.subscribe-newsletter]
+verify_jwt = false
