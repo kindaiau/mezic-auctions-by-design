@@ -100,10 +100,14 @@ export default function Auctions() {
     const now = new Date();
     const diff = date.getTime() - now.getTime();
     const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    
     if (hours < 24) {
-      return `Ends in ${hours}h`;
+      return `${hours}h ${minutes}m`;
     }
-    return `Ends ${date.toLocaleDateString()}`;
+    const days = Math.floor(hours / 24);
+    const timeString = date.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', hour12: true });
+    return `${days}d at ${timeString}`;
   };
   if (loading) {
     return <section id="auctions" className="px-6 py-16 md:py-24">
@@ -150,7 +154,7 @@ export default function Auctions() {
                       ${auction.current_bid}
                     </p>
                     <p className="text-black/60 text-xs">
-                      Ends {formatEndTime(auction.end_time)}
+                      Ends: {formatEndTime(auction.end_time)}
                     </p>
                   </div>
                 </div>
