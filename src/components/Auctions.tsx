@@ -106,10 +106,10 @@ export default function Auctions() {
     const timeString = date.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', hour12: true });
     
     if (hours < 24) {
-      return `${hours}h ${minutes}m (${dateString} ${timeString})`;
+      return `${hours}h ${minutes}m ${dateString} ${timeString}`;
     }
     const days = Math.floor(hours / 24);
-    return `${days}d (${dateString} ${timeString})`;
+    return `${days}d ${dateString} ${timeString}`;
   };
   if (loading) {
     return <section id="auctions" className="px-6 py-16 md:py-24">
