@@ -144,8 +144,11 @@ export default function Auctions() {
               <div className="mt-4 flex flex-col justify-between" style={{ minHeight: '120px' }}>
                 <div className="space-y-2">
                   <h3 className="text-black text-lg md:text-xl font-medium line-clamp-2">{auction.title}</h3>
-                  <p className="text-black/60 text-sm line-clamp-1">
-                    Current bid: ${auction.current_bid} • {formatEndTime(auction.end_time)}
+                  <p className="text-black/80 text-sm font-semibold">
+                    Current bid: ${auction.current_bid}
+                  </p>
+                  <p className="text-black/60 text-xs">
+                    Ends {formatEndTime(auction.end_time)}
                   </p>
                 </div>
                 <Button onClick={() => handleBidClick(auction)} variant="mez" className="w-full px-4 py-3 text-sm uppercase tracking-tight min-h-[44px] mt-3" aria-label={`Place bid on ${auction.title}`}>
