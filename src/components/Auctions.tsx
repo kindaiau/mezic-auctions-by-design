@@ -143,7 +143,7 @@ export default function Auctions() {
               </div>
               <div className="mt-4 flex flex-col justify-between" style={{ minHeight: '120px' }}>
                 <div className="space-y-3">
-                  <h3 className="text-black text-lg md:text-xl font-medium line-clamp-2">{auction.title}</h3>
+                  <h3 className="text-black text-lg md:text-xl font-medium line-clamp-2 text-center">{auction.title}</h3>
                   <div className="text-center space-y-1">
                     <p className="text-black/70 text-xs uppercase tracking-wider">Current Bid</p>
                     <p className="text-gallery-gold text-2xl font-bold">
