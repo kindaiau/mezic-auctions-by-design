@@ -369,7 +369,7 @@ serve(async (req) => {
       const previousBidder = previousHighest;
       try {
         await resend.emails.send({
-          from: 'MEZ Auctions <auctions@resend.dev>',
+          from: 'MEZ Auctions <auctions@mezauctions.com>',
           to: [previousBidder.bidder_email],
           subject: `You've been outbid on "${auction.title}"`,
           html: `
