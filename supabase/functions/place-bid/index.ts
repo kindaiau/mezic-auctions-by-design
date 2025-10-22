@@ -477,7 +477,7 @@ serve(async (req) => {
           bidderEmail,
           bidderPhone: bidderPhone || undefined,
           bidAmount: resultingBidAmount,
-          maximumBid: maximumBidAmount,
+          maximumBid: proxyCeiling,
           status: currentLeaderStatus,
           timestamp: new Date().toLocaleString('en-AU', { 
             timeZone: 'Australia/Sydney',
@@ -488,7 +488,7 @@ serve(async (req) => {
       );
 
       await resend.emails.send({
-        from: "MEZ Auctions <onboarding@resend.dev>",
+        from: "MEZ Auctions <auctions@mezauctions.com>",
         to: [ADMIN_EMAIL],
         subject: `🎨 New Bid: ${bidderName} - ${auction.title}`,
         html: adminEmailHtml,
