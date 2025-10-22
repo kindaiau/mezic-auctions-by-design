@@ -112,6 +112,34 @@ export default function AuctionManagement() {
     }
   };
 
+  const handleNotifyWinner = async (id: string) => {
+    if (!confirm('Are you sure you want to notify the winner? This will send an email and SMS to the winning bidder.')) {
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase.functions.invoke('notify-winner', {
+        body: { auctionId: id },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: 'Success',
+        description: `Winner ${data.winner.name} has been notified via email and SMS!`,
+      });
+
+      fetchAuctions();
+    } catch (error: any) {
+      console.error('Winner notification error:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to notify winner',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const handleFormClose = () => {
     setShowForm(false);
     setEditingAuction(null);
@@ -143,6 +171,7 @@ export default function AuctionManagement() {
         onEdit={handleEdit}
         onDelete={handleDelete}
         onStatusChange={handleStatusChange}
+        onNotifyWinner={handleNotifyWinner}
       />
     </div>
   );

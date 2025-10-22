@@ -81,6 +81,8 @@ export type Database = {
           status: string
           title: string
           updated_at: string
+          winner_notified: boolean | null
+          winner_notified_at: string | null
         }
         Insert: {
           artist: string
@@ -94,6 +96,8 @@ export type Database = {
           status?: string
           title: string
           updated_at?: string
+          winner_notified?: boolean | null
+          winner_notified_at?: string | null
         }
         Update: {
           artist?: string
@@ -107,6 +111,8 @@ export type Database = {
           status?: string
           title?: string
           updated_at?: string
+          winner_notified?: boolean | null
+          winner_notified_at?: string | null
         }
         Relationships: []
       }
@@ -114,7 +120,7 @@ export type Database = {
         Row: {
           created_at: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           operation: string
           record_id: string | null
           sensitive_data_accessed: Json | null
@@ -125,7 +131,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           operation: string
           record_id?: string | null
           sensitive_data_accessed?: Json | null
@@ -136,7 +142,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           operation?: string
           record_id?: string | null
           sensitive_data_accessed?: Json | null
@@ -432,7 +438,7 @@ export type Database = {
     }
     Functions: {
       detect_suspicious_access: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           access_count: number
           first_access: string
@@ -441,20 +447,11 @@ export type Database = {
           user_id: string
         }[]
       }
-      encrypt_customer_data: {
-        Args: { data: string }
-        Returns: string
-      }
-      ensure_admin_exists: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      get_current_user_role: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
+      encrypt_customer_data: { Args: { data: string }; Returns: string }
+      ensure_admin_exists: { Args: never; Returns: boolean }
+      get_current_user_role: { Args: never; Returns: string }
       get_my_bids: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           auction_id: string
           bid_amount: number
@@ -471,14 +468,8 @@ export type Database = {
         }
         Returns: boolean
       }
-      is_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      is_current_user_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      is_admin: { Args: never; Returns: boolean }
+      is_current_user_admin: { Args: never; Returns: boolean }
       verify_admin_with_audit: {
         Args: {
           operation: string

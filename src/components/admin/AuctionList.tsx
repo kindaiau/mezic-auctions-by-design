@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Pencil, Trash2, Eye, EyeOff } from 'lucide-react';
+import { Pencil, Trash2, Eye, EyeOff, Trophy } from 'lucide-react';
 
 interface AuctionListProps {
   auctions: any[];
@@ -9,6 +9,7 @@ interface AuctionListProps {
   onEdit: (auction: any) => void;
   onDelete: (id: string) => void;
   onStatusChange: (id: string, status: string) => void;
+  onNotifyWinner: (id: string) => void;
 }
 
 export default function AuctionList({
@@ -17,6 +18,7 @@ export default function AuctionList({
   onEdit,
   onDelete,
   onStatusChange,
+  onNotifyWinner,
 }: AuctionListProps) {
   if (loading) {
     return <div className="text-center py-8">Loading auctions...</div>;
@@ -67,6 +69,17 @@ export default function AuctionList({
               </TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
+                  {auction.status === 'ended' && !auction.winner_notified && (
+                    <Button
+                      size="sm"
+                      variant="default"
+                      onClick={() => onNotifyWinner(auction.id)}
+                      title="Notify Winner"
+                    >
+                      <Trophy className="h-4 w-4 mr-1" />
+                      Notify Winner
+                    </Button>
+                  )}
                   <Button
                     size="sm"
                     variant="ghost"

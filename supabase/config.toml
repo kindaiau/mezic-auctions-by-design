@@ -6,6 +6,9 @@ verify_jwt = true
 [functions.notify-auction-start]
 verify_jwt = false
 
+[functions.notify-winner]
+verify_jwt = false
+
 [functions.place-bid]
 verify_jwt = false
 
