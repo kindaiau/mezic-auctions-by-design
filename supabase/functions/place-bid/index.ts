@@ -11,7 +11,7 @@ import { AdminBidNotification } from '../_shared/email-templates/admin-bid-notif
 const TWILIO_ACCOUNT_SID = Deno.env.get("TWILIO_ACCOUNT_SID")?.trim();
 const TWILIO_AUTH_TOKEN = Deno.env.get("TWILIO_AUTH_TOKEN")?.trim();
 const TWILIO_PHONE_NUMBER = Deno.env.get("TWILIO_PHONE_NUMBER")?.trim();
-const ADMIN_NOTIFICATION_PHONE = "0422331992"; // Mariana's phone
+const ADMIN_NOTIFICATION_PHONE = "+61422331992"; // Mariana's phone (international format)
 const ADMIN_EMAIL = "mariana@getgas.net.au"; // Mariana's email
 
 const corsHeaders = {
@@ -135,11 +135,23 @@ async function sendSMS(to: string, body: string): Promise<void> {
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('Twilio SMS error:', errorText);
-    throw new Error(`Twilio SMS failed: ${errorText}`);
+    console.error('Twilio SMS error - Full response:', {
+      status: response.status,
+      statusText: response.statusText,
+      body: errorText,
+      to: normalizedPhone.substring(0, 5) + '***',
+      from: TWILIO_PHONE_NUMBER
+    });
+    throw new Error(`Twilio SMS failed (${response.status}): ${errorText}`);
   }
-  
-  console.log('SMS sent successfully to:', normalizedPhone.substring(0, 5) + '***');
+
+  const responseData = await response.json();
+  console.log('SMS sent successfully:', {
+    to: normalizedPhone.substring(0, 5) + '***',
+    sid: responseData.sid,
+    status: responseData.status,
+    from: TWILIO_PHONE_NUMBER
+  });
 }
 
 serve(async (req) => {
